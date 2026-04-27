@@ -1,0 +1,84 @@
+@layer layout {
+  body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-block-size: 100vh;
+  }
+  main {
+    inline-size: var(--measure-wide);
+    margin-inline: auto;
+    padding: var(--space-6) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+  }
+  .site-header {
+    inline-size: var(--measure-wide);
+    margin-inline: auto;
+    padding: var(--space-4) var(--space-5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    border-block-end: 1px solid var(--color-surface-alt);
+  }
+  .site-header nav ul {
+    display: flex;
+    gap: var(--space-5);
+  }
+  .site-brand {
+    font-weight: 700;
+    font-size: var(--step-1);
+    text-decoration: none;
+    color: var(--color-ink);
+  }
+  .site-footer {
+    inline-size: var(--measure-wide);
+    margin-inline: auto;
+    padding: var(--space-5);
+    border-block-start: 1px solid var(--color-surface-alt);
+    color: var(--color-ink-subtle);
+    font-size: var(--step--1);
+  }
+  .site-footer nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .home-hero h1 {
+    font-size: var(--step-4);
+    max-inline-size: 22ch;
+  }
+  .home-hero__intro {
+    font-size: var(--step-1);
+    color: var(--color-ink-subtle);
+    max-inline-size: var(--measure-prose);
+  }
+  .home-featured__grid,
+  .home-stats__grid,
+  .work-index__list {
+    display: grid;
+    gap: var(--space-5);
+    container-type: inline-size;
+  }
+  @container (min-width: 48rem) {
+    .home-featured__grid { grid-template-columns: repeat(3, 1fr); }
+    .home-stats__grid { grid-template-columns: repeat(3, 1fr); }
+    .work-index__list { grid-template-columns: repeat(2, 1fr); }
+  }
+  @container (min-width: 72rem) {
+    .work-index__list { grid-template-columns: repeat(3, 1fr); }
+  }
+  .work-detail {
+    display: grid;
+    gap: var(--space-6);
+  }
+  @container (min-width: 60rem) {
+    .work-detail {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+    }
+    .work-detail__aside {
+      grid-column: 2;
+    }
+  }
+}
