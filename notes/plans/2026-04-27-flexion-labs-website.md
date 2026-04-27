@@ -6,7 +6,7 @@
 
 **Architecture:** Bun + Hono SSG renders every route to static HTML at build time. A committed JSON snapshot (refreshed daily from the GitHub API) plus a hand-authored YAML overrides file plus per-repo markdown overlays feed a single merged catalog. Hand-rolled CSS with cascade layers, container queries, and design tokens sourced from Flexion's brand palette. HTML Web Components wrap rendered HTML to add filter/sort/copy behaviors as progressive enhancement. GitHub Pages hosts production at the domain root and branch previews under `/preview/<branch>/`, surfaced via GitHub Deployments.
 
-**Tech Stack:** Bun (runtime + package manager + test runner), TypeScript, Hono (with `@hono/ssg`), `hono/jsx` for components, `yaml` for overrides, `marked` for markdown, `happy-dom` for component tests, `@axe-core/playwright` or `axe-core` with `happy-dom` for a11y, GitHub Actions for CI.
+**Tech Stack:** Bun (runtime + package manager + test runner), TypeScript, Hono (the SSG helper is a subpath export — `import { toSSG } from 'hono/ssg'` — no extra dependency needed), `hono/jsx` for components, `yaml` for overrides, `marked` for markdown, `happy-dom` for component tests, `axe-core` with `happy-dom` for a11y, GitHub Actions for CI.
 
 **Plan location convention:** Per user preferences, this plan is saved to `notes/plans/` rather than `docs/superpowers/plans/`. Ephemeral planning lives in `notes/`; durable behavioral docs live in `docs/`.
 
@@ -151,7 +151,6 @@ Top-level domain layout (Screaming Architecture). Subdirectories reveal intent b
   },
   "dependencies": {
     "hono": "^4.6.0",
-    "@hono/ssg": "^0.2.0",
     "marked": "^14.0.0",
     "yaml": "^2.6.0"
   },
