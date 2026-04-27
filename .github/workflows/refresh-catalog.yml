@@ -1,0 +1,51 @@
+name: Refresh catalog
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile || bun install
+
+      - name: Run refresh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bun run refresh:catalog
+
+      - name: Open PR if snapshot changed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet catalog/repos.json; then
+            echo 'No changes; nothing to do.'
+            exit 0
+          fi
+          DATE="$(date -u +%F)"
+          BRANCH="catalog/refresh-$DATE"
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -B "$BRANCH"
+          git add catalog/repos.json
+          git commit -m "chore(catalog): refresh snapshot $DATE"
+          git push --force-with-lease origin "$BRANCH"
+          if ! gh pr view "$BRANCH" >/dev/null 2>&1; then
+            gh pr create --base main --head "$BRANCH" \
+              --title "Refresh catalog snapshot — $DATE" \
+              --body "Automated snapshot refresh from the GitHub API."
+          fi
+          gh pr merge "$BRANCH" --auto --squash
