@@ -27,6 +27,7 @@ export const fixtureCatalog: Catalog = [
   entry({
     name: 'messaging',
     description: 'Messaging — text-based notifications for critical updates.',
+    url: 'https://github.com/flexion/messaging',
     language: 'TypeScript',
     license: 'Apache-2.0',
     tier: 'active',
