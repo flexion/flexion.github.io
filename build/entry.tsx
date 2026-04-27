@@ -63,7 +63,14 @@ export async function buildSite(options: BuildOptions): Promise<void> {
   }
 
   await copyTree(join(rootDir, 'styles'), join(outDir, 'styles'))
-  await copyTree(join(rootDir, 'enhancements'), join(outDir, 'enhancements'))
+  await Bun.build({
+    entrypoints: [join(rootDir, 'enhancements', 'register.ts')],
+    outdir: join(outDir, 'enhancements'),
+    target: 'browser',
+    naming: '[name].js',
+    minify: true,
+    sourcemap: 'linked',
+  })
   await copyTree(join(rootDir, 'assets'), join(outDir, 'assets'))
 }
 
