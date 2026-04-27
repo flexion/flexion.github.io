@@ -1,0 +1,6 @@
+.worktrees/
+node_modules/
+dist/
+.direnv/
+.DS_Store
+*.log
