@@ -71,8 +71,8 @@ export function DesignSystem({ config }: { config: SiteConfig }) {
           <SelectExamples />
           <CardExamples />
           <SideNavExamples />
-          <HeaderExamples />
-          <FooterExamples />
+          <HeaderExamples config={config} />
+          <FooterExamples config={config} />
           <RepoCardExamples />
           <StandardsListExamples />
           <CatalogFilterExamples />
