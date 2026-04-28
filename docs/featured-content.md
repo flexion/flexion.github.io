@@ -13,26 +13,33 @@ This document thinks through how to present Flexion's featured projects — Form
 
 - The home page has a "Featured labs" section with a 3-column grid, but no repos are marked `featured: true` in `overrides.yml` yet — so it renders empty.
 - The work index already sorts featured repos first.
-- `document-extractor` exists in `repos.json`. `forms`, `messaging`, and `forms-lab` do **not** yet appear in the GitHub snapshot (they may be private or pending creation).
-- Rich content overlays already exist for `forms`, `messaging`, and `document-extractor` in `content/work/`.
+- `document-extractor` exists in `repos.json`. The others are in various stages of going public:
+  - `forms-lab` — now public (will appear in next refresh)
+  - `forms` — public access requested, pending
+  - `flexion-notify` — will be made public soon
+- Rich content overlays exist for `forms`, `messaging`, and `document-extractor` in `content/work/`.
+- **Naming mismatch:** The Notify repo is `flexion-notify` on GitHub, but the overlay is `content/work/messaging.md`. It needs to be renamed to `content/work/flexion-notify.md` for the merge logic to attach it.
 
 ## Data model gap
 
-The merge logic (`src/catalog/merge.ts`) only produces entries for repos present in `repos.json`. This means:
+The merge logic (`src/catalog/merge.ts`) only produces entries for repos present in `repos.json`. Overlay content for repos not yet in the snapshot is orphaned until they appear.
 
-- If `forms`, `messaging`, or `forms-lab` don't exist as public repos in the Flexion org, they can't appear on the site at all under the current pipeline.
-- Their overlay content is currently orphaned.
+### Resolution: Approach A (wait for public repos)
 
-### Options for handling missing repos
+All four repos are going public:
 
-| Approach | Pros | Cons |
-|----------|------|------|
-| **A. Create the public repos first, let refresh pick them up** | Zero code changes needed. Data model stays simple. Overlays immediately attach. | Requires the repos to actually exist and be public before the site can show them. |
-| **B. Add synthetic entries to `repos.json` by hand** | Quick unblock. | Breaks the invariant that `repos.json` is machine-generated and refreshed daily — hand-edits get overwritten. |
-| **C. Extend merge logic to create entries from overlays alone** | Allows content-first authoring (write the overlay, mark featured, even before the repo goes public). | Adds complexity. Synthetic entries lack GitHub metadata (stars, license, last push). Need sentinel values or nullable display logic. |
-| **D. Add a `data/manual-entries.yml` file for curated repos not yet in the org** | Separates concerns from `repos.json`. Supports a "coming soon" or "private-with-public-face" pattern cleanly. | Another data source to merge. Needs clear lifecycle (remove entry once repo goes public and refresh picks it up). |
+| Repo | Status | Action needed |
+|------|--------|---------------|
+| `document-extractor` | Already in snapshot | None |
+| `forms-lab` | Now public | Next daily refresh (or manual dispatch) picks it up |
+| `forms` | Public access requested | Wait for approval, then refresh picks it up |
+| `flexion-notify` | Will be made public soon | Wait, then refresh picks it up |
 
-**Recommendation:** Approach **A** is simplest if the repos will be public soon. If we need to ship the featured section before they go public, approach **D** gives the cleanest separation — a small, hand-authored file that explicitly owns synthetic entries and can be retired per-repo as they appear in the refresh pipeline.
+No code changes needed for the data pipeline. Once a repo is public, the 09:00 UTC refresh workflow adds it to `repos.json` automatically.
+
+### Content file rename needed
+
+The overlay at `content/work/messaging.md` must be renamed to `content/work/flexion-notify.md` to match the actual GitHub repo name. The merge logic joins on filename slug → repo name.
 
 ---
 
@@ -170,19 +177,20 @@ No dead ends. Featured content is always reachable from the catalog, and the cat
 
 ## Implementation sequence
 
-1. **Data:** Ensure repos exist in `repos.json` (wait for public repos) or implement approach D (manual entries).
-2. **Overrides:** Mark the four repos as `featured: true`, `tier: active`, `category: product` in `overrides.yml`.
-3. **Content:** Write `content/work/forms-lab.md`. Add `highlights` field to all four overlays.
-4. **Component:** Build `FeaturedCard` component (or extend `RepoCard` with a `variant` prop).
-5. **Home page:** Wire `FeaturedCard` into the existing `home-featured__grid`.
-6. **Work index:** Add section heading logic for featured cluster.
-7. **Stretch:** Add `related` field support and render cross-links on detail pages.
+1. **Rename:** `content/work/messaging.md` → `content/work/flexion-notify.md` (update title/summary to reflect repo name if needed).
+2. **Content:** Write `content/work/forms-lab.md`. Add `highlights` field to all four overlays.
+3. **Overrides:** Mark all four repos as `featured: true`, `tier: active`, `category: product` in `overrides.yml`.
+4. **Refresh:** Trigger manual catalog refresh (or wait for daily run) once repos are public, to populate `repos.json`.
+5. **Component:** Build `FeaturedCard` component (or extend `RepoCard` with a `variant` prop).
+6. **Home page:** Wire `FeaturedCard` into the existing `home-featured__grid`.
+7. **Work index:** Add section heading logic for featured cluster.
+8. **Stretch:** Add `related` field support and render cross-links on detail pages.
 
 ---
 
 ## Open questions
 
-1. Are `forms`, `messaging`, and `forms-lab` going to be public repos in the Flexion org? If not, which data approach (A–D) do we want?
+1. ~~Are the repos going to be public?~~ **Resolved** — yes, all going public. Approach A confirmed.
 2. What is Forms Lab's relationship to Forms — companion sandbox, docs site, or independent product?
 3. Should the featured section on the home page have its own heading/intro copy, or just the grid?
 4. Do we want a cap on featured projects (e.g., max 6) to protect the home page layout?
