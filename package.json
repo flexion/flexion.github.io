@@ -1,0 +1,23 @@
+{
+  "name": "flexion-labs-website",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run src/build/entry.tsx --watch",
+    "build": "bun run src/build/entry.tsx",
+    "test": "bun test",
+    "refresh:catalog": "bun run src/catalog/refresh.ts"
+  },
+  "dependencies": {
+    "hono": "^4.6.0",
+    "marked": "^14.0.0",
+    "yaml": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "happy-dom": "^15.0.0",
+    "axe-core": "^4.10.0",
+    "typescript": "^5.6.0"
+  }
+}

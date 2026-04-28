@@ -4,3 +4,4 @@ dist/
 .direnv/
 .DS_Store
 *.log
+bun.lock

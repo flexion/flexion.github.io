@@ -1,0 +1,54 @@
+import { describe, test, expect } from 'bun:test'
+import { renderToHtml } from '../../src/build/render'
+import { Tag } from '../../src/design/components/tag'
+import { RepoCard } from '../../src/design/components/repo-card'
+import { StandardsList } from '../../src/design/components/standards-list'
+import { fixtureCatalog, fixtureNow } from '../fixtures/catalog'
+import { evaluateRepo } from '../../src/catalog/repo-checks'
+
+describe('Tag', () => {
+  test('renders label with a data-variant attribute', async () => {
+    const html = await renderToHtml(<Tag variant="tier-active">Active</Tag>)
+    expect(html).toContain('class="tag"')
+    expect(html).toContain('data-variant="tier-active"')
+    expect(html).toContain('Active')
+  })
+})
+
+describe('RepoCard', () => {
+  const messaging = fixtureCatalog.find((e) => e.name === 'messaging')!
+
+  test('renders name, description, and category/tier badges', async () => {
+    const html = await renderToHtml(<RepoCard entry={messaging} basePath="/" />)
+    expect(html).toContain('messaging')
+    expect(html).toContain('Text-based communication')
+    expect(html).toContain('data-variant="tier-active"')
+    expect(html).toContain('data-variant="category-product"')
+  })
+
+  test('uses overlay.summary when present', async () => {
+    const html = await renderToHtml(<RepoCard entry={messaging} basePath="/" />)
+    expect(html).toContain('Text-based communication for critical updates.')
+  })
+
+  test('falls back to description when there is no overlay', async () => {
+    const forms = fixtureCatalog.find((e) => e.name === 'forms')!
+    const html = await renderToHtml(<RepoCard entry={forms} basePath="/" />)
+    expect(html).toContain('Accessible form experiences')
+  })
+
+  test('links to work/<slug>/', async () => {
+    const html = await renderToHtml(<RepoCard entry={messaging} basePath="/" />)
+    expect(html).toContain('href="/work/messaging/"')
+  })
+})
+
+describe('StandardsList', () => {
+  test('renders a list item per check with the result class', async () => {
+    const messaging = fixtureCatalog.find((e) => e.name === 'messaging')!
+    const evaluation = evaluateRepo(messaging, fixtureNow)
+    const html = await renderToHtml(<StandardsList evaluation={evaluation} />)
+    expect(html).toContain('standards-list__item--pass')
+    expect(html.match(/standards-list__item/g)!.length).toBe(5)
+  })
+})

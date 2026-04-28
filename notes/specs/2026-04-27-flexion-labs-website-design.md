@@ -150,11 +150,12 @@ type CatalogEntry = {
 
 ### 3.3 Defaults
 
-When `overrides.yml` has no entry for a repo, defaults are applied per field. Rules fire in order; a field set by an earlier rule is not overwritten:
+When `overrides.yml` has no entry for a repo, defaults are derived per field with `archived` taking precedence over `fork` for tier:
 
-1. `fork: true` → `category: 'fork'`, `tier: 'as-is'`
-2. `archived: true` (on GitHub) → `tier: 'archived'` (category may already be set from rule 1; if not, it stays `'uncategorized'`)
-3. No field set yet → `tier: 'unreviewed'`, `category: 'uncategorized'`
+- **Category**: `fork: true` → `'fork'`; otherwise `'uncategorized'`.
+- **Tier**: `archived: true` → `'archived'`; else `fork: true` → `'as-is'`; else `'unreviewed'`.
+
+Overrides always win over either rule.
 
 The "unreviewed" tier is publicly visible and honest — it says "a human has not yet classified this repo."
 

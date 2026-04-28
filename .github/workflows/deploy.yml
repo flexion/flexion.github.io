@@ -1,0 +1,167 @@
+name: Build, test, and deploy
+
+on:
+  push:
+    branches: ['**']
+  delete:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  deployments: write
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    if: github.event_name != 'delete'
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.meta.outputs.branch }}
+      base_path: ${{ steps.meta.outputs.base_path }}
+      is_production: ${{ steps.meta.outputs.is_production }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile || bun install
+
+      - name: Determine deploy metadata
+        id: meta
+        run: |
+          BRANCH="${GITHUB_REF_NAME}"
+          SANITIZED="$(echo "$BRANCH" | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')"
+          if [ "$BRANCH" = "main" ]; then
+            echo "base_path=/" >> "$GITHUB_OUTPUT"
+            echo "branch=main" >> "$GITHUB_OUTPUT"
+            echo "is_production=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "base_path=/preview/$SANITIZED/" >> "$GITHUB_OUTPUT"
+            echo "branch=$SANITIZED" >> "$GITHUB_OUTPUT"
+            echo "is_production=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run unit and component tests
+        run: bun test tests/catalog tests/standards tests/views tests/enhancements tests/build
+
+      - name: Build site
+        env:
+          SITE_BASE_URL: ${{ steps.meta.outputs.base_path }}
+        run: bun run build
+
+      - name: Run a11y tests against built site
+        run: bun test tests/a11y
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 3
+
+  publish:
+    if: github.event_name == 'push'
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ needs.build-and-test.outputs.is_production == 'true' && 'production' || 'preview' }}
+      url: ${{ needs.build-and-test.outputs.is_production == 'true' && 'https://labs.flexion.us/' || format('https://labs.flexion.us/preview/{0}/', needs.build-and-test.outputs.branch) }}
+    steps:
+      - name: Check out or bootstrap gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git init gh-pages-work
+          cd gh-pages-work
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git fetch --depth=1 origin gh-pages
+            git checkout -B gh-pages FETCH_HEAD
+          else
+            echo 'gh-pages branch missing — creating orphan.'
+            git checkout --orphan gh-pages
+            git reset --hard
+          fi
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Sync dist into gh-pages
+        run: |
+          set -euo pipefail
+          BASE_PATH="${{ needs.build-and-test.outputs.base_path }}"
+          cd gh-pages-work
+          if [ "$BASE_PATH" = "/" ]; then
+            find . -mindepth 1 -maxdepth 1 ! -name '.git' ! -name 'preview' -exec rm -rf {} +
+            cp -r ../dist/. ./
+          else
+            rel="${BASE_PATH#/}"
+            rel="${rel%/}"
+            rm -rf "$rel"
+            mkdir -p "$(dirname "$rel")"
+            cp -r ../dist "$rel"
+          fi
+          if [ ! -f CNAME ]; then
+            cp ../CNAME . 2>/dev/null || true
+          fi
+
+      - name: Commit and push gh-pages
+        working-directory: gh-pages-work
+        run: |
+          set -euo pipefail
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'No changes to publish.'
+            exit 0
+          fi
+          git commit -m "Deploy ${GITHUB_SHA::7} to ${{ needs.build-and-test.outputs.base_path }}"
+          git push origin gh-pages
+
+  cleanup-preview:
+    if: github.event_name == 'delete' && github.event.ref_type == 'branch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out gh-pages (skip if absent)
+        id: checkout
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git init .
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git fetch --depth=1 origin gh-pages
+            git checkout -B gh-pages FETCH_HEAD
+            echo 'exists=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'gh-pages branch does not exist — nothing to clean up.'
+            echo 'exists=false' >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Remove preview directory
+        if: steps.checkout.outputs.exists == 'true'
+        run: |
+          set -euo pipefail
+          SANITIZED="$(echo "${{ github.event.ref }}" | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')"
+          DIR="preview/$SANITIZED"
+          if [ -d "$DIR" ]; then
+            rm -rf "$DIR"
+            git add -A
+            git commit -m "Remove preview for deleted branch $SANITIZED"
+            git push origin gh-pages
+          fi
