@@ -1,4 +1,5 @@
 import { parse as parseYaml } from 'yaml'
+import { marked } from 'marked'
 import type { Overlay } from './types'
 
 const FRONTMATTER_RE = /^---\n([\s\S]*?)\n---\n?([\s\S]*)$/
@@ -20,7 +21,7 @@ export async function loadOverlay(path: string): Promise<Overlay | null> {
     summary: stringOrUndefined(frontMatter.summary),
     highlights: stringArrayOrUndefined(frontMatter.highlights),
     related: stringArrayOrUndefined(frontMatter.related),
-    body: body || undefined,
+    body: body ? (marked.parse(body, { async: false }) as string) : undefined,
   }
 }
 
