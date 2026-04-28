@@ -26,9 +26,9 @@ export function WorkIndex({
     <Layout title="Work" config={config}>
       <h1>Our work</h1>
       <p class="work-index__intro">
-        Every public repository Flexion maintains. Active projects are stewarded; as-is
-        projects are available without promised maintenance; archived projects are no
-        longer updated.
+        Flexion's public portfolio — tools we've built, prototypes we've shipped, and
+        open-source projects we actively contribute to. Use the filters to explore by
+        tier or category.
       </p>
       <catalog-filter>
         <form class="catalog-filter">
@@ -37,9 +37,9 @@ export function WorkIndex({
             <Select name="tier" label="Tier">
               <option value="">All</option>
               <option value="active">Active</option>
+              <option value="unreviewed">Unreviewed</option>
               <option value="as-is">As-is</option>
               <option value="archived">Archived</option>
-              <option value="unreviewed">Unreviewed</option>
             </Select>
             <Select name="category" label="Category">
               <option value="">All</option>
@@ -80,8 +80,8 @@ function defaultSort(a: CatalogEntry, b: CatalogEntry): number {
   if (a.featured !== b.featured) return a.featured ? -1 : 1
   const tierRank: Record<CatalogEntry['tier'], number> = {
     active: 0,
-    'as-is': 1,
-    unreviewed: 2,
+    unreviewed: 1,
+    'as-is': 2,
     archived: 3,
   }
   if (tierRank[a.tier] !== tierRank[b.tier]) return tierRank[a.tier] - tierRank[b.tier]
