@@ -4,6 +4,11 @@ export function getBasePath(raw: string | undefined): string {
   return `/${trimmed}/`
 }
 
+export function url(path: string, basePath: string): string {
+  const normalised = path.startsWith('/') ? path.slice(1) : path
+  return basePath + normalised
+}
+
 export type SiteConfig = {
   basePath: string
   buildTime: string

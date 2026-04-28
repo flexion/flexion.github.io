@@ -28,7 +28,7 @@ export function RepoCardExamples() {
       <h2>Repo card</h2>
       <p>Displays a repository with its name, description, tier and category tags. Links to the repo's detail page.</p>
       <div style="max-inline-size: 24rem;">
-        <RepoCard entry={example} />
+        <RepoCard entry={example} basePath="/" />
       </div>
     </section>
   )

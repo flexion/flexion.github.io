@@ -1,5 +1,6 @@
 import type { CatalogEntry } from '../../../catalog/types'
-import { Badge } from '../tag'
+import { Tag } from '../tag'
+import { url } from '../../../build/config'
 
 const TIER_LABEL: Record<CatalogEntry['tier'], string> = {
   active: 'Active',
@@ -17,9 +18,9 @@ const CATEGORY_LABEL: Record<CatalogEntry['category'], string> = {
   uncategorized: 'Uncategorized',
 }
 
-export function RepoCard({ entry }: { entry: CatalogEntry }) {
+export function RepoCard({ entry, basePath }: { entry: CatalogEntry; basePath: string }) {
+  const href = url(`/work/${entry.name}/`, basePath)
   const summary = entry.overlay?.summary ?? entry.description ?? ''
-  const href = `work/${entry.name}/`
   return (
     <article class="repo-card">
       <h3 class="repo-card__name">
@@ -27,10 +28,10 @@ export function RepoCard({ entry }: { entry: CatalogEntry }) {
       </h3>
       {summary ? <p class="repo-card__summary">{summary}</p> : null}
       <p class="repo-card__meta">
-        <Badge variant={`tier-${entry.tier}`}>{TIER_LABEL[entry.tier]}</Badge>{' '}
-        <Badge variant={`category-${entry.category}`}>
+        <Tag variant={`tier-${entry.tier}`}>{TIER_LABEL[entry.tier]}</Tag>{' '}
+        <Tag variant={`category-${entry.category}`}>
           {CATEGORY_LABEL[entry.category]}
-        </Badge>
+        </Tag>
       </p>
     </article>
   )

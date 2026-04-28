@@ -1,16 +1,19 @@
-export function Footer({ buildTime }: { buildTime: string }) {
+import { url } from '../../../build/config'
+import type { SiteConfig } from '../../../build/config'
+
+export function Footer({ config }: { config: SiteConfig }) {
   return (
     <footer class="site-footer">
       <nav aria-label="Footer">
         <ul>
-          <li><a href="work/">Work</a></li>
-          <li><a href="commitment/">Commitment</a></li>
-          <li><a href="about/">About</a></li>
-          <li><a href="design-system/">Design system</a></li>
+          <li><a href={url('/work/', config.basePath)}>Work</a></li>
+          <li><a href={url('/commitment/', config.basePath)}>Commitment</a></li>
+          <li><a href={url('/about/', config.basePath)}>About</a></li>
+          <li><a href={url('/design-system/', config.basePath)}>Design system</a></li>
         </ul>
       </nav>
       <p class="site-footer__meta">
-        Built {formatBuildTime(buildTime)}. Content licensed as noted per project.
+        Built {formatBuildTime(config.buildTime)}. Content licensed as noted per project.
       </p>
     </footer>
   )

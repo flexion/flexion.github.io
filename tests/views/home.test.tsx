@@ -40,8 +40,8 @@ describe('Home', () => {
     const html = await renderToHtml(
       <Home catalog={fixtureCatalog} hero={heroContent} config={config} />,
     )
-    expect(html).toContain('href="work/"')
-    expect(html).toContain('href="commitment/"')
-    expect(html).toContain('href="about/"')
+    expect(html).toContain('href="/work/"')
+    expect(html).toContain('href="/commitment/"')
+    expect(html).toContain('href="/about/"')
   })
 })

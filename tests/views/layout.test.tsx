@@ -38,12 +38,12 @@ describe('Layout', () => {
     expect(html).toMatch(/<title>Flexion Labs<\/title>/)
   })
 
-  test('emits a <base> tag with the basePath', async () => {
+  test('prefixes asset URLs with basePath', async () => {
     const html = await renderToHtml(
       <Layout title={null} config={{ basePath: '/preview/x/', buildTime: '2026-04-27T12:00:00Z' }}>
         <p />
       </Layout>,
     )
-    expect(html).toContain('<base href="/preview/x/"')
+    expect(html).toContain('href="/preview/x/design/index.css"')
   })
 })

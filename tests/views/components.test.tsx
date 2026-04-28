@@ -19,7 +19,7 @@ describe('RepoCard', () => {
   const messaging = fixtureCatalog.find((e) => e.name === 'messaging')!
 
   test('renders name, description, and category/tier badges', async () => {
-    const html = await renderToHtml(<RepoCard entry={messaging} />)
+    const html = await renderToHtml(<RepoCard entry={messaging} basePath="/" />)
     expect(html).toContain('messaging')
     expect(html).toContain('Text-based communication')
     expect(html).toContain('data-variant="tier-active"')
@@ -27,19 +27,19 @@ describe('RepoCard', () => {
   })
 
   test('uses overlay.summary when present', async () => {
-    const html = await renderToHtml(<RepoCard entry={messaging} />)
+    const html = await renderToHtml(<RepoCard entry={messaging} basePath="/" />)
     expect(html).toContain('Text-based communication for critical updates.')
   })
 
   test('falls back to description when there is no overlay', async () => {
     const forms = fixtureCatalog.find((e) => e.name === 'forms')!
-    const html = await renderToHtml(<RepoCard entry={forms} />)
+    const html = await renderToHtml(<RepoCard entry={forms} basePath="/" />)
     expect(html).toContain('Accessible form experiences')
   })
 
   test('links to work/<slug>/', async () => {
-    const html = await renderToHtml(<RepoCard entry={messaging} />)
-    expect(html).toContain('href="work/messaging/"')
+    const html = await renderToHtml(<RepoCard entry={messaging} basePath="/" />)
+    expect(html).toContain('href="/work/messaging/"')
   })
 })
 

@@ -15,6 +15,14 @@ import { CatalogFilterExamples } from '../design/components/catalog-filter/examp
 import { SortableTableExamples } from '../design/components/sortable-table/examples'
 import { CopyButtonExamples } from '../design/components/copy-button/examples'
 
+declare module 'hono/jsx' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'side-nav': { children?: any }
+    }
+  }
+}
+
 const NAV_ITEMS = [
   { href: '#tokens', label: 'Tokens' },
   { href: '#typography', label: 'Typography' },
@@ -41,15 +49,17 @@ export function DesignSystem({ config }: { config: SiteConfig }) {
       <p>Component library and design tokens for Flexion Labs. This page showcases every component available for building pages.</p>
 
       <div class="l-sidebar">
-        <nav class="side-nav" aria-label="Design system">
-          <ul class="side-nav__list">
-            {NAV_ITEMS.map(({ href, label }) => (
-              <li class="side-nav__item">
-                <a class="side-nav__link" href={href}>{label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <side-nav>
+          <nav class="side-nav" aria-label="Design system">
+            <ul class="side-nav__list">
+              {NAV_ITEMS.map(({ href, label }) => (
+                <li class="side-nav__item">
+                  <a class="side-nav__link" href={href}>{label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </side-nav>
 
         <div class="l-stack" data-space="xl">
           <TokensSection />

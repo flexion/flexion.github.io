@@ -1,6 +1,7 @@
 import { Layout } from '../design/common/layout'
 import { RepoCard } from '../design/components/repo-card'
 import type { Catalog } from '../catalog/types'
+import { url } from '../build/config'
 import type { SiteConfig } from '../build/config'
 
 export type HeroContent = { hero: string; intro: string }
@@ -32,7 +33,7 @@ export function Home({
         <h2 id="featured-heading">Featured labs</h2>
         <div class="home-featured__grid">
           {featured.map((entry) => (
-            <RepoCard entry={entry} />
+            <RepoCard entry={entry} basePath={config.basePath} />
           ))}
         </div>
       </section>
@@ -49,9 +50,9 @@ export function Home({
       <section class="home-paths" aria-labelledby="paths-heading">
         <h2 id="paths-heading">Where to next</h2>
         <ul>
-          <li><a href="work/">Explore our work</a></li>
-          <li><a href="commitment/">Read our open source commitment</a></li>
-          <li><a href="about/">Get in touch</a></li>
+          <li><a href={url('/work/', config.basePath)}>Explore our work</a></li>
+          <li><a href={url('/commitment/', config.basePath)}>Read our open source commitment</a></li>
+          <li><a href={url('/about/', config.basePath)}>Get in touch</a></li>
         </ul>
       </section>
     </Layout>
