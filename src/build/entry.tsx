@@ -73,6 +73,9 @@ export async function buildSite(options: BuildOptions): Promise<void> {
     sourcemap: 'linked',
   })
   await copyTree(join(rootDir, 'src', 'design', 'assets'), join(outDir, 'assets'))
+  if (config.basePath === '/') {
+    await copyFile(join(rootDir, 'CNAME'), join(outDir, 'CNAME'))
+  }
 }
 
 async function render(
