@@ -11,7 +11,7 @@ permissions:
   deployments: write
 
 concurrency:
-  group: deploy-${{ github.ref }}
+  group: deploy-${{ github.event_name == 'delete' && github.event.ref || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
