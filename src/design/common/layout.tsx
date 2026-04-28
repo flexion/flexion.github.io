@@ -21,7 +21,11 @@ export function Layout({
         <base href={config.basePath} />
         <title>{documentTitle}</title>
         <link rel="stylesheet" href="design/index.css" />
+        <link rel="icon" href="assets/favicon-32x32.png" sizes="32x32" type="image/png" />
+        <link rel="icon" href="assets/favicon-192x192.png" sizes="192x192" type="image/png" />
         <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+        <meta name="msapplication-TileImage" content="assets/mstile-270x270.png" />
         <script type="module" src="enhancements/register.js" defer></script>
       </head>
       <body>

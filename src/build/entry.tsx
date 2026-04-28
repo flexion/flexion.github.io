@@ -11,6 +11,7 @@ import { WorkDetail } from '../pages/work/detail'
 import { Health } from '../pages/work/health'
 import { Commitment } from '../pages/commitment'
 import { About } from '../pages/about'
+import { DesignSystem } from '../pages/design-system'
 import { SHOW_PER_REPO_FAILURES } from '../catalog/repo-checks'
 
 export type BuildOptions = {
@@ -101,6 +102,8 @@ async function render(
       return renderToHtml(<Commitment body={commitmentBody} config={config} />)
     case 'about':
       return renderToHtml(<About body={aboutBody} config={config} />)
+    case 'design-system':
+      return renderToHtml(<DesignSystem config={config} />)
     case 'work-detail': {
       const entry = catalog.find((e) => e.name === route.slug)!
       return renderToHtml(<WorkDetail entry={entry} now={now} config={config} />)

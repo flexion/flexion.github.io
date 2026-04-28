@@ -1,5 +1,7 @@
 import { Layout } from '../../design/common/layout'
+import { Button } from '../../design/components/button'
 import { RepoCard } from '../../design/components/repo-card'
+import { Select } from '../../design/components/select'
 import type { Catalog, CatalogEntry } from '../../catalog/types'
 import type { SiteConfig } from '../../build/config'
 
@@ -33,29 +35,23 @@ export function WorkIndex({
         <form class="catalog-filter" method="get">
           <fieldset>
             <legend>Filter</legend>
-            <label>
-              Tier
-              <select name="tier">
-                <option value="">All</option>
-                <option value="active">Active</option>
-                <option value="as-is">As-is</option>
-                <option value="archived">Archived</option>
-                <option value="unreviewed">Unreviewed</option>
-              </select>
-            </label>
-            <label>
-              Category
-              <select name="category">
-                <option value="">All</option>
-                <option value="product">Product</option>
-                <option value="tool">Tool</option>
-                <option value="workshop">Workshop</option>
-                <option value="prototype">Prototype</option>
-                <option value="fork">Fork</option>
-                <option value="uncategorized">Uncategorized</option>
-              </select>
-            </label>
-            <button type="submit">Apply</button>
+            <Select name="tier" label="Tier">
+              <option value="">All</option>
+              <option value="active">Active</option>
+              <option value="as-is">As-is</option>
+              <option value="archived">Archived</option>
+              <option value="unreviewed">Unreviewed</option>
+            </Select>
+            <Select name="category" label="Category">
+              <option value="">All</option>
+              <option value="product">Product</option>
+              <option value="tool">Tool</option>
+              <option value="workshop">Workshop</option>
+              <option value="prototype">Prototype</option>
+              <option value="fork">Fork</option>
+              <option value="uncategorized">Uncategorized</option>
+            </Select>
+            <Button type="submit">Apply</Button>
           </fieldset>
         </form>
         <ul class="work-index__list">

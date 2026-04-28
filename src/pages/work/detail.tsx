@@ -1,6 +1,7 @@
 import { raw } from 'hono/html'
 import { Layout } from '../../design/common/layout'
-import { Badge } from '../../design/components/tag'
+import { Link } from '../../design/components/link'
+import { Tag } from '../../design/components/tag'
 import { StandardsList } from '../../design/components/standards-list'
 import { evaluateRepo } from '../../catalog/repo-checks'
 import type { CatalogEntry } from '../../catalog/types'
@@ -24,15 +25,15 @@ export function WorkDetail({
         <header class="work-detail__header">
           <h1>{title}</h1>
           <p class="work-detail__badges">
-            <Badge variant={`tier-${entry.tier}`}>{entry.tier}</Badge>{' '}
-            <Badge variant={`category-${entry.category}`}>{entry.category}</Badge>
+            <Tag variant={`tier-${entry.tier}`}>{entry.tier}</Tag>{' '}
+            <Tag variant={`category-${entry.category}`}>{entry.category}</Tag>
           </p>
           <p class="work-detail__links">
-            <a href={entry.url} rel="noopener external">View on GitHub</a>
+            <Link href={entry.url} external>View on GitHub</Link>
             {entry.homepage ? (
               <>
                 {' · '}
-                <a href={entry.homepage} rel="noopener external">Homepage</a>
+                <Link href={entry.homepage} external>Homepage</Link>
               </>
             ) : null}
           </p>

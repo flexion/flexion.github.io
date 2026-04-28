@@ -6,6 +6,7 @@ export function Footer({ buildTime }: { buildTime: string }) {
           <li><a href="work/">Work</a></li>
           <li><a href="commitment/">Commitment</a></li>
           <li><a href="about/">About</a></li>
+          <li><a href="design-system/">Design system</a></li>
         </ul>
       </nav>
       <p class="site-footer__meta">

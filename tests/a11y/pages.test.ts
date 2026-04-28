@@ -11,6 +11,7 @@ const pages = [
   'work/health/index.html',
   'commitment/index.html',
   'about/index.html',
+  'design-system/index.html',
 ]
 
 describe('axe-core a11y scan', () => {

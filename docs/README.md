@@ -14,6 +14,6 @@ This directory explains how the site behaves and how to work in it. It is writte
 
 ## Working in this project
 
-- Source code lives under `src/` with three top-level concerns: `build/` (SSG tooling), `catalog/` (domain logic + stewardship evaluation), and `web/` (pages, components, styles, assets). Data and content stay at the repo root (`data/`, `content/`).
+- Source code lives under `src/` with four top-level concerns: `build/` (SSG tooling), `catalog/` (domain logic + stewardship evaluation), `design/` (the design system — all stateless UI components, CSS, assets), and `pages/` (route entrypoints). Data and content stay at the repo root (`data/`, `content/`). Each design component has its own directory with `index.tsx`, `styles.css`, and `examples.tsx`.
 - TDD is the norm. Pure logic (catalog, standards) is covered by unit tests; views have behavior tests against a shared fixture catalog; the build has a smoke test; a11y is scanned with axe-core.
 - Commits are small and focused. Every task in the implementation plan ends with one.

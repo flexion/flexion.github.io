@@ -1,16 +1,16 @@
 import { describe, test, expect } from 'bun:test'
 import { renderToHtml } from '../../src/build/render'
-import { Badge } from '../../src/design/components/tag'
+import { Tag } from '../../src/design/components/tag'
 import { RepoCard } from '../../src/design/components/repo-card'
 import { StandardsList } from '../../src/design/components/standards-list'
 import { fixtureCatalog, fixtureNow } from '../fixtures/catalog'
 import { evaluateRepo } from '../../src/catalog/repo-checks'
 
-describe('Badge', () => {
-  test('renders label and a class reflecting the variant', async () => {
-    const html = await renderToHtml(<Badge variant="tier-active">Active</Badge>)
-    expect(html).toContain('badge')
-    expect(html).toContain('badge--tier-active')
+describe('Tag', () => {
+  test('renders label with a data-variant attribute', async () => {
+    const html = await renderToHtml(<Tag variant="tier-active">Active</Tag>)
+    expect(html).toContain('class="tag"')
+    expect(html).toContain('data-variant="tier-active"')
     expect(html).toContain('Active')
   })
 })
@@ -22,8 +22,8 @@ describe('RepoCard', () => {
     const html = await renderToHtml(<RepoCard entry={messaging} />)
     expect(html).toContain('messaging')
     expect(html).toContain('Text-based communication')
-    expect(html).toContain('badge--tier-active')
-    expect(html).toContain('badge--category-product')
+    expect(html).toContain('data-variant="tier-active"')
+    expect(html).toContain('data-variant="category-product"')
   })
 
   test('uses overlay.summary when present', async () => {
