@@ -73,11 +73,24 @@ jobs:
       name: ${{ needs.build-and-test.outputs.is_production == 'true' && 'production' || 'preview' }}
       url: ${{ needs.build-and-test.outputs.is_production == 'true' && 'https://labs.flexion.us/' || format('https://labs.flexion.us/preview/{0}/', needs.build-and-test.outputs.branch) }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: gh-pages-work
-          fetch-depth: 0
+      - name: Check out or bootstrap gh-pages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git init gh-pages-work
+          cd gh-pages-work
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git fetch --depth=1 origin gh-pages
+            git checkout -B gh-pages FETCH_HEAD
+          else
+            echo 'gh-pages branch missing — creating orphan.'
+            git checkout --orphan gh-pages
+            git reset --hard
+          fi
 
       - uses: actions/download-artifact@v4
         with:
@@ -107,8 +120,6 @@ jobs:
         working-directory: gh-pages-work
         run: |
           set -euo pipefail
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add -A
           if git diff --cached --quiet; then
             echo 'No changes to publish.'
@@ -123,20 +134,33 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          fetch-depth: 0
+      - name: Check out gh-pages (skip if absent)
+        id: checkout
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git init .
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git ls-remote --exit-code --heads origin gh-pages >/dev/null 2>&1; then
+            git fetch --depth=1 origin gh-pages
+            git checkout -B gh-pages FETCH_HEAD
+            echo 'exists=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'gh-pages branch does not exist — nothing to clean up.'
+            echo 'exists=false' >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Remove preview directory
+        if: steps.checkout.outputs.exists == 'true'
         run: |
           set -euo pipefail
           SANITIZED="$(echo "${{ github.event.ref }}" | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')"
           DIR="preview/$SANITIZED"
           if [ -d "$DIR" ]; then
             rm -rf "$DIR"
-            git config user.name 'github-actions[bot]'
-            git config user.email 'github-actions[bot]@users.noreply.github.com'
             git add -A
             git commit -m "Remove preview for deleted branch $SANITIZED"
             git push origin gh-pages
