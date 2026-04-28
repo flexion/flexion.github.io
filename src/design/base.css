@@ -25,19 +25,25 @@
   p, ul, ol, dl, table {
     max-inline-size: var(--measure-prose);
   }
-  /* Restore list styling for prose content — nav/UI lists keep reset defaults */
-  :where(article, .content-page, .l-stack, section:not([class])) :where(ul) {
+  /* Restore list styling inside prose containers (markdown output) */
+  :where(article, .content-page) :where(ul) {
     padding-inline-start: 1.5em;
     margin-block-end: 1em;
     list-style: disc;
   }
-  :where(article, .content-page, .l-stack, section:not([class])) :where(ol) {
+  :where(article, .content-page) :where(ol) {
     padding-inline-start: 1.5em;
     margin-block-end: 1em;
     list-style: decimal;
   }
   :where(article, .content-page) :where(li + li) {
     margin-block-start: 0.25em;
+  }
+  /* Navigation lists never have bullets — overrides any container restoration */
+  nav ul, nav ol {
+    list-style: none;
+    padding-inline-start: 0;
+    margin-block-end: 0;
   }
   dt {
     font-weight: 600;
