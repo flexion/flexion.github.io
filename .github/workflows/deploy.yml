@@ -112,9 +112,6 @@ jobs:
             mkdir -p "$(dirname "$rel")"
             cp -r ../dist "$rel"
           fi
-          if [ ! -f CNAME ]; then
-            cp ../CNAME . 2>/dev/null || true
-          fi
 
       - name: Commit and push gh-pages
         working-directory: gh-pages-work
