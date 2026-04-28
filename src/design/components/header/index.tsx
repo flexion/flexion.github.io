@@ -6,7 +6,14 @@ export function Header({ config }: { config: SiteConfig }) {
   return (
     <header class="site-header">
       <a href={url('/', config.basePath)} class="site-brand">
-        Flexion Labs
+        <img
+          src={url('/assets/flexion_tornado.svg', config.basePath)}
+          alt=""
+          class="site-brand__logo"
+          width="38"
+          height="38"
+        />
+        <span>Flexion Labs</span>
       </a>
       <nav aria-label="Primary">
         <ul>
