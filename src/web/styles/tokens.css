@@ -36,6 +36,9 @@
     --color-tier-archived:   var(--color-midnight);
     --color-tier-unreviewed: var(--color-platinum);
 
+    /* ---------- Surface variants ---------- */
+    --color-surface-highlight: color-mix(in srgb, var(--color-sky) 15%, var(--color-snow));
+
     /* ---------- Status ---------- */
     --color-pass:  var(--color-lapis);
     --color-warn:  var(--color-tango);

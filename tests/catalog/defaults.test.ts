@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'bun:test'
-import { applyDefaults } from '../../catalog/defaults'
-import type { GithubSnapshotEntry } from '../../catalog/types'
+import { applyDefaults } from '../../src/catalog/defaults'
+import type { GithubSnapshotEntry } from '../../src/catalog/types'
 
 const base: GithubSnapshotEntry = {
   name: 'example',

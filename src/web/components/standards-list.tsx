@@ -1,4 +1,4 @@
-import type { RepoEvaluation } from '../../standards/repo-checks'
+import type { RepoEvaluation } from '../../catalog/repo-checks'
 
 const CHECKS: ReadonlyArray<{ key: keyof Omit<RepoEvaluation, 'overallPass'>; label: string }> = [
   { key: 'readme', label: 'README' },

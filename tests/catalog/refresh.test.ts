@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'bun:test'
-import { buildSnapshot } from '../../catalog/refresh'
+import { buildSnapshot } from '../../src/catalog/refresh'
 
 const apiRepo = (overrides: Record<string, unknown>) => ({
   name: 'example',

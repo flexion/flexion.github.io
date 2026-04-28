@@ -1,7 +1,7 @@
 import { raw } from 'hono/html'
 import { marked } from 'marked'
 import { Layout } from './layout'
-import type { SiteConfig } from '../build/config'
+import type { SiteConfig } from '../../build/config'
 
 export function ContentPage({
   title,

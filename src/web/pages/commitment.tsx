@@ -1,5 +1,5 @@
-import { ContentPage } from './content-page'
-import type { SiteConfig } from '../build/config'
+import { ContentPage } from '../common/content-page'
+import type { SiteConfig } from '../../build/config'
 
 export function Commitment({
   body,

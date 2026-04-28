@@ -1,8 +1,8 @@
 import type { Child } from 'hono/jsx'
-import { Header } from './components/header'
-import { Footer } from './components/footer'
-import { url } from '../build/config'
-import type { SiteConfig } from '../build/config'
+import { Header } from '../components/header'
+import { Footer } from '../components/footer'
+import { url } from '../../build/config'
+import type { SiteConfig } from '../../build/config'
 
 export function Layout({
   title,

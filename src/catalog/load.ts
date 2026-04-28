@@ -6,8 +6,8 @@ import { loadOverlay } from './overlays'
 import type { Catalog, GithubSnapshotEntry, OverrideEntry, Overlay } from './types'
 
 export async function loadCatalog(rootDir: string): Promise<Catalog> {
-  const snapshot = await readSnapshot(join(rootDir, 'catalog', 'repos.json'))
-  const overrides = await readOverrides(join(rootDir, 'catalog', 'overrides.yml'))
+  const snapshot = await readSnapshot(join(rootDir, 'data', 'repos.json'))
+  const overrides = await readOverrides(join(rootDir, 'data', 'overrides.yml'))
   const overlays = await readOverlays(join(rootDir, 'content', 'work'))
   return mergeCatalog(snapshot, overrides, overlays)
 }

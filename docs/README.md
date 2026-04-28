@@ -4,7 +4,7 @@ This directory explains how the site behaves and how to work in it. It is writte
 
 ## Structure
 
-- **`views/`** — one file per page describing its behavior as a "when/then" list that maps to the tests.
+- **`views/`** — one file per page describing its behavior; maps to `src/web/pages/` and `tests/views/`.
 - **`catalog.md`** — what the catalog is, how it's assembled, and how to change it.
 - **`content.md`** — how to author prose: hero, commitment, about, per-repo overlays.
 - **`stewardship.md`** — tier definitions and how the health checks are evaluated.
@@ -14,6 +14,6 @@ This directory explains how the site behaves and how to work in it. It is writte
 
 ## Working in this project
 
-- The top-level layout is intent-first: `catalog/`, `content/`, `standards/`, `views/`, `styles/`, `enhancements/`, `build/`. Framework concerns sit inside the tech directories, not at the root.
+- Source code lives under `src/` with three top-level concerns: `build/` (SSG tooling), `catalog/` (domain logic + stewardship evaluation), and `web/` (pages, components, styles, assets). Data and content stay at the repo root (`data/`, `content/`).
 - TDD is the norm. Pure logic (catalog, standards) is covered by unit tests; views have behavior tests against a shared fixture catalog; the build has a smoke test; a11y is scanned with axe-core.
 - Commits are small and focused. Every task in the implementation plan ends with one.

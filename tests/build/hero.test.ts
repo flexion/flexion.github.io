@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'bun:test'
-import { loadHero } from '../../build/hero'
+import { loadHero } from '../../src/build/hero'
 import { writeFileSync, mkdtempSync, mkdirSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'

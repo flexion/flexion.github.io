@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'bun:test'
-import { mergeCatalog } from '../../catalog/merge'
-import type { GithubSnapshotEntry, OverrideEntry, Overlay } from '../../catalog/types'
+import { mergeCatalog } from '../../src/catalog/merge'
+import type { GithubSnapshotEntry, OverrideEntry, Overlay } from '../../src/catalog/types'
 
 const snapshot: GithubSnapshotEntry = {
   name: 'messaging',

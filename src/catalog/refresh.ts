@@ -84,7 +84,7 @@ export async function writeSnapshot(
   rootDir: string,
   snapshot: GithubSnapshotEntry[],
 ): Promise<void> {
-  const path = join(rootDir, 'catalog', 'repos.json')
+  const path = join(rootDir, 'data', 'repos.json')
   const sorted = [...snapshot].sort((a, b) => a.name.localeCompare(b.name))
   await writeFile(path, JSON.stringify(sorted, null, 2) + '\n', 'utf8')
 }
@@ -100,5 +100,5 @@ if (import.meta.main) {
   }
   const snapshot = await buildSnapshot({ org, fetch, fileCheck, token })
   await writeSnapshot(process.cwd(), snapshot)
-  console.log(`Wrote ${snapshot.length} entries to catalog/repos.json`)
+  console.log(`Wrote ${snapshot.length} entries to data/repos.json`)
 }

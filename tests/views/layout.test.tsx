@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'bun:test'
-import { Layout } from '../../views/layout'
-import { renderToHtml } from '../../build/render'
+import { Layout } from '../../src/web/common/layout'
+import { renderToHtml } from '../../src/build/render'
 
 const config = { basePath: '/', buildTime: '2026-04-27T12:00:00Z' }
 

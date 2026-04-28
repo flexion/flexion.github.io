@@ -9,7 +9,7 @@ Transparency surface. Publicly reports how each repo measures up to Flexion's st
 - `catalog` — the merged catalog.
 - `now` — current time, for the activity check.
 - `config` — base path, build time.
-- `showPerRepo` — `SHOW_PER_REPO_FAILURES` from `standards/repo-checks.ts`.
+- `showPerRepo` — `SHOW_PER_REPO_FAILURES` from `src/catalog/repo-checks.ts`.
 
 ## Behavior
 

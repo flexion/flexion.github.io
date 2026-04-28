@@ -1,7 +1,7 @@
-import { Layout } from '../layout'
-import { RepoCard } from '../components/repo-card'
-import type { Catalog, CatalogEntry } from '../../catalog/types'
-import type { SiteConfig } from '../../build/config'
+import { Layout } from '../../common/layout'
+import { RepoCard } from '../../components/repo-card'
+import type { Catalog, CatalogEntry } from '../../../catalog/types'
+import type { SiteConfig } from '../../../build/config'
 
 declare module 'hono/jsx' {
   namespace JSX {

@@ -1,7 +1,7 @@
-import { Layout } from '../layout'
-import { evaluateRepo, type CheckResult, type RepoEvaluation } from '../../standards/repo-checks'
-import type { Catalog } from '../../catalog/types'
-import type { SiteConfig } from '../../build/config'
+import { Layout } from '../../common/layout'
+import { evaluateRepo, type CheckResult, type RepoEvaluation } from '../../../catalog/repo-checks'
+import type { Catalog } from '../../../catalog/types'
+import type { SiteConfig } from '../../../build/config'
 
 declare module 'hono/jsx' {
   namespace JSX {

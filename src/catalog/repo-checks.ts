@@ -1,4 +1,4 @@
-import type { CatalogEntry } from '../catalog/types'
+import type { CatalogEntry } from './types'
 
 export type CheckResult = 'pass' | 'warn' | 'fail'
 

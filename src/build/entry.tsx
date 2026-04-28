@@ -5,13 +5,13 @@ import { createConfig, getBasePath } from './config'
 import { loadCatalog } from '../catalog/load'
 import { loadHero } from './hero'
 import { allRoutes } from './routes'
-import { Home } from '../views/home'
-import { WorkIndex } from '../views/work/index'
-import { WorkDetail } from '../views/work/detail'
-import { Health } from '../views/work/health'
-import { Commitment } from '../views/commitment'
-import { About } from '../views/about'
-import { SHOW_PER_REPO_FAILURES } from '../standards/repo-checks'
+import { Home } from '../web/pages/home'
+import { WorkIndex } from '../web/pages/work/index'
+import { WorkDetail } from '../web/pages/work/detail'
+import { Health } from '../web/pages/work/health'
+import { Commitment } from '../web/pages/commitment'
+import { About } from '../web/pages/about'
+import { SHOW_PER_REPO_FAILURES } from '../catalog/repo-checks'
 
 export type BuildOptions = {
   rootDir: string
@@ -62,16 +62,16 @@ export async function buildSite(options: BuildOptions): Promise<void> {
     await writeFile(outPath, html, 'utf8')
   }
 
-  await copyTree(join(rootDir, 'styles'), join(outDir, 'styles'))
+  await copyTree(join(rootDir, 'src', 'web', 'styles'), join(outDir, 'styles'))
   await Bun.build({
-    entrypoints: [join(rootDir, 'enhancements', 'register.ts')],
+    entrypoints: [join(rootDir, 'src', 'web', 'components', 'register.ts')],
     outdir: join(outDir, 'enhancements'),
     target: 'browser',
     naming: '[name].js',
     minify: true,
     sourcemap: 'linked',
   })
-  await copyTree(join(rootDir, 'assets'), join(outDir, 'assets'))
+  await copyTree(join(rootDir, 'src', 'web', 'assets'), join(outDir, 'assets'))
 }
 
 async function render(

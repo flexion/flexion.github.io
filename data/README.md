@@ -9,7 +9,7 @@ The catalog is the inventory of Flexion's open source work. It drives every view
 
 ## Fields
 
-See `types.ts` for the canonical type. The fields that humans set are described in `docs/catalog.md`.
+See `src/catalog/types.ts` for the canonical type. The fields that humans set are described in `docs/catalog.md`.
 
 ## Refresh cadence
 

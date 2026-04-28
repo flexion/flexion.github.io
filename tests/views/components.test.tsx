@@ -1,10 +1,10 @@
 import { describe, test, expect } from 'bun:test'
-import { renderToHtml } from '../../build/render'
-import { Badge } from '../../views/components/badge'
-import { RepoCard } from '../../views/components/repo-card'
-import { StandardsList } from '../../views/components/standards-list'
+import { renderToHtml } from '../../src/build/render'
+import { Badge } from '../../src/web/components/badge'
+import { RepoCard } from '../../src/web/components/repo-card'
+import { StandardsList } from '../../src/web/components/standards-list'
 import { fixtureCatalog, fixtureNow } from '../fixtures/catalog'
-import { evaluateRepo } from '../../standards/repo-checks'
+import { evaluateRepo } from '../../src/catalog/repo-checks'
 
 describe('Badge', () => {
   test('renders label and a class reflecting the variant', async () => {

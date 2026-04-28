@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "bun run build/entry.tsx --watch",
-    "build": "bun run build/entry.tsx",
+    "dev": "bun run src/build/entry.tsx --watch",
+    "build": "bun run src/build/entry.tsx",
     "test": "bun test",
-    "refresh:catalog": "bun run catalog/refresh.ts"
+    "refresh:catalog": "bun run src/catalog/refresh.ts"
   },
   "dependencies": {
     "hono": "^4.6.0",

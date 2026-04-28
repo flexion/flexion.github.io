@@ -1,5 +1,5 @@
 import { describe, test, expect, beforeAll } from 'bun:test'
-import { buildSite } from '../../build/entry.tsx'
+import { buildSite } from '../../src/build/entry.tsx'
 import { mkdtempSync, readFileSync, existsSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'

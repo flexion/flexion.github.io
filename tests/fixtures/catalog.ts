@@ -1,4 +1,4 @@
-import type { Catalog, CatalogEntry } from '../../catalog/types'
+import type { Catalog, CatalogEntry } from '../../src/catalog/types'
 
 function entry(overrides: Partial<CatalogEntry>): CatalogEntry {
   return {

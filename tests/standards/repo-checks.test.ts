@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'bun:test'
-import { evaluateRepo } from '../../standards/repo-checks'
-import type { CatalogEntry } from '../../catalog/types'
+import { evaluateRepo } from '../../src/catalog/repo-checks'
+import type { CatalogEntry } from '../../src/catalog/types'
 
 const NOW = new Date('2026-04-27T00:00:00Z')
 

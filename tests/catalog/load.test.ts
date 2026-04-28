@@ -1,15 +1,15 @@
 import { describe, test, expect } from 'bun:test'
-import { loadCatalog } from '../../catalog/load'
+import { loadCatalog } from '../../src/catalog/load'
 import { mkdtempSync, writeFileSync, mkdirSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
 function seed() {
   const dir = mkdtempSync(join(tmpdir(), 'flexion-labs-'))
-  mkdirSync(join(dir, 'catalog'), { recursive: true })
+  mkdirSync(join(dir, 'data'), { recursive: true })
   mkdirSync(join(dir, 'content', 'work'), { recursive: true })
   writeFileSync(
-    join(dir, 'catalog', 'repos.json'),
+    join(dir, 'data', 'repos.json'),
     JSON.stringify([
       {
         name: 'messaging',
@@ -29,7 +29,7 @@ function seed() {
     ]),
   )
   writeFileSync(
-    join(dir, 'catalog', 'overrides.yml'),
+    join(dir, 'data', 'overrides.yml'),
     'messaging:\n  tier: active\n  category: product\n  featured: true\n',
   )
   writeFileSync(

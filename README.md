@@ -4,13 +4,17 @@ Source for [labs.flexion.us](https://labs.flexion.us/) — a public-facing site 
 
 ## Layout
 
-- `catalog/` — the inventory of our open source work (a generated snapshot plus hand-authored overrides).
+- `src/` — all source code:
+  - `src/build/` — the Bun + Hono SSG build driver.
+  - `src/catalog/` — catalog domain logic: types, loading, merging, stewardship evaluation, refresh script.
+  - `src/web/` — everything the visitor sees:
+    - `src/web/common/` — shared templates (layout shell, content page).
+    - `src/web/pages/` — route entrypoints (one file per URL path).
+    - `src/web/components/` — reusable UI: JSX components and HTML Web Components.
+    - `src/web/styles/` — hand-rolled CSS with cascade layers and design tokens.
+    - `src/web/assets/` — static files (favicon).
+- `data/` — catalog data: generated snapshot (`repos.json`) and hand-authored overrides (`overrides.yml`).
 - `content/` — the words we publish, as markdown.
-- `standards/` — the stewardship rules the health report evaluates.
-- `views/` — the pages visitors see, rendered at build time.
-- `styles/` — hand-rolled CSS with cascade layers and design tokens.
-- `enhancements/` — HTML Web Components that decorate rendered HTML.
-- `build/` — the Bun + Hono build driver.
 - `docs/` — durable behavioral documentation for contributors and agents.
 - `notes/` — ephemeral planning and specs.
 

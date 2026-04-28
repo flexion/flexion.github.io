@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'bun:test'
-import { getBasePath, url } from '../../build/config'
+import { getBasePath, url } from '../../src/build/config'
 
 describe('build config', () => {
   test('base path defaults to /', () => {

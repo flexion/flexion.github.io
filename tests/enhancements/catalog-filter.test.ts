@@ -9,8 +9,8 @@ beforeEach(async () => {
   ;(globalThis as any).document = window.document
   ;(globalThis as any).HTMLElement = window.HTMLElement
   ;(globalThis as any).customElements = window.customElements
-  delete require.cache[require.resolve('../../enhancements/catalog-filter.ts')]
-  await import('../../enhancements/catalog-filter.ts')
+  delete require.cache[require.resolve('../../src/web/components/catalog-filter.ts')]
+  await import('../../src/web/components/catalog-filter.ts')
 })
 
 describe('<catalog-filter>', () => {

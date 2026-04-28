@@ -11,7 +11,7 @@ The site reports, publicly, how each repo measures up to Flexion's stewardship s
 
 ## Checks
 
-Defined in `standards/repo-checks.ts`. Every public repo is evaluated against:
+Defined in `src/catalog/repo-checks.ts`. Every public repo is evaluated against:
 
 1. **README** — `README.md` at the root.
 2. **License** — a detectable license (GitHub's license field or a LICENSE file).
@@ -21,4 +21,4 @@ Defined in `standards/repo-checks.ts`. Every public repo is evaluated against:
 
 ## Hiding per-repo failures
 
-Before launch, leadership may decide to show aggregate counts only. Set `SHOW_PER_REPO_FAILURES` to `false` in `standards/repo-checks.ts` and redeploy; the health view will hide the per-repo table and display a short aggregate instead.
+Before launch, leadership may decide to show aggregate counts only. Set `SHOW_PER_REPO_FAILURES` to `false` in `src/catalog/repo-checks.ts` and redeploy; the health view will hide the per-repo table and display a short aggregate instead.

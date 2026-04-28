@@ -31,7 +31,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          if git diff --quiet catalog/repos.json; then
+          if git diff --quiet data/repos.json; then
             echo 'No changes; nothing to do.'
             exit 0
           fi
@@ -40,7 +40,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git checkout -B "$BRANCH"
-          git add catalog/repos.json
+          git add data/repos.json
           git commit -m "chore(catalog): refresh snapshot $DATE"
           git push --force-with-lease origin "$BRANCH"
           if ! gh pr view "$BRANCH" >/dev/null 2>&1; then

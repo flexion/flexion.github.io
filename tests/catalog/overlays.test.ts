@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'bun:test'
-import { loadOverlay } from '../../catalog/overlays'
+import { loadOverlay } from '../../src/catalog/overlays'
 
 describe('loadOverlay', () => {
   test('parses front-matter and body from a markdown file', async () => {
