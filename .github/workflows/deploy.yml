@@ -131,7 +131,6 @@ jobs:
     permissions:
       contents: write
       deployments: write
-      administration: write
     steps:
       - name: Check out gh-pages (skip if absent)
         id: checkout
@@ -196,23 +195,3 @@ jobs:
             fi
           done
 
-      - name: Delete preview environment
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -euo pipefail
-          SANITIZED="$(echo "${{ github.event.ref }}" | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')"
-          ENV_NAME="preview/$SANITIZED"
-          # URL-encode the forward slash.
-          ENCODED="$(printf %s "$ENV_NAME" | sed 's|/|%2F|g')"
-          echo "Deleting environment $ENV_NAME (encoded: $ENCODED)."
-          if output=$(gh api \
-            --method DELETE \
-            -H 'Accept: application/vnd.github+json' \
-            "/repos/${GITHUB_REPOSITORY}/environments/${ENCODED}" 2>&1); then
-            echo "Deleted environment $ENV_NAME."
-          elif [[ "$output" == *"Not Found"* ]] || [[ "$output" == *"HTTP 404"* ]]; then
-            echo "Environment $ENV_NAME already absent."
-          else
-            echo "::warning::Failed to delete environment $ENV_NAME: $output"
-          fi

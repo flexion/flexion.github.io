@@ -26,10 +26,11 @@ The site is hosted on GitHub Pages with a custom domain.
 
 Concurrency is keyed on the acted-on branch name, not `github.ref`. A `delete` event against `feat/foo` and a `push` to `main` run in different concurrency groups, so a branch cleanup cannot cancel a production deploy.
 
-When a branch is deleted, the `cleanup-preview` job runs and does three things:
+When a branch is deleted, the `cleanup-preview` job runs and does two things:
 - Removes `preview/<sanitized-branch>/` from `gh-pages`.
-- Marks every deployment in the `preview/<sanitized-branch>` environment as `inactive`.
-- Deletes the per-branch environment via the REST API so it drops out of the Deployments sidebar.
+- Marks every deployment in the `preview/<sanitized-branch>` environment as `inactive` so the GitHub UI stops showing them as live.
+
+The environment entry itself persists in the Deployments sidebar. Deleting environments requires repo-admin rights that `GITHUB_TOKEN` cannot be granted via `permissions:`; that step would need a PAT-backed secret and has been deferred.
 
 ## Custom domain
 
