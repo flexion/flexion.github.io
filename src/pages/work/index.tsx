@@ -31,7 +31,7 @@ export function WorkIndex({
         longer updated.
       </p>
       <catalog-filter>
-        <form class="catalog-filter" method="get">
+        <form class="catalog-filter">
           <fieldset>
             <legend>Filter</legend>
             <Select name="tier" label="Tier">
