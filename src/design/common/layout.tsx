@@ -25,6 +25,7 @@ export function Layout({
         <link rel="icon" href={url('/assets/favicon-192x192.png', config.basePath)} sizes="192x192" type="image/png" />
         <link rel="apple-touch-icon" href={url('/assets/apple-touch-icon.png', config.basePath)} />
         <meta name="msapplication-TileImage" content={url('/assets/mstile-270x270.png', config.basePath)} />
+        <script>{`document.documentElement.classList.add('js')`}</script>
         <script type="module" src={url('/enhancements/register.js', config.basePath)} defer></script>
       </head>
       <body>

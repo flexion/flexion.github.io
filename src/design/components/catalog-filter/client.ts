@@ -1,5 +1,6 @@
 class CatalogFilter extends HTMLElement {
   connectedCallback() {
+    this.querySelector<HTMLElement>('[type="submit"]')?.setAttribute('hidden', '')
     this.addEventListener('change', this.apply)
     this.addEventListener('submit', this.preventAndApply)
   }

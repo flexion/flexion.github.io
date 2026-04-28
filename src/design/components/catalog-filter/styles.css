@@ -1,7 +1,13 @@
 catalog-filter { display: block; }
 
+/* Hidden until JS confirms it can do something useful */
 .catalog-filter {
+  display: none;
   margin-block-end: var(--space-5);
+}
+
+.js .catalog-filter {
+  display: block;
 }
 
 .catalog-filter fieldset {
