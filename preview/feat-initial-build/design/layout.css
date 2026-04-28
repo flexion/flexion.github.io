@@ -32,12 +32,6 @@
     display: flex;
     gap: var(--space-5);
   }
-  .site-brand {
-    font-weight: 700;
-    font-size: var(--step-1);
-    text-decoration: none;
-    color: var(--color-accent);
-  }
   .site-footer {
     inline-size: 100%;
     max-inline-size: none;
