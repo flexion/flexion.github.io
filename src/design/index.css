@@ -13,6 +13,7 @@
 @import url("./components/header/styles.css") layer(components);
 @import url("./components/footer/styles.css") layer(components);
 @import url("./components/repo-card/styles.css") layer(components);
+@import url("./components/featured-card/styles.css") layer(components);
 @import url("./components/standards-list/styles.css") layer(components);
 @import url("./components/catalog-filter/styles.css") layer(components);
 @import url("./components/sortable-table/styles.css") layer(components);

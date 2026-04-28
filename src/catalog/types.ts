@@ -34,6 +34,8 @@ export type OverrideEntry = {
 export type Overlay = {
   title?: string
   summary?: string
+  highlights?: string[]
+  related?: string[]
   body?: string
 }
 

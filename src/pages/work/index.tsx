@@ -53,10 +53,22 @@ export function WorkIndex({
           </fieldset>
         </form>
         <ul class="work-index__list">
-          {sorted.map((entry) => (
-            <li data-tier={entry.tier} data-category={entry.category}>
-              <RepoCard entry={entry} basePath={config.basePath} />
-            </li>
+          {sorted.map((entry, i) => (
+            <>
+              {entry.featured && i === 0 ? (
+                <li class="work-index__section-heading" data-featured="true" role="presentation" aria-hidden="true">
+                  <h2>Featured</h2>
+                </li>
+              ) : null}
+              {!entry.featured && (i === 0 || sorted[i - 1].featured) ? (
+                <li class="work-index__section-heading" role="presentation" aria-hidden="true">
+                  <h2>All projects</h2>
+                </li>
+              ) : null}
+              <li data-tier={entry.tier} data-category={entry.category} data-featured={entry.featured ? 'true' : undefined}>
+                <RepoCard entry={entry} basePath={config.basePath} />
+              </li>
+            </>
           ))}
         </ul>
       </catalog-filter>

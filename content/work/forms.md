@@ -1,6 +1,12 @@
 ---
 title: Forms
 summary: Accessible, USWDS-aligned form experiences that work for every resident and every agency.
+highlights:
+  - WCAG 2.1 AA conformant
+  - Multi-step with save and resume
+  - Agency-agnostic, works with any back-end
+related:
+  - forms-lab
 ---
 
 ## What it solves

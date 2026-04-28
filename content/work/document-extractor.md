@@ -1,6 +1,10 @@
 ---
 title: Document Extractor
 summary: Turn PDFs and images of forms into structured data — without vendor lock-in.
+highlights:
+  - Scanned PDFs, photos, and faxes
+  - Open alternative to commercial OCR
+  - Deploy, audit, and extend in-house
 ---
 
 ## What it solves

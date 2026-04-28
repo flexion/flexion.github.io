@@ -18,10 +18,18 @@ export async function loadOverlay(path: string): Promise<Overlay | null> {
   return {
     title: stringOrUndefined(frontMatter.title),
     summary: stringOrUndefined(frontMatter.summary),
+    highlights: stringArrayOrUndefined(frontMatter.highlights),
+    related: stringArrayOrUndefined(frontMatter.related),
     body: body || undefined,
   }
 }
 
 function stringOrUndefined(value: unknown): string | undefined {
   return typeof value === 'string' ? value : undefined
+}
+
+function stringArrayOrUndefined(value: unknown): string[] | undefined {
+  if (!Array.isArray(value)) return undefined
+  const strings = value.filter((v): v is string => typeof v === 'string')
+  return strings.length > 0 ? strings : undefined
 }
