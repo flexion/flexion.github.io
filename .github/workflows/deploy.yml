@@ -70,7 +70,7 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     environment:
-      name: ${{ needs.build-and-test.outputs.is_production == 'true' && 'production' || 'preview' }}
+      name: ${{ needs.build-and-test.outputs.is_production == 'true' && 'production' || format('preview/{0}', needs.build-and-test.outputs.branch) }}
       url: ${{ needs.build-and-test.outputs.is_production == 'true' && 'https://labs.flexion.us/' || format('https://labs.flexion.us/preview/{0}/', needs.build-and-test.outputs.branch) }}
     steps:
       - name: Check out or bootstrap gh-pages
