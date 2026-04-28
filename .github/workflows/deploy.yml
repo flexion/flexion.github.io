@@ -11,7 +11,7 @@ permissions:
   deployments: write
 
 concurrency:
-  group: deploy-${{ github.ref }}
+  group: deploy-${{ github.event_name == 'delete' && github.event.ref || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
@@ -66,11 +66,11 @@ jobs:
           retention-days: 3
 
   publish:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     needs: build-and-test
     runs-on: ubuntu-latest
     environment:
-      name: ${{ needs.build-and-test.outputs.is_production == 'true' && 'production' || 'preview' }}
+      name: ${{ needs.build-and-test.outputs.is_production == 'true' && 'production' || format('preview/{0}', needs.build-and-test.outputs.branch) }}
       url: ${{ needs.build-and-test.outputs.is_production == 'true' && 'https://labs.flexion.us/' || format('https://labs.flexion.us/preview/{0}/', needs.build-and-test.outputs.branch) }}
     steps:
       - name: Check out or bootstrap gh-pages
@@ -112,9 +112,6 @@ jobs:
             mkdir -p "$(dirname "$rel")"
             cp -r ../dist "$rel"
           fi
-          if [ ! -f CNAME ]; then
-            cp ../CNAME . 2>/dev/null || true
-          fi
 
       - name: Commit and push gh-pages
         working-directory: gh-pages-work
@@ -133,6 +130,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      deployments: write
     steps:
       - name: Check out gh-pages (skip if absent)
         id: checkout
@@ -165,3 +163,35 @@ jobs:
             git commit -m "Remove preview for deleted branch $SANITIZED"
             git push origin gh-pages
           fi
+
+      - name: Deactivate preview deployments for the deleted branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          SANITIZED="$(echo "${{ github.event.ref }}" | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')"
+          ENV_NAME="preview/$SANITIZED"
+          # List all deployments for this environment. Paginate to be safe.
+          deployment_ids="$(gh api \
+            --method GET \
+            -H 'Accept: application/vnd.github+json' \
+            "/repos/${GITHUB_REPOSITORY}/deployments?environment=${ENV_NAME}&per_page=100" \
+            --paginate \
+            --jq '.[].id' || true)"
+          if [ -z "$deployment_ids" ]; then
+            echo "No deployments found for environment $ENV_NAME."
+            exit 0
+          fi
+          echo "$deployment_ids" | while read -r id; do
+            [ -z "$id" ] && continue
+            echo "Marking deployment $id inactive."
+            if ! output=$(gh api \
+              --method POST \
+              -H 'Accept: application/vnd.github+json' \
+              "/repos/${GITHUB_REPOSITORY}/deployments/${id}/statuses" \
+              -f state=inactive \
+              -f description='Branch deleted; preview removed.' 2>&1); then
+              echo "::warning::Failed to mark deployment $id inactive: $output"
+            fi
+          done
+
