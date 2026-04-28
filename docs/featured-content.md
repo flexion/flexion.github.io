@@ -105,7 +105,7 @@ Featured repos get a subtle highlight (accent border, background tint) but stay 
 
 Each featured repo already gets a full detail page from the existing `WorkDetail` template. No structural change needed there. But consider:
 
-- **Cross-linking between featured projects.** If Forms and Forms Lab are related, a "Related projects" section at the bottom of each detail page would help visitors discover the family. This can be driven by a `related: [forms-lab]` field in the overlay front-matter.
+- **Cross-linking between related projects.** Forms and Forms Lab should cross-link on their detail pages via a "Related projects" section. Driven by a `related: [forms-lab]` field in overlay front-matter. This is low-cost and makes the relationship explicit without conflating the two.
 - **"Back to featured" breadcrumb vs. "Back to all work."** Since featured repos are *part of* the catalog, the breadcrumb should go to `/work/` (the full index), not to a separate featured page. This reinforces the "same collection" principle.
 
 ---
@@ -128,15 +128,20 @@ Each featured overlay should communicate:
 
 ---
 
-## What "Forms Lab" is relative to "Forms"
+## Forms and Forms Lab: linked but separate
 
-This needs clarification for content purposes:
+Forms and Forms Lab are **separate featured items** — each gets its own card, detail page, and overlay. But they should be visibly linked so visitors understand the relationship.
 
-- If Forms Lab is an **experimental playground** (try components, submit designs), it should be positioned as a companion/sandbox — "where agencies experiment before committing to Forms."
-- If it's a **documentation/demo site**, it's more of a resource than a product — maybe not "featured" on its own but linked from the Forms detail page.
-- If it's a **separate product** (different use case, different audience), it deserves its own full overlay with distinct positioning.
+### How to surface the link
 
-The layout accommodates any of these — the question is purely content/positioning.
+| Mechanism | Where it appears | Effort |
+|-----------|-----------------|--------|
+| **`related` field in overlay front-matter** | Detail page — "Related projects" section at bottom | New field + render logic |
+| **Explicit mention in body copy** | Detail page body (e.g. "See also [Forms Lab](/work/forms-lab/)") | Zero code, just content |
+| **Shared "family" tag or badge** | Cards and detail pages | New taxonomy concept — probably overkill |
+| **Adjacent placement in featured grid** | Home page | Just ordering, no code |
+
+**Recommendation:** Use the `related` front-matter field (planned for stretch anyway) to cross-link them on detail pages, and place them adjacent in the featured grid on the home page. The body copy can also reference the sibling naturally. This gives multiple touchpoints without introducing new taxonomy.
 
 ---
 
@@ -178,20 +183,20 @@ No dead ends. Featured content is always reachable from the catalog, and the cat
 ## Implementation sequence
 
 1. **Rename:** `content/work/messaging.md` → `content/work/flexion-notify.md` (update title/summary to reflect repo name if needed).
-2. **Content:** Write `content/work/forms-lab.md`. Add `highlights` field to all four overlays.
+2. **Content:** Write `content/work/forms-lab.md`. Add `highlights` field to all four overlays. Add `related` field to Forms and Forms Lab overlays.
 3. **Overrides:** Mark all four repos as `featured: true`, `tier: active`, `category: product` in `overrides.yml`.
 4. **Refresh:** Trigger manual catalog refresh (or wait for daily run) once repos are public, to populate `repos.json`.
 5. **Component:** Build `FeaturedCard` component (or extend `RepoCard` with a `variant` prop).
-6. **Home page:** Wire `FeaturedCard` into the existing `home-featured__grid`.
+6. **Home page:** Wire `FeaturedCard` into the existing `home-featured__grid`. Place Forms and Forms Lab adjacent.
 7. **Work index:** Add section heading logic for featured cluster.
-8. **Stretch:** Add `related` field support and render cross-links on detail pages.
+8. **Related projects:** Add `related` field support to overlay front-matter and render cross-links on detail pages (needed for Forms ↔ Forms Lab link).
 
 ---
 
 ## Open questions
 
 1. ~~Are the repos going to be public?~~ **Resolved** — yes, all going public. Approach A confirmed.
-2. What is Forms Lab's relationship to Forms — companion sandbox, docs site, or independent product?
+2. ~~Forms Lab's relationship to Forms?~~ **Resolved** — separate featured items, but linked visibly (cross-links on detail pages, adjacent in grid).
 3. Should the featured section on the home page have its own heading/intro copy, or just the grid?
 4. Do we want a cap on featured projects (e.g., max 6) to protect the home page layout?
 5. For the `highlights` field — should these be auto-derived from the overlay body, or always hand-authored?
