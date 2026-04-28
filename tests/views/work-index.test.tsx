@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'bun:test'
 import { renderToHtml } from '../../src/build/render'
-import { WorkIndex } from '../../src/web/pages/work/index'
+import { WorkIndex } from '../../src/pages/work/index'
 import { fixtureCatalog } from '../fixtures/catalog'
 
 const config = { basePath: '/', buildTime: '2026-04-27T12:00:00Z' }

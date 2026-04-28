@@ -9,8 +9,8 @@ beforeEach(async () => {
   ;(globalThis as any).document = window.document
   ;(globalThis as any).HTMLElement = window.HTMLElement
   ;(globalThis as any).customElements = window.customElements
-  delete require.cache[require.resolve('../../src/web/components/sortable-table.ts')]
-  await import('../../src/web/components/sortable-table.ts')
+  delete require.cache[require.resolve('../../src/design/components/sortable-table/client.ts')]
+  await import('../../src/design/components/sortable-table/client.ts')
 })
 
 describe('<sortable-table>', () => {

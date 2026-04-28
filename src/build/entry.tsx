@@ -5,12 +5,12 @@ import { createConfig, getBasePath } from './config'
 import { loadCatalog } from '../catalog/load'
 import { loadHero } from './hero'
 import { allRoutes } from './routes'
-import { Home } from '../web/pages/home'
-import { WorkIndex } from '../web/pages/work/index'
-import { WorkDetail } from '../web/pages/work/detail'
-import { Health } from '../web/pages/work/health'
-import { Commitment } from '../web/pages/commitment'
-import { About } from '../web/pages/about'
+import { Home } from '../pages/home'
+import { WorkIndex } from '../pages/work/index'
+import { WorkDetail } from '../pages/work/detail'
+import { Health } from '../pages/work/health'
+import { Commitment } from '../pages/commitment'
+import { About } from '../pages/about'
 import { SHOW_PER_REPO_FAILURES } from '../catalog/repo-checks'
 
 export type BuildOptions = {
@@ -62,16 +62,16 @@ export async function buildSite(options: BuildOptions): Promise<void> {
     await writeFile(outPath, html, 'utf8')
   }
 
-  await copyTree(join(rootDir, 'src', 'web', 'styles'), join(outDir, 'styles'))
+  await copyCssTree(join(rootDir, 'src', 'design'), join(outDir, 'design'))
   await Bun.build({
-    entrypoints: [join(rootDir, 'src', 'web', 'components', 'register.ts')],
+    entrypoints: [join(rootDir, 'src', 'design', 'register.ts')],
     outdir: join(outDir, 'enhancements'),
     target: 'browser',
     naming: '[name].js',
     minify: true,
     sourcemap: 'linked',
   })
-  await copyTree(join(rootDir, 'src', 'web', 'assets'), join(outDir, 'assets'))
+  await copyTree(join(rootDir, 'src', 'design', 'assets'), join(outDir, 'assets'))
 }
 
 async function render(
@@ -111,6 +111,26 @@ async function render(
 async function loadContentBody(path: string): Promise<string> {
   const raw = await Bun.file(path).text()
   return raw.replace(/^---\n[\s\S]*?\n---\n?/, '').trim()
+}
+
+async function copyCssTree(src: string, dst: string): Promise<void> {
+  let entries: string[]
+  try {
+    entries = await readdir(src)
+  } catch {
+    return
+  }
+  await mkdir(dst, { recursive: true })
+  for (const entry of entries) {
+    const from = join(src, entry)
+    const to = join(dst, entry)
+    const info = await stat(from)
+    if (info.isDirectory()) {
+      await copyCssTree(from, to)
+    } else if (entry.endsWith('.css')) {
+      await copyFile(from, to)
+    }
+  }
 }
 
 async function copyTree(src: string, dst: string): Promise<void> {

@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'bun:test'
 import { renderToHtml } from '../../src/build/render'
-import { ContentPage } from '../../src/web/common/content-page'
+import { ContentPage } from '../../src/design/common/content-page'
 
 const config = { basePath: '/', buildTime: '2026-04-27T12:00:00Z' }
 

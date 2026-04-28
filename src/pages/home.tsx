@@ -1,7 +1,7 @@
-import { Layout } from '../common/layout'
-import { RepoCard } from '../components/repo-card'
-import type { Catalog } from '../../catalog/types'
-import type { SiteConfig } from '../../build/config'
+import { Layout } from '../design/common/layout'
+import { RepoCard } from '../design/components/repo-card'
+import type { Catalog } from '../catalog/types'
+import type { SiteConfig } from '../build/config'
 
 export type HeroContent = { hero: string; intro: string }
 

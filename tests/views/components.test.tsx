@@ -1,8 +1,8 @@
 import { describe, test, expect } from 'bun:test'
 import { renderToHtml } from '../../src/build/render'
-import { Badge } from '../../src/web/components/badge'
-import { RepoCard } from '../../src/web/components/repo-card'
-import { StandardsList } from '../../src/web/components/standards-list'
+import { Badge } from '../../src/design/components/tag'
+import { RepoCard } from '../../src/design/components/repo-card'
+import { StandardsList } from '../../src/design/components/standards-list'
 import { fixtureCatalog, fixtureNow } from '../fixtures/catalog'
 import { evaluateRepo } from '../../src/catalog/repo-checks'
 

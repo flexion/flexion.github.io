@@ -1,6 +1,6 @@
 import { parse as parseYaml } from 'yaml'
 import { join } from 'node:path'
-import type { HeroContent } from '../web/pages/home'
+import type { HeroContent } from '../pages/home'
 
 const FRONTMATTER_RE = /^---\n([\s\S]*?)\n---/
 

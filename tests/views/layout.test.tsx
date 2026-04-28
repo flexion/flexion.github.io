@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'bun:test'
-import { Layout } from '../../src/web/common/layout'
+import { Layout } from '../../src/design/common/layout'
 import { renderToHtml } from '../../src/build/render'
 
 const config = { basePath: '/', buildTime: '2026-04-27T12:00:00Z' }

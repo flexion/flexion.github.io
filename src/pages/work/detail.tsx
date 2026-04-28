@@ -1,10 +1,10 @@
 import { raw } from 'hono/html'
-import { Layout } from '../../common/layout'
-import { Badge } from '../../components/badge'
-import { StandardsList } from '../../components/standards-list'
-import { evaluateRepo } from '../../../catalog/repo-checks'
-import type { CatalogEntry } from '../../../catalog/types'
-import type { SiteConfig } from '../../../build/config'
+import { Layout } from '../../design/common/layout'
+import { Badge } from '../../design/components/tag'
+import { StandardsList } from '../../design/components/standards-list'
+import { evaluateRepo } from '../../catalog/repo-checks'
+import type { CatalogEntry } from '../../catalog/types'
+import type { SiteConfig } from '../../build/config'
 
 export function WorkDetail({
   entry,

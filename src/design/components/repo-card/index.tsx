@@ -1,5 +1,5 @@
-import type { CatalogEntry } from '../../catalog/types'
-import { Badge } from './badge'
+import type { CatalogEntry } from '../../../catalog/types'
+import { Badge } from '../tag'
 
 const TIER_LABEL: Record<CatalogEntry['tier'], string> = {
   active: 'Active',

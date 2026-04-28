@@ -10,8 +10,8 @@ beforeEach(async () => {
   ;(globalThis as any).HTMLElement = window.HTMLElement
   ;(globalThis as any).customElements = window.customElements
   ;(globalThis as any).navigator = window.navigator
-  delete require.cache[require.resolve('../../src/web/components/copy-button.ts')]
-  await import('../../src/web/components/copy-button.ts')
+  delete require.cache[require.resolve('../../src/design/components/copy-button/client.ts')]
+  await import('../../src/design/components/copy-button/client.ts')
 })
 
 describe('<copy-button>', () => {

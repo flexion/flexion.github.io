@@ -20,7 +20,7 @@ export function Layout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <base href={config.basePath} />
         <title>{documentTitle}</title>
-        <link rel="stylesheet" href="styles/index.css" />
+        <link rel="stylesheet" href="design/index.css" />
         <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
         <script type="module" src="enhancements/register.js" defer></script>
       </head>
