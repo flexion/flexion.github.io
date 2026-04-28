@@ -61,7 +61,7 @@ export function WorkIndex({
         <ul class="work-index__list">
           {sorted.map((entry) => (
             <li data-tier={entry.tier} data-category={entry.category}>
-              <RepoCard entry={entry} basePath={config.basePath} />
+              <RepoCard entry={entry} />
             </li>
           ))}
         </ul>

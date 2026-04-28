@@ -1,22 +1,19 @@
-import { url } from '../../build/config'
-import type { SiteConfig } from '../../build/config'
-
-export function Header({ config }: { config: SiteConfig }) {
+export function Header() {
   return (
     <header class="site-header">
-      <a href={url('/', config.basePath)} class="site-brand">
+      <a href="./" class="site-brand">
         Flexion Labs
       </a>
       <nav aria-label="Primary">
         <ul>
           <li>
-            <a href={url('/work/', config.basePath)}>Work</a>
+            <a href="work/">Work</a>
           </li>
           <li>
-            <a href={url('/commitment/', config.basePath)}>Commitment</a>
+            <a href="commitment/">Commitment</a>
           </li>
           <li>
-            <a href={url('/about/', config.basePath)}>About</a>
+            <a href="about/">About</a>
           </li>
           <li>
             <a href="https://github.com/flexion" rel="noopener external">

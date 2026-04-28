@@ -39,7 +39,7 @@ describe('WorkIndex', () => {
     const order = ['messaging', 'forms', 'document-extractor']
     let last = -1
     for (const name of order) {
-      const idx = html.indexOf(`href="/work/${name}/"`)
+      const idx = html.indexOf(`href="work/${name}/"`)
       expect(idx).toBeGreaterThan(last)
       last = idx
     }

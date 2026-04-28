@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ needs.build-and-test.outputs.is_production == 'true' && 'production' || 'preview' }}
-      url: ${{ needs.build-and-test.outputs.is_production == 'true' && 'https://labs.flexion.us/' || format('https://labs.flexion.us/preview/{0}/', needs.build-and-test.outputs.branch) }}
+      url: ${{ needs.build-and-test.outputs.is_production == 'true' && format('https://{0}.github.io/', github.repository_owner) || format('https://{0}.github.io/preview/{1}/', github.repository_owner, needs.build-and-test.outputs.branch) }}
     steps:
       - name: Check out or bootstrap gh-pages
         env:
@@ -112,9 +112,7 @@ jobs:
             mkdir -p "$(dirname "$rel")"
             cp -r ../dist "$rel"
           fi
-          if [ ! -f CNAME ]; then
-            cp ../CNAME . 2>/dev/null || echo 'labs.flexion.us' > CNAME
-          fi
+          # When a custom domain is configured, add a CNAME file here
 
       - name: Commit and push gh-pages
         working-directory: gh-pages-work
