@@ -1,0 +1,101 @@
+@layer components {
+  /* ---------- Badge ---------- */
+  .badge {
+    display: inline-block;
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-sm);
+    font-size: var(--step--1);
+    font-weight: 600;
+    background: var(--color-surface-alt);
+    color: var(--color-ink);
+  }
+  .badge--tier-active     { background: var(--color-tier-active); color: var(--color-snow); }
+  .badge--tier-as-is      { background: var(--color-tier-as-is); color: var(--color-snow); }
+  .badge--tier-archived   { background: var(--color-tier-archived); color: var(--color-snow); }
+  .badge--tier-unreviewed { background: var(--color-tier-unreviewed); color: var(--color-ink); }
+  .badge--category-product      { background: var(--color-sky); color: var(--color-midnight); }
+  .badge--category-tool         { background: var(--color-lilac); color: var(--color-midnight); }
+  .badge--category-workshop     { background: var(--color-butter); color: var(--color-midnight); }
+  .badge--category-prototype    { background: var(--color-melon); color: var(--color-midnight); }
+  .badge--category-fork         { background: var(--color-surface-alt); color: var(--color-ink-subtle); }
+  .badge--category-uncategorized{ background: var(--color-surface-alt); color: var(--color-ink-subtle); }
+  .badge--pass { background: var(--color-pass); color: var(--color-snow); }
+  .badge--warn { background: var(--color-warn); color: var(--color-snow); }
+  .badge--fail { background: var(--color-fail); color: var(--color-snow); }
+
+  /* ---------- Repo card ---------- */
+  .repo-card {
+    padding: var(--space-5);
+    border: 1px solid var(--color-surface-alt);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-card);
+    display: grid;
+    gap: var(--space-3);
+  }
+  .repo-card__name { font-size: var(--step-1); }
+  .repo-card__name a { text-decoration: none; }
+  .repo-card__name a:hover { text-decoration: underline; }
+  .repo-card__summary { color: var(--color-ink-subtle); }
+  .repo-card__meta { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+  /* ---------- Standards list ---------- */
+  .standards-list { display: grid; gap: var(--space-2); }
+  .standards-list__item--pass,
+  .standards-list__item--warn,
+  .standards-list__item--fail {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    border-inline-start: 3px solid var(--color-surface-alt);
+  }
+  .standards-list__item--pass { border-inline-start-color: var(--color-pass); }
+  .standards-list__item--warn { border-inline-start-color: var(--color-warn); }
+  .standards-list__item--fail { border-inline-start-color: var(--color-fail); }
+
+  /* ---------- Health table ---------- */
+  .health-table {
+    inline-size: 100%;
+    max-inline-size: none;
+    border-collapse: collapse;
+  }
+  .health-table th, .health-table td {
+    text-align: start;
+    padding: var(--space-2) var(--space-3);
+    border-block-end: 1px solid var(--color-surface-alt);
+  }
+  .health-cell--pass { color: var(--color-pass); }
+  .health-cell--warn { color: var(--color-warn); }
+  .health-cell--fail { color: var(--color-fail); }
+
+  /* ---------- Catalog filter ---------- */
+  catalog-filter { display: block; }
+  .catalog-filter {
+    margin-block-end: var(--space-5);
+  }
+  .catalog-filter fieldset {
+    border: 1px solid var(--color-surface-alt);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    align-items: end;
+  }
+  .catalog-filter label {
+    display: grid;
+    gap: var(--space-1);
+    font-size: var(--step--1);
+    font-weight: 600;
+  }
+
+  /* ---------- Content page ---------- */
+  .content-page { display: grid; gap: var(--space-4); }
+  .content-page h2 { margin-block-start: var(--space-6); }
+  .content-page h3 { margin-block-start: var(--space-5); }
+
+  /* ---------- Copy button ---------- */
+  copy-button { display: inline-block; }
+  copy-button:not(:defined) button { display: none; }
+}
