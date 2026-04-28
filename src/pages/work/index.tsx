@@ -1,5 +1,4 @@
 import { Layout } from '../../design/common/layout'
-import { Button } from '../../design/components/button'
 import { RepoCard } from '../../design/components/repo-card'
 import { Select } from '../../design/components/select'
 import type { Catalog, CatalogEntry } from '../../catalog/types'
@@ -51,7 +50,6 @@ export function WorkIndex({
               <option value="fork">Fork</option>
               <option value="uncategorized">Uncategorized</option>
             </Select>
-            <Button type="submit">Apply</Button>
           </fieldset>
         </form>
         <ul class="work-index__list">
