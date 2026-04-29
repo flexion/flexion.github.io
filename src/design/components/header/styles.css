@@ -12,3 +12,18 @@
   inline-size: auto;
   display: block;
 }
+.mobile-nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: var(--space-2);
+  cursor: pointer;
+  color: var(--color-ink);
+  border-radius: var(--radius-sm);
+}
+.mobile-nav-toggle:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
