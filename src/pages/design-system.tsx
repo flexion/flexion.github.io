@@ -125,12 +125,12 @@ function TypographySection() {
   return (
     <section id="typography">
       <h2>Typography</h2>
-      <p>System font stack with a major-third (1.25) fluid type scale. Line height 1.5 for body, 1.15 for headings.</p>
+      <p>Figtree for headings, Inter for body text, with a major-third (1.25) fluid type scale. Line height 1.5 for body, 1.15 for headings.</p>
       <div class="l-stack">
-        <div><span style="font-size: var(--step-4); font-weight: 700; line-height: 1.15;">Step 4 — Page title</span></div>
-        <div><span style="font-size: var(--step-3); font-weight: 700; line-height: 1.15;">Step 3 — Section heading</span></div>
-        <div><span style="font-size: var(--step-2); font-weight: 700; line-height: 1.15;">Step 2 — Subsection</span></div>
-        <div><span style="font-size: var(--step-1); font-weight: 700; line-height: 1.15;">Step 1 — Card title</span></div>
+        <div><span style="font-family: var(--font-display); font-size: var(--step-4); font-weight: 700; line-height: 1.15;">Step 4 — Page title</span></div>
+        <div><span style="font-family: var(--font-display); font-size: var(--step-3); font-weight: 700; line-height: 1.15;">Step 3 — Section heading</span></div>
+        <div><span style="font-family: var(--font-display); font-size: var(--step-2); font-weight: 700; line-height: 1.15;">Step 2 — Subsection</span></div>
+        <div><span style="font-family: var(--font-display); font-size: var(--step-1); font-weight: 700; line-height: 1.15;">Step 1 — Card title</span></div>
         <div><span style="font-size: var(--step-0);">Step 0 — Body text</span></div>
         <div><span style="font-size: var(--step--1);">Step −1 — Small text, labels</span></div>
       </div>

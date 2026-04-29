@@ -1,16 +1,28 @@
 import { Layout } from '../../design/common/layout'
-import { RepoCard } from '../../design/components/repo-card'
-import { Select } from '../../design/components/select'
+import { FeaturedCard } from '../../design/components/featured-card'
+import { Tag } from '../../design/components/tag'
 import type { Catalog, CatalogEntry } from '../../catalog/types'
+import { url } from '../../build/config'
 import type { SiteConfig } from '../../build/config'
 
 declare module 'hono/jsx' {
   namespace JSX {
     interface IntrinsicElements {
-      'catalog-filter': { children?: any }
+      'side-nav': { children?: any }
     }
   }
 }
+
+const CATEGORY_LABEL: Record<CatalogEntry['category'], string> = {
+  product: 'Product',
+  tool: 'Tool',
+  workshop: 'Workshop',
+  prototype: 'Prototype',
+  fork: 'Fork',
+  uncategorized: 'Uncategorized',
+}
+
+type Section = { id: string; label: string; entries: CatalogEntry[]; featured?: boolean }
 
 export function WorkIndex({
   catalog,
@@ -20,70 +32,86 @@ export function WorkIndex({
   config: SiteConfig
 }) {
   const visible = catalog.filter((e) => !e.hidden)
-  const sorted = [...visible].sort(defaultSort)
+  const featured = visible.filter((e) => e.featured)
+  const rest = visible.filter((e) => !e.featured)
+
+  const sections: Section[] = [
+    ...(featured.length > 0 ? [{ id: 'featured', label: 'Featured', entries: featured, featured: true }] : []),
+    { id: 'active', label: 'Active', entries: rest.filter((e) => e.tier === 'active') },
+    { id: 'available', label: 'Available', entries: rest.filter((e) => e.tier === 'unreviewed' || e.tier === 'as-is') },
+    { id: 'archived', label: 'Archived', entries: rest.filter((e) => e.tier === 'archived') },
+  ].filter((s) => s.entries.length > 0)
+
+  // Sort non-featured entries within each section by pushedAt descending
+  for (const section of sections) {
+    if (!section.featured) {
+      section.entries.sort((a, b) => b.pushedAt.localeCompare(a.pushedAt))
+    }
+  }
+
+  const navItems = sections.map((s) => ({
+    href: `#${s.id}`,
+    label: s.featured ? s.label : `${s.label} (${s.entries.length})`,
+  }))
 
   return (
     <Layout title="Work" config={config}>
       <h1>Our work</h1>
       <p class="work-index__intro">
-        Every public repository Flexion maintains. Active projects are stewarded; as-is
-        projects are available without promised maintenance; archived projects are no
-        longer updated.
+        Flexion's public portfolio — tools we've built, prototypes we've shipped, and
+        open-source projects we actively contribute to. See our{' '}
+        <a href={url('/work/health/', config.basePath)}>stewardship scorecard</a> for
+        how each repo measures up.
       </p>
-      <catalog-filter>
-        <form class="catalog-filter">
-          <fieldset>
-            <legend>Filter</legend>
-            <Select name="tier" label="Tier">
-              <option value="">All</option>
-              <option value="active">Active</option>
-              <option value="as-is">As-is</option>
-              <option value="archived">Archived</option>
-              <option value="unreviewed">Unreviewed</option>
-            </Select>
-            <Select name="category" label="Category">
-              <option value="">All</option>
-              <option value="product">Product</option>
-              <option value="tool">Tool</option>
-              <option value="workshop">Workshop</option>
-              <option value="prototype">Prototype</option>
-              <option value="fork">Fork</option>
-              <option value="uncategorized">Uncategorized</option>
-            </Select>
-          </fieldset>
-        </form>
-        <ul class="work-index__list">
-          {sorted.map((entry, i) => (
-            <>
-              {entry.featured && i === 0 ? (
-                <li class="work-index__section-heading" data-featured="true" role="presentation" aria-hidden="true">
-                  <h2>Featured</h2>
+
+      <div class="l-sidebar">
+        <side-nav>
+          <nav class="side-nav" aria-label="Work sections">
+            <ul class="side-nav__list">
+              {navItems.map(({ href, label }) => (
+                <li class="side-nav__item">
+                  <a class="side-nav__link" href={href}>{label}</a>
                 </li>
-              ) : null}
-              {!entry.featured && (i === 0 || sorted[i - 1].featured) ? (
-                <li class="work-index__section-heading" role="presentation" aria-hidden="true">
-                  <h2>All projects</h2>
-                </li>
-              ) : null}
-              <li data-tier={entry.tier} data-category={entry.category} data-featured={entry.featured ? 'true' : undefined}>
-                <RepoCard entry={entry} basePath={config.basePath} />
-              </li>
-            </>
+              ))}
+            </ul>
+          </nav>
+        </side-nav>
+
+        <div class="l-stack" data-space="xl">
+          {sections.map((section) => (
+            <section id={section.id} aria-labelledby={`${section.id}-heading`}>
+              <h2 id={`${section.id}-heading`}>{section.label}</h2>
+              {section.featured ? (
+                <div class="work-index__featured-grid">
+                  {section.entries.map((entry) => (
+                    <FeaturedCard entry={entry} basePath={config.basePath} />
+                  ))}
+                </div>
+              ) : (
+                <ul class="work-list">
+                  {section.entries.map((entry) => (
+                    <li class="work-list__item">
+                      <div class="work-list__header">
+                        <a class="work-list__name" href={url(`/work/${entry.name}/`, config.basePath)}>
+                          {entry.name}
+                        </a>
+                        <Tag variant={`category-${entry.category}`}>
+                          {CATEGORY_LABEL[entry.category]}
+                        </Tag>
+                      </div>
+                      {entry.overlay?.summary || entry.description ? (
+                        <p class="work-list__desc">
+                          {entry.overlay?.summary ?? entry.description}
+                        </p>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
           ))}
-        </ul>
-      </catalog-filter>
+        </div>
+      </div>
     </Layout>
   )
-}
-
-function defaultSort(a: CatalogEntry, b: CatalogEntry): number {
-  if (a.featured !== b.featured) return a.featured ? -1 : 1
-  const tierRank: Record<CatalogEntry['tier'], number> = {
-    active: 0,
-    'as-is': 1,
-    unreviewed: 2,
-    archived: 3,
-  }
-  if (tierRank[a.tier] !== tierRank[b.tier]) return tierRank[a.tier] - tierRank[b.tier]
-  return b.pushedAt.localeCompare(a.pushedAt)
 }

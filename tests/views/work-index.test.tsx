@@ -6,13 +6,15 @@ import { fixtureCatalog } from '../fixtures/catalog'
 const config = { basePath: '/', buildTime: '2026-04-27T12:00:00Z' }
 
 describe('WorkIndex', () => {
-  test('renders a row for every non-hidden repo', async () => {
+  test('renders featured repos in a featured section', async () => {
     const html = await renderToHtml(
       <WorkIndex catalog={fixtureCatalog} config={config} />,
     )
-    for (const entry of fixtureCatalog) {
-      expect(html).toContain(entry.name)
-    }
+    expect(html).toContain('id="featured"')
+    expect(html).toContain('featured-card')
+    expect(html).toContain('messaging')
+    expect(html).toContain('forms')
+    expect(html).toContain('document-extractor')
   })
 
   test('omits hidden repos', async () => {
@@ -22,26 +24,32 @@ describe('WorkIndex', () => {
     const html = await renderToHtml(
       <WorkIndex catalog={catalog} config={config} />,
     )
-    expect(html).not.toContain('messaging')
+    expect(html).not.toContain('href="/work/messaging/"')
   })
 
-  test('wraps the list in a <catalog-filter> web component', async () => {
+  test('renders a side-nav with section links', async () => {
     const html = await renderToHtml(
       <WorkIndex catalog={fixtureCatalog} config={config} />,
     )
-    expect(html).toContain('<catalog-filter')
+    expect(html).toContain('<side-nav')
+    expect(html).toContain('class="side-nav"')
   })
 
-  test('applies the default sort: featured first, then active, then by pushedAt desc', async () => {
+  test('groups non-featured repos into tier sections', async () => {
     const html = await renderToHtml(
       <WorkIndex catalog={fixtureCatalog} config={config} />,
     )
-    const order = ['messaging', 'forms', 'document-extractor']
-    let last = -1
-    for (const name of order) {
-      const idx = html.indexOf(`href="/work/${name}/"`)
-      expect(idx).toBeGreaterThan(last)
-      last = idx
-    }
+    expect(html).toContain('id="available"')
+    expect(html).toContain('id="archived"')
+    expect(html).toContain('fork-of-thing')
+    expect(html).toContain('archived-thing')
+  })
+
+  test('renders compact list items with name and category', async () => {
+    const html = await renderToHtml(
+      <WorkIndex catalog={fixtureCatalog} config={config} />,
+    )
+    expect(html).toContain('class="work-list__name"')
+    expect(html).toContain('class="work-list__desc"')
   })
 })

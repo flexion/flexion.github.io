@@ -1,7 +1,6 @@
 import { Layout } from '../design/common/layout'
 import { FeaturedCard } from '../design/components/featured-card'
 import type { Catalog } from '../catalog/types'
-import { url } from '../build/config'
 import type { SiteConfig } from '../build/config'
 
 export type HeroContent = { hero: string; intro: string }
@@ -50,21 +49,11 @@ export function Home({
         </div>
       </section>
 
-      <section class="home-stats" aria-labelledby="stats-heading">
-        <h2 id="stats-heading">By the numbers</h2>
+      <section class="home-stats">
         <ul class="home-stats__grid">
           <li><strong>{visible.length}</strong> public projects</li>
           <li><strong>{active}</strong> actively maintained</li>
           <li><strong>{languages}</strong> languages</li>
-        </ul>
-      </section>
-
-      <section class="home-paths" aria-labelledby="paths-heading">
-        <h2 id="paths-heading">Where to next</h2>
-        <ul>
-          <li><a href={url('/work/', config.basePath)}>Explore our work</a></li>
-          <li><a href={url('/commitment/', config.basePath)}>Read our open source commitment</a></li>
-          <li><a href={url('/about/', config.basePath)}>Get in touch</a></li>
         </ul>
       </section>
     </Layout>
