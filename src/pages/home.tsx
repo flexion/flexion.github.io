@@ -37,8 +37,8 @@ export function Home({
       </section>
 
       <section class="home-featured" aria-labelledby="featured-heading">
-        <h2 id="featured-heading">Featured labs</h2>
-        <div class="home-featured__grid">
+        <h2 id="featured-heading">Featured</h2>
+        <div class="home-featured__list">
           {featured.map((entry) => (
             <FeaturedCard entry={entry} basePath={config.basePath} />
           ))}
