@@ -14,26 +14,36 @@ export function FeaturedCard({ entry, basePath }: { entry: CatalogEntry; basePat
   const summary = entry.overlay?.summary ?? entry.description ?? ''
   const highlights = entry.overlay?.highlights
   const excerpt = entry.overlay?.body ? firstParagraph(entry.overlay.body) : null
+  const image = entry.overlay?.image
+    ? url(entry.overlay.image, basePath)
+    : null
+  const imageAlt = entry.overlay?.imageAlt ?? ''
+  const hasImage = Boolean(image)
 
   return (
-    <article class="featured-card">
-      <div class="featured-card__header">
+    <article class={`featured-card${hasImage ? ' featured-card--has-image' : ''}`}>
+      <div class="featured-card__content">
         <h3 class="featured-card__title">
           <a href={href}>{title}</a>
         </h3>
+        <p class="featured-card__summary">{summary}</p>
+        {excerpt ? <p class="featured-card__excerpt">{raw(excerpt)}</p> : null}
         {highlights ? (
           <ul class="featured-card__tags">
             {highlights.map((h) => <li>{h}</li>)}
           </ul>
         ) : null}
+        <p class="featured-card__cta">
+          <a href={href}>Explore {title} &rarr;</a>
+        </p>
       </div>
-      <div class="featured-card__body">
-        <p class="featured-card__summary">{summary}</p>
-        {excerpt ? <p class="featured-card__excerpt">{raw(excerpt)}</p> : null}
-      </div>
-      <p class="featured-card__cta">
-        <a href={href}>Explore {title} &rarr;</a>
-      </p>
+      {image ? (
+        <div class="featured-card__image">
+          <a href={href} tabindex={-1} aria-hidden="true">
+            <img src={image} alt={imageAlt} loading="lazy" />
+          </a>
+        </div>
+      ) : null}
     </article>
   )
 }

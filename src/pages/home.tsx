@@ -37,7 +37,12 @@ export function Home({
       </section>
 
       <section class="home-featured" aria-labelledby="featured-heading">
-        <h2 id="featured-heading">Featured</h2>
+        <div class="home-featured__header">
+          <h2 id="featured-heading">Featured</h2>
+          <p class="home-featured__intro">
+            Products and tools we actively steward — built for government, shared with everyone.
+          </p>
+        </div>
         <div class="home-featured__list">
           {featured.map((entry) => (
             <FeaturedCard entry={entry} basePath={config.basePath} />
