@@ -13,7 +13,6 @@
   display: block;
 }
 .mobile-nav-toggle {
-  display: inline-flex;
   align-items: center;
   justify-content: center;
   background: none;
@@ -22,6 +21,7 @@
   cursor: pointer;
   color: var(--color-ink);
   border-radius: var(--radius-sm);
+  margin-inline-start: auto;
 }
 .mobile-nav-toggle:focus-visible {
   outline: 2px solid var(--color-focus-ring);
