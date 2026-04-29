@@ -27,7 +27,7 @@ export function Header({ config }: { config: SiteConfig }) {
         </svg>
       </button>
       <nav aria-label="Primary">
-        <div id="mobile-nav" popover>
+        <div id="mobile-nav" popover="auto">
           <ul>
             <li>
               <a href={url('/work/', config.basePath)}>Work</a>
