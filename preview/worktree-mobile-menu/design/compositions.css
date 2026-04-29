@@ -1,0 +1,33 @@
+.l-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  &[data-space="sm"] { gap: var(--space-2); }
+  &[data-space="lg"] { gap: var(--space-6); }
+  &[data-space="xl"] { gap: var(--space-8); }
+}
+
+.l-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.l-sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+
+  & > :first-child {
+    flex-basis: 16rem;
+    flex-grow: 1;
+  }
+
+  & > :last-child {
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: 60%;
+  }
+}
