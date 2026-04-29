@@ -52,11 +52,11 @@
     gap: var(--space-4);
   }
   .home-hero h1 {
+    font-family: var(--font-mono);
     font-size: var(--step-4);
     max-inline-size: 22ch;
   }
   .home-hero__intro {
-    font-family: var(--font-mono);
     font-size: var(--step-1);
     color: var(--color-ink-subtle);
     max-inline-size: var(--measure-prose);
