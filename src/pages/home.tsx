@@ -1,5 +1,5 @@
 import { Layout } from '../design/common/layout'
-import { RepoCard } from '../design/components/repo-card'
+import { FeaturedCard } from '../design/components/featured-card'
 import type { Catalog } from '../catalog/types'
 import { url } from '../build/config'
 import type { SiteConfig } from '../build/config'
@@ -15,7 +15,14 @@ export function Home({
   hero: HeroContent
   config: SiteConfig
 }) {
-  const featured = catalog.filter((e) => e.featured && !e.hidden)
+  const featuredOrder = ['forms', 'forms-lab', 'document-extractor', 'flexion-notify']
+  const featured = catalog
+    .filter((e) => e.featured && !e.hidden)
+    .sort((a, b) => {
+      const ai = featuredOrder.indexOf(a.name)
+      const bi = featuredOrder.indexOf(b.name)
+      return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi)
+    })
   const visible = catalog.filter((e) => !e.hidden)
   const active = visible.filter((e) => e.tier === 'active').length
   const languages = new Set(
@@ -33,7 +40,7 @@ export function Home({
         <h2 id="featured-heading">Featured labs</h2>
         <div class="home-featured__grid">
           {featured.map((entry) => (
-            <RepoCard entry={entry} basePath={config.basePath} />
+            <FeaturedCard entry={entry} basePath={config.basePath} />
           ))}
         </div>
       </section>

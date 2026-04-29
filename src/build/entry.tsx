@@ -109,7 +109,7 @@ async function render(
       return renderToHtml(<DesignSystem config={config} />)
     case 'work-detail': {
       const entry = catalog.find((e) => e.name === route.slug)!
-      return renderToHtml(<WorkDetail entry={entry} now={now} config={config} />)
+      return renderToHtml(<WorkDetail entry={entry} catalog={catalog} now={now} config={config} />)
     }
   }
 }

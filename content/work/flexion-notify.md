@@ -1,6 +1,10 @@
 ---
-title: Messaging
+title: Notify
 summary: A public-sector-grade platform for sending SMS and email notifications about benefits, deadlines, and outages.
+highlights:
+  - SMS and email from one API
+  - Self-hosted, auditable delivery
+  - No per-message vendor pricing
 ---
 
 ## What it solves

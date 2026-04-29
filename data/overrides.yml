@@ -1,2 +1,22 @@
 # Hand-authored overrides keyed by repo name.
 # See docs/catalog.md for supported fields.
+
+forms:
+  tier: active
+  category: product
+  featured: true
+
+forms-lab:
+  tier: active
+  category: product
+  featured: true
+
+document-extractor:
+  tier: active
+  category: product
+  featured: true
+
+flexion-notify:
+  tier: active
+  category: product
+  featured: true

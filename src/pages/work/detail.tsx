@@ -4,15 +4,18 @@ import { Link } from '../../design/components/link'
 import { Tag } from '../../design/components/tag'
 import { StandardsList } from '../../design/components/standards-list'
 import { evaluateRepo } from '../../catalog/repo-checks'
-import type { CatalogEntry } from '../../catalog/types'
+import type { Catalog, CatalogEntry } from '../../catalog/types'
+import { url } from '../../build/config'
 import type { SiteConfig } from '../../build/config'
 
 export function WorkDetail({
   entry,
+  catalog,
   now,
   config,
 }: {
   entry: CatalogEntry
+  catalog: Catalog
   now: Date
   config: SiteConfig
 }) {
@@ -43,6 +46,7 @@ export function WorkDetail({
           {entry.overlay?.body
             ? raw(entry.overlay.body)
             : <p>{renderBody(entry)}</p>}
+          <RelatedProjects entry={entry} catalog={catalog} basePath={config.basePath} />
         </div>
 
         <aside class="work-detail__aside" aria-label="Stewardship">
@@ -66,4 +70,39 @@ function renderBody(entry: CatalogEntry): string {
   if (entry.overlay?.summary) return entry.overlay.summary
   if (entry.description) return entry.description
   return 'No description yet.'
+}
+
+function RelatedProjects({
+  entry,
+  catalog,
+  basePath,
+}: {
+  entry: CatalogEntry
+  catalog: Catalog
+  basePath: string
+}) {
+  const relatedNames = entry.overlay?.related
+  if (!relatedNames || relatedNames.length === 0) return null
+
+  const related = relatedNames
+    .map((name) => catalog.find((e) => e.name === name))
+    .filter((e): e is CatalogEntry => e != null && !e.hidden)
+
+  if (related.length === 0) return null
+
+  return (
+    <section class="work-detail__related" aria-labelledby="related-heading">
+      <h2 id="related-heading">Related projects</h2>
+      <ul>
+        {related.map((r) => (
+          <li>
+            <a href={url(`/work/${r.name}/`, basePath)}>
+              {r.overlay?.title ?? r.name}
+            </a>
+            {r.overlay?.summary ? <span> — {r.overlay.summary}</span> : null}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
 }
