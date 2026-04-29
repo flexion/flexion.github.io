@@ -97,15 +97,14 @@
   .mobile-nav-toggle {
     display: none;
   }
-  #mobile-nav:not(:popover-open) {
-    display: contents;
+  @media (min-width: 36rem) {
+    #mobile-nav:not(:popover-open) {
+      display: contents;
+    }
   }
   @media (max-width: 36rem) {
     .mobile-nav-toggle {
       display: inline-flex;
-    }
-    .site-header nav {
-      display: none;
     }
   }
   #mobile-nav:popover-open {
