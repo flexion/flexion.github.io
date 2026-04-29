@@ -1,0 +1,2 @@
+copy-button { display: inline-block; }
+copy-button:not(:defined) button { display: none; }
