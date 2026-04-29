@@ -2,6 +2,7 @@ import { Layout } from '../../design/common/layout'
 import { RepoCard } from '../../design/components/repo-card'
 import { Select } from '../../design/components/select'
 import type { Catalog, CatalogEntry } from '../../catalog/types'
+import { url } from '../../build/config'
 import type { SiteConfig } from '../../build/config'
 
 declare module 'hono/jsx' {
@@ -28,7 +29,9 @@ export function WorkIndex({
       <p class="work-index__intro">
         Flexion's public portfolio — tools we've built, prototypes we've shipped, and
         open-source projects we actively contribute to. Use the filters to explore by
-        tier or category.
+        tier or category. See our{' '}
+        <a href={url('/work/health/', config.basePath)}>stewardship scorecard</a> for
+        how each repo measures up.
       </p>
       <catalog-filter>
         <form class="catalog-filter">
