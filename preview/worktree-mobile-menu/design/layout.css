@@ -100,6 +100,15 @@
   @media (min-width: 36rem) {
     #primary-nav:not(:popover-open) {
       display: block;
+      position: static;
+      inset: auto;
+      width: auto;
+      height: auto;
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: none;
+      overflow: visible;
     }
   }
   @media (max-width: 36rem) {
