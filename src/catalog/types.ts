@@ -36,6 +36,8 @@ export type Overlay = {
   summary?: string
   highlights?: string[]
   related?: string[]
+  image?: string
+  imageAlt?: string
   body?: string
 }
 

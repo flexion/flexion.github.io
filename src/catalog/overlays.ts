@@ -21,6 +21,8 @@ export async function loadOverlay(path: string): Promise<Overlay | null> {
     summary: stringOrUndefined(frontMatter.summary),
     highlights: stringArrayOrUndefined(frontMatter.highlights),
     related: stringArrayOrUndefined(frontMatter.related),
+    image: stringOrUndefined(frontMatter.image),
+    imageAlt: stringOrUndefined(frontMatter.imageAlt),
     body: body ? (marked.parse(body, { async: false }) as string) : undefined,
   }
 }

@@ -5,6 +5,8 @@ highlights:
   - WCAG 2.1 AA conformant
   - Multi-step with save and resume
   - Agency-agnostic, works with any back-end
+image: /assets/forms-phone.png
+imageAlt: A mobile phone displaying an accessible government form built with Flexion Forms
 related:
   - forms-lab
 ---
