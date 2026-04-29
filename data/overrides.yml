@@ -1,6 +1,8 @@
 # Hand-authored overrides keyed by repo name.
 # See docs/catalog.md for supported fields.
 
+# ─── Active Flexion-originated projects ───────────────────────────────────────
+
 forms:
   tier: active
   category: product
@@ -11,12 +13,175 @@ forms-lab:
   category: product
   featured: true
 
+flexion-notify:
+  tier: active
+  category: product
+  featured: true
+
+devops-deployment-metrics:
+  tier: active
+  category: tool
+  featured: true
+
+flexion.github.io:
+  tier: active
+  category: tool
+
+claude-domestique:
+  tier: active
+  category: tool
+
+aws-codebuild-runner-project-tf-module:
+  tier: active
+  category: tool
+
+odoo-ai-assistant:
+  tier: active
+  category: tool
+
+flexcoins:
+  tier: active
+  category: product
+
+# ─── Active forks (significant project contributions) ─────────────────────────
+
+ef-cms:
+  tier: active
+
+ef-cms-ustc:
+  tier: active
+
+notifications-admin:
+  tier: active
+
+notifications-api:
+  tier: active
+
 document-extractor:
   tier: active
   category: product
   featured: true
 
-flexion-notify:
+uswds:
   tier: active
+
+uswds-site:
+  tier: active
+
+uswds-elements:
+  tier: active
+
+# ─── Active prototypes (bid/design work) ──────────────────────────────────────
+
+Destin-Municipal-Prototype:
+  tier: active
+  category: prototype
+
+Destin-Design-Repo:
+  tier: active
+  category: prototype
+
+# ─── Categorized (unreviewed tier, but with a useful category) ────────────────
+
+bash_shell_script_starter:
+  category: tool
+
+flexion-sig-security:
+  category: tool
+
+flexion-sig-security-tf-modules:
+  category: tool
+
+msab-arts-locator:
   category: product
-  featured: true
+
+tech-radar-generator:
+  category: tool
+
+check-contributor-allowlist-action:
+  category: tool
+
+strapi-provider-upload-aws-s3-auth:
+  category: tool
+
+jubilant-computing-machine:
+  category: tool
+
+10x-uswds-forms:
+  category: prototype
+
+10x-uswds-dataviz:
+  category: prototype
+
+epa-prototype:
+  category: prototype
+
+flexion-ads-18f-response:
+  category: prototype
+
+flexion-ads-18f-save-my-picnic:
+  category: prototype
+
+qpp-design-exercise:
+  category: prototype
+
+Planet-Express:
+  category: tool
+
+asset-manager:
+  category: prototype
+
+# ─── Hidden (no portfolio value, visible only on Health page) ─────────────────
+
+# Dead forks (2012–2015, no stars, no meaningful contribution)
+node-js-crate:
+  hidden: true
+
+coffeescript-koans:
+  hidden: true
+
+javascript-koans:
+  hidden: true
+
+pallet:
+  hidden: true
+
+django-axes:
+  hidden: true
+
+django-ckeditor:
+  hidden: true
+
+custom-post-type-ui:
+  hidden: true
+
+django:
+  hidden: true
+
+docker-karma-protractor:
+  hidden: true
+
+hubot-google-hangouts:
+  hidden: true
+
+lookml:
+  hidden: true
+
+# Dead non-forks (no README, no license, no description, or clearly abandoned)
+pig-latin-cli:
+  hidden: true
+
+mini-project-1:
+  hidden: true
+
+cdk-playground:
+  hidden: true
+
+mob-timer:
+  hidden: true
+
+uswds-react:
+  hidden: true
+
+radar:
+  hidden: true

@@ -13,11 +13,14 @@ describe('Health', () => {
     expect(html).toMatch(/of\s+<strong>\d+<\/strong>\s+repos meet the documented standards/)
   })
 
-  test('renders a table with one row per non-hidden repo', async () => {
-    const html = await renderToHtml(
-      <Health catalog={fixtureCatalog} now={fixtureNow} config={config} showPerRepo={true} />,
+  test('renders a table with one row per repo including hidden', async () => {
+    const catalog = fixtureCatalog.map((e, i) =>
+      i === 0 ? { ...e, hidden: true } : e,
     )
-    for (const entry of fixtureCatalog.filter((e) => !e.hidden)) {
+    const html = await renderToHtml(
+      <Health catalog={catalog} now={fixtureNow} config={config} showPerRepo={true} />,
+    )
+    for (const entry of catalog) {
       expect(html).toContain(`data-repo="${entry.name}"`)
     }
   })

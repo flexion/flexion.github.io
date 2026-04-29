@@ -37,15 +37,14 @@ export function Health({
   config: SiteConfig
   showPerRepo: boolean
 }) {
-  const visible = catalog.filter((e) => !e.hidden)
-  const evaluations = visible.map((e) => ({ entry: e, evaluation: evaluateRepo(e, now) }))
+  const evaluations = catalog.map((e) => ({ entry: e, evaluation: evaluateRepo(e, now) }))
   const passing = evaluations.filter(({ evaluation }) => evaluation.overallPass).length
 
   return (
     <Layout title="Repo health" config={config}>
       <h1>Repo health</h1>
       <p class="health-summary">
-        <strong>{passing}</strong> of <strong>{visible.length}</strong> repos meet the documented standards.
+        <strong>{passing}</strong> of <strong>{catalog.length}</strong> repos meet the documented standards.
       </p>
 
       {showPerRepo ? (
