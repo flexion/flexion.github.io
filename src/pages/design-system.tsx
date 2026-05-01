@@ -9,6 +9,7 @@ import { CardExamples } from '../design/components/card/examples'
 import { HeaderExamples } from '../design/components/header/examples'
 import { FooterExamples } from '../design/components/footer/examples'
 import { RepoCardExamples } from '../design/components/repo-card/examples'
+import { LabCardExamples } from '../design/components/lab-card/examples'
 import { StandardsListExamples } from '../design/components/standards-list/examples'
 import { SideNavExamples } from '../design/components/side-nav/examples'
 import { CatalogFilterExamples } from '../design/components/catalog-filter/examples'
@@ -35,6 +36,7 @@ const NAV_ITEMS = [
   { href: '#side-nav', label: 'Side nav' },
   { href: '#header', label: 'Header' },
   { href: '#footer', label: 'Footer' },
+  { href: '#lab-card', label: 'Lab card' },
   { href: '#repo-card', label: 'Repo card' },
   { href: '#standards-list', label: 'Standards list' },
   { href: '#catalog-filter', label: 'Catalog filter' },
@@ -73,6 +75,7 @@ export function DesignSystem({ config }: { config: SiteConfig }) {
           <SideNavExamples />
           <HeaderExamples config={config} />
           <FooterExamples config={config} />
+          <LabCardExamples />
           <RepoCardExamples />
           <StandardsListExamples />
           <CatalogFilterExamples />
