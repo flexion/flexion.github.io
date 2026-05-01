@@ -4,6 +4,7 @@ import { renderToHtml } from './render'
 import { createConfig, getBasePath } from './config'
 import { loadCatalog } from '../catalog/load'
 import { loadHero } from './hero'
+import { loadFeatured } from './featured'
 import { allRoutes } from './routes'
 import { Home } from '../pages/home'
 import { WorkIndex } from '../pages/work/index'
@@ -32,9 +33,10 @@ export async function buildSite(options: BuildOptions): Promise<void> {
     buildTime: now.toISOString(),
   }
 
-  const [catalog, hero] = await Promise.all([
+  const [catalog, hero, featured] = await Promise.all([
     loadCatalog(rootDir),
     loadHero(rootDir),
+    loadFeatured(rootDir),
   ])
   const commitmentBody = await loadContentBody(
     join(rootDir, 'content', 'commitment.md'),
@@ -48,6 +50,7 @@ export async function buildSite(options: BuildOptions): Promise<void> {
       route,
       catalog,
       hero,
+      featured,
       commitmentBody,
       aboutBody,
       config,
@@ -82,6 +85,7 @@ async function render(
   route: ReturnType<typeof allRoutes>[number],
   catalog: Awaited<ReturnType<typeof loadCatalog>>,
   hero: Awaited<ReturnType<typeof loadHero>>,
+  featured: Awaited<ReturnType<typeof loadFeatured>>,
   commitmentBody: string,
   aboutBody: string,
   config: { basePath: string; buildTime: string },
@@ -89,7 +93,7 @@ async function render(
 ): Promise<string> {
   switch (route.view) {
     case 'home':
-      return renderToHtml(<Home catalog={catalog} hero={hero} config={config} />)
+      return renderToHtml(<Home hero={hero} featured={featured} config={config} />)
     case 'work-index':
       return renderToHtml(<WorkIndex catalog={catalog} config={config} />)
     case 'health':
