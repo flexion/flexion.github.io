@@ -7,8 +7,6 @@ const DIST = join(process.cwd(), 'dist')
 
 const pages = [
   'index.html',
-  'work/index.html',
-  'work/health/index.html',
   'commitment/index.html',
   'about/index.html',
   'design-system/index.html',
