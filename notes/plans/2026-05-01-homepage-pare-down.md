@@ -8,7 +8,7 @@
 
 **Tech Stack:** Bun + Hono JSX SSG, `marked` for markdown, `yaml` for front-matter parsing. Tests via `bun test`, a11y via axe-core. CSS uses cascade layers with design tokens.
 
-**Spec:** `docs/superpowers/specs/2026-05-01-homepage-pare-down-design.md`
+**Spec:** `notes/specs/2026-05-01-homepage-pare-down-design.md`
 
 ---
 
@@ -1184,7 +1184,7 @@ Delete the file or adjust `order`. No other changes needed.
 
 ## Related: the catalog directory
 
-The catalog directory (`/work/` index, per-repo detail pages, `/work/health/` stewardship page) is **temporarily disabled** on the public site. The code, tests, and daily catalog refresh workflow remain intact; only the routes are commented out in `src/build/routes.ts`. See the spec at `docs/superpowers/specs/2026-05-01-homepage-pare-down-design.md` for the rationale and the plan for restoring the directory.
+The catalog directory (`/work/` index, per-repo detail pages, `/work/health/` stewardship page) is **temporarily disabled** on the public site. The code, tests, and daily catalog refresh workflow remain intact; only the routes are commented out in `src/build/routes.ts`. See the spec at `notes/specs/2026-05-01-homepage-pare-down-design.md` for the rationale and the plan for restoring the directory.
 ~~~
 
 - [ ] **Step 2: Commit**
@@ -1233,7 +1233,7 @@ gh pr create --title "Pare home page to three Flexion Solutions offerings" --bod
 - Adjusts primary nav to Home · Commitment · About · GitHub.
 - Deletes the unapproved `content/work/*.md` overlay files.
 
-See `docs/superpowers/specs/2026-05-01-homepage-pare-down-design.md` for design rationale.
+See `notes/specs/2026-05-01-homepage-pare-down-design.md` for design rationale.
 
 ## Coordination
 
