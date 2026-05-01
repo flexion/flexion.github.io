@@ -6,7 +6,6 @@ The home page showcases three Flexion Solutions offerings as "featured labs". Ea
 
 Files in `content/featured/*.md` use front-matter only. The body is ignored.
 
-````markdown
 ```yaml
 ---
 title: Forms Lab
@@ -19,7 +18,6 @@ links:
     url: https://github.com/flexion/forms
 ---
 ```
-````
 
 ### Fields
 
