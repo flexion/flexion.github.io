@@ -2,25 +2,25 @@
 
 ## Purpose
 
-First impression for every visitor. Explains what Flexion Labs is, highlights featured labs, grounds the pitch with real numbers, and hands visitors off to the right next step.
+First impression for every visitor. Introduces Flexion Labs with a hero, showcases the three Flexion Solutions offerings as featured labs, and hands visitors off to the commitment and about pages.
 
 ## Inputs
 
-- `catalog` — the merged catalog.
-- `hero` — `{ hero, intro }` read from `content/home.md` front-matter.
+- `hero` — `{ title, subtitle, intro, learnMore }` read from `content/home.md` front-matter. `intro` is pre-rendered HTML; the others are strings.
+- `featured` — array of `FeaturedLab` loaded from `content/featured/*.md` sorted by `order` ascending.
 - `config` — base path, build time.
 
 ## Behavior
 
-- **When the page loads, then** the hero statement is the `<h1>`, followed by the intro paragraph.
-- **When there are repos flagged `featured: true` and not hidden, then** one card is rendered per featured repo in the order they appear in the catalog.
-- **When there are no featured repos, then** the featured section renders its heading and an empty grid (acceptable for v1; may be hardened later).
-- **When the catalog has N non-hidden repos, then** the stats strip renders `N public projects`, the count of `tier: active` repos as `actively maintained`, and the count of distinct languages.
-- **When the page loads, then** three audience paths link to `/work/`, `/commitment/`, and `/about/`.
+- **When the page loads, then** the hero renders the `title` as `<h1>`, the `subtitle` as a tagline paragraph, and the rendered `intro` HTML as the intro block.
+- **When there are featured labs, then** one `LabCard` is rendered per lab in `order` ascending.
+- **When the page loads, then** a "Learn more" section renders two teasers linking to `/commitment/` and `/about/` respectively.
+- **The stats strip is not rendered.** The catalog directory is disabled in this pass.
 
 ## Fallbacks
 
-- None — every section renders; empty collections produce empty grids.
+- If `content/featured/` is empty or missing, the featured section renders its heading with no cards.
+- If `subtitle` or `intro` is empty, that element is omitted.
 
 ## Tests
 
