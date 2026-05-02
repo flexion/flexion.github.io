@@ -89,7 +89,6 @@
   .home-learn-more__grid {
     display: grid;
     gap: var(--space-5);
-    container-type: inline-size;
     margin-block-start: var(--space-4);
   }
   .home-learn-more__item {
@@ -102,6 +101,9 @@
     font-size: var(--step-1);
     margin-block-end: var(--space-2);
   }
+  @media (min-width: 48rem) {
+    .home-learn-more__grid { grid-template-columns: repeat(2, 1fr); }
+  }
   .work-index__featured-grid {
     display: grid;
     gap: var(--space-5);
@@ -109,7 +111,6 @@
   }
   @container (min-width: 48rem) {
     .work-index__featured-grid { grid-template-columns: repeat(2, 1fr); }
-    .home-learn-more__grid { grid-template-columns: repeat(2, 1fr); }
   }
   @container (min-width: 72rem) {
     .work-index__list { grid-template-columns: repeat(3, 1fr); }
