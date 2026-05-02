@@ -37,9 +37,11 @@ export function LabCardExamples() {
     <section id="lab-card">
       <h2>Lab card</h2>
       <p>
-        Featured-lab card on the home page. Title and tagline sit on top; each link becomes
-        its own column below, titled with the link kind (Demo, Repository, or Case study).
-        Columns flow from 1 → 2 → 4 based on card width.
+        Featured-lab card on the home page. Title and tagline sit on top; links group into one
+        column per distinct kind (Demo, Repository, or Case study) below. Columns always appear
+        in kind order (Demo → Repository → Case study), and multiple links of the same kind
+        stack vertically within their column in document order. Links with matching list
+        positions across columns (first Demo ↔ first Repository) refer to the same project.
       </p>
       <div class="l-stack" data-space="md">
         <LabCard lab={multiProject} />

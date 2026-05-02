@@ -100,35 +100,54 @@ describe('LabCard', () => {
     expect(html).toContain('Digitize forms to create modern, accessible experiences')
   })
 
-  test('renders one column per link with kind heading, icon, and external anchor', async () => {
+  test('groups links by kind — one column per distinct kind', async () => {
     const html = await renderToHtml(<LabCard lab={multiProject} />)
-    expect(html.match(/class="lab-card__column"/g)?.length).toBe(4)
-    expect(html.match(/class="lab-card__column-heading"/g)?.length).toBe(4)
+    // Two distinct kinds (demo, repo) → two columns
+    expect(html.match(/class="lab-card__column"/g)?.length).toBe(2)
+    expect(html.match(/class="lab-card__column-heading"/g)?.length).toBe(2)
+
+    // Four links total, each with its own anchor + icon + external rel
     expect(html.match(/class="lab-card__column-link"/g)?.length).toBe(4)
     expect(html.match(/class="lab-card__icon"/g)?.length).toBe(4)
     expect(html.match(/rel="noopener external"/g)?.length).toBe(4)
+  })
 
-    // Kind headings match each link's kind in order: demo, repo, demo, repo
-    expect(html).toContain('Demo')
-    expect(html).toContain('Repository')
+  test('column order is Demo, Repository, Case study (only kinds present)', async () => {
+    const html = await renderToHtml(<LabCard lab={multiProject} />)
+    const demoIdx = html.indexOf('>Demo<')
+    const repoIdx = html.indexOf('>Repository<')
+    expect(demoIdx).toBeGreaterThan(-1)
+    expect(repoIdx).toBeGreaterThan(-1)
+    expect(demoIdx).toBeLessThan(repoIdx)
+    // No case-study heading in this lab
+    expect(html).not.toContain('>Case study<')
+  })
 
-    // Labels come through as the visible link text
-    expect(html).toContain('>Forms Platform<')
-    expect(html).toContain('>flexion/forms<')
-    expect(html).toContain('>Forms Lab (experiment)<')
-    expect(html).toContain('>flexion/forms-lab<')
+  test('same-kind links stack in document order inside their column', async () => {
+    const html = await renderToHtml(<LabCard lab={multiProject} />)
+    // In the Demo column: "Forms Platform" appears before "Forms Lab (experiment)"
+    expect(html.indexOf('>Forms Platform<')).toBeLessThan(
+      html.indexOf('>Forms Lab (experiment)<'),
+    )
+    // In the Repository column: "flexion/forms" appears before "flexion/forms-lab"
+    expect(html.indexOf('>flexion/forms<')).toBeLessThan(
+      html.indexOf('>flexion/forms-lab<'),
+    )
   })
 
   test('a single-link lab renders a single column', async () => {
     const html = await renderToHtml(<LabCard lab={singleLink} />)
     expect(html.match(/class="lab-card__column"/g)?.length).toBe(1)
-    expect(html).toContain('Repository')
+    expect(html).toContain('>Repository<')
     expect(html).toContain('href="https://github.com/flexion/flexion-notify"')
   })
 
-  test('case-study kind renders its own heading', async () => {
+  test('case-study kind renders its own column and heading', async () => {
     const html = await renderToHtml(<LabCard lab={caseStudy} />)
-    expect(html).toContain('Case study')
+    // Repository + Case study → two columns in that order
+    expect(html.match(/class="lab-card__column"/g)?.length).toBe(2)
+    expect(html).toContain('>Case study<')
+    expect(html.indexOf('>Repository<')).toBeLessThan(html.indexOf('>Case study<'))
     expect(html).toContain('href="https://flexion.us/case-study/"')
   })
 })

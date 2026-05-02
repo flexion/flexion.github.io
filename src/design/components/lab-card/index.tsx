@@ -1,4 +1,4 @@
-import type { FeaturedLab, FeaturedLinkKind } from '../../../build/featured'
+import type { FeaturedLab, FeaturedLink, FeaturedLinkKind } from '../../../build/featured'
 
 const KIND_HEADING: Record<FeaturedLinkKind, string> = {
   demo: 'Demo',
@@ -6,7 +6,26 @@ const KIND_HEADING: Record<FeaturedLinkKind, string> = {
   'case-study': 'Case study',
 }
 
+// Column order whenever these kinds are present.
+const KIND_ORDER: readonly FeaturedLinkKind[] = ['demo', 'repo', 'case-study']
+
+type Column = { kind: FeaturedLinkKind; links: FeaturedLink[] }
+
+function groupByKind(links: readonly FeaturedLink[]): Column[] {
+  const byKind = new Map<FeaturedLinkKind, FeaturedLink[]>()
+  for (const link of links) {
+    const bucket = byKind.get(link.kind) ?? []
+    bucket.push(link)
+    byKind.set(link.kind, bucket)
+  }
+  return KIND_ORDER.filter((k) => byKind.has(k)).map((kind) => ({
+    kind,
+    links: byKind.get(kind)!,
+  }))
+}
+
 export function LabCard({ lab }: { lab: FeaturedLab }) {
+  const columns = groupByKind(lab.links)
   return (
     <article class="lab-card">
       <div class="lab-card__intro">
@@ -14,17 +33,23 @@ export function LabCard({ lab }: { lab: FeaturedLab }) {
         <p class="lab-card__tagline">{lab.tagline}</p>
       </div>
       <ul class="lab-card__columns">
-        {lab.links.map((link) => (
+        {columns.map((column) => (
           <li class="lab-card__column">
-            <p class="lab-card__column-heading">{KIND_HEADING[link.kind]}</p>
-            <a
-              class="lab-card__column-link"
-              href={link.url}
-              rel="noopener external"
-            >
-              <LinkIcon kind={link.kind} />
-              <span>{link.label}</span>
-            </a>
+            <p class="lab-card__column-heading">{KIND_HEADING[column.kind]}</p>
+            <ul class="lab-card__column-links">
+              {column.links.map((link) => (
+                <li>
+                  <a
+                    class="lab-card__column-link"
+                    href={link.url}
+                    rel="noopener external"
+                  >
+                    <LinkIcon kind={column.kind} />
+                    <span>{link.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </li>
         ))}
       </ul>

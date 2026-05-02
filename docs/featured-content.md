@@ -37,7 +37,9 @@ links:
 
 ## Rendering
 
-The home page renders one `<LabCard />` per lab. Each card places the title and tagline on top, with a horizontal row of columns below it — one column per link. Each column has a small uppercase kind heading ("Demo", "Repository", or "Case study") and the link itself, prefixed with an icon (globe for `demo`, GitHub mark for `repo`, document for `case-study`). Columns flow from 1 → 2 → 4 based on card width via container queries at 32rem and 56rem. The home page's featured list is constrained to `72rem` to keep cards at a readable width on wide displays.
+The home page renders one `<LabCard />` per lab. Each card places the title and tagline on top, with a horizontal row of columns below it — **one column per distinct link kind**, in fixed order (Demo → Repository → Case study). Links sharing a kind stack vertically within their column in document order; matching positions across columns (first demo ↔ first repo) refer to the same project, so a lab with multiple projects should list them in the same order under each kind.
+
+Each link is prefixed with an icon (globe for `demo`, GitHub mark for `repo`, document for `case-study`). The columns container collapses to a single column below 32rem; above it, columns auto-fit at a minimum of 14rem wide. The home page's featured list is constrained to `72rem` to keep cards at a readable width on wide displays.
 
 ## Adding a featured lab
 

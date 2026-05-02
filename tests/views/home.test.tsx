@@ -21,8 +21,8 @@ const featured: FeaturedLab[] = [
     tagline: 'Digitize forms to create modern, accessible experiences for public outreach.',
     order: 1,
     links: [
-      { label: 'Demo (Forms Platform)', url: 'https://pp4cc7kwbf.us-east-1.awsapprunner.com/' },
-      { label: 'GitHub repository — Forms Platform', url: 'https://github.com/flexion/forms' },
+      { label: 'Forms Platform', url: 'https://pp4cc7kwbf.us-east-1.awsapprunner.com/', kind: 'demo' },
+      { label: 'flexion/forms', url: 'https://github.com/flexion/forms', kind: 'repo' },
     ],
   },
   {
@@ -30,7 +30,7 @@ const featured: FeaturedLab[] = [
     tagline: 'Text messaging services to deliver critical updates to the people you serve.',
     order: 2,
     links: [
-      { label: 'GitHub repository', url: 'https://github.com/flexion/flexion-notify' },
+      { label: 'flexion/flexion-notify', url: 'https://github.com/flexion/flexion-notify', kind: 'repo' },
     ],
   },
   {
@@ -38,7 +38,7 @@ const featured: FeaturedLab[] = [
     tagline: 'Accurately extract data from PDFs and images for faster application processing.',
     order: 3,
     links: [
-      { label: 'GitHub repository', url: 'https://github.com/flexion/document-extractor' },
+      { label: 'flexion/document-extractor', url: 'https://github.com/flexion/document-extractor', kind: 'repo' },
     ],
   },
 ]
