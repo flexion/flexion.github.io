@@ -1,56 +1,35 @@
-import type { FeaturedLab, FeaturedLink, FeaturedLinkKind } from '../../../build/featured'
+import type { FeaturedLab, FeaturedLinkKind } from '../../../build/featured'
+
+const KIND_HEADING: Record<FeaturedLinkKind, string> = {
+  demo: 'Demo',
+  repo: 'Repository',
+  'case-study': 'Case study',
+}
 
 export function LabCard({ lab }: { lab: FeaturedLab }) {
-  const groups = groupLinks(lab.links)
   return (
     <article class="lab-card">
       <div class="lab-card__intro">
         <h3 class="lab-card__title">{lab.title}</h3>
         <p class="lab-card__tagline">{lab.tagline}</p>
       </div>
-      <div class="lab-card__links">
-        {groups.map((group) => (
-          <div class="lab-card__group">
-            {group.name ? (
-              <p class="lab-card__group-name">{group.name}</p>
-            ) : null}
-            <ul class="lab-card__link-list">
-              {group.links.map((link) => (
-                <li class="lab-card__link">
-                  <a
-                    class="lab-card__link-anchor"
-                    href={link.url}
-                    rel="noopener external"
-                  >
-                    <LinkIcon kind={link.kind} />
-                    <span>{link.label}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+      <ul class="lab-card__columns">
+        {lab.links.map((link) => (
+          <li class="lab-card__column">
+            <p class="lab-card__column-heading">{KIND_HEADING[link.kind]}</p>
+            <a
+              class="lab-card__column-link"
+              href={link.url}
+              rel="noopener external"
+            >
+              <LinkIcon kind={link.kind} />
+              <span>{link.label}</span>
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
     </article>
   )
-}
-
-type LinkGroup = { name: string | null; links: FeaturedLink[] }
-
-function groupLinks(links: FeaturedLink[]): LinkGroup[] {
-  const groups: LinkGroup[] = []
-  const byName = new Map<string | null, LinkGroup>()
-  for (const link of links) {
-    const name = link.group ?? null
-    let group = byName.get(name)
-    if (!group) {
-      group = { name, links: [] }
-      byName.set(name, group)
-      groups.push(group)
-    }
-    group.links.push(link)
-  }
-  return groups
 }
 
 function LinkIcon({ kind }: { kind: FeaturedLinkKind }) {

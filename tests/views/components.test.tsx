@@ -62,10 +62,10 @@ describe('LabCard', () => {
     tagline: 'Digitize forms to create modern, accessible experiences for public outreach.',
     order: 1,
     links: [
-      { label: 'Live demo', url: 'https://example.com/platform', kind: 'demo', group: 'Forms Platform' },
-      { label: 'Repository', url: 'https://github.com/flexion/forms', kind: 'repo', group: 'Forms Platform' },
-      { label: 'Live demo', url: 'https://example.com/lab', kind: 'demo', group: 'Forms Lab (experiment)' },
-      { label: 'Repository', url: 'https://github.com/flexion/forms-lab', kind: 'repo', group: 'Forms Lab (experiment)' },
+      { label: 'Forms Platform', url: 'https://example.com/platform', kind: 'demo' },
+      { label: 'flexion/forms', url: 'https://github.com/flexion/forms', kind: 'repo' },
+      { label: 'Forms Lab (experiment)', url: 'https://example.com/lab', kind: 'demo' },
+      { label: 'flexion/forms-lab', url: 'https://github.com/flexion/forms-lab', kind: 'repo' },
     ],
   }
 
@@ -74,7 +74,17 @@ describe('LabCard', () => {
     tagline: 'Text messaging services.',
     order: 2,
     links: [
-      { label: 'Repository', url: 'https://github.com/flexion/flexion-notify', kind: 'repo' },
+      { label: 'flexion/flexion-notify', url: 'https://github.com/flexion/flexion-notify', kind: 'repo' },
+    ],
+  }
+
+  const caseStudy: FeaturedLab = {
+    title: 'Document Extractor Lab',
+    tagline: 'OCR alternative.',
+    order: 3,
+    links: [
+      { label: 'flexion/document-extractor', url: 'https://github.com/flexion/document-extractor', kind: 'repo' },
+      { label: 'Flexion case study', url: 'https://flexion.us/case-study/', kind: 'case-study' },
     ],
   }
 
@@ -90,33 +100,35 @@ describe('LabCard', () => {
     expect(html).toContain('Digitize forms to create modern, accessible experiences')
   })
 
-  test('renders each link as an external anchor with the labeled text', async () => {
+  test('renders one column per link with kind heading, icon, and external anchor', async () => {
     const html = await renderToHtml(<LabCard lab={multiProject} />)
-    expect(html).toContain('href="https://example.com/platform"')
-    expect(html).toContain('href="https://github.com/flexion/forms"')
-    expect(html).toContain('href="https://example.com/lab"')
-    expect(html).toContain('href="https://github.com/flexion/forms-lab"')
-    // Every anchor carries rel="noopener external"
+    expect(html.match(/class="lab-card__column"/g)?.length).toBe(4)
+    expect(html.match(/class="lab-card__column-heading"/g)?.length).toBe(4)
+    expect(html.match(/class="lab-card__column-link"/g)?.length).toBe(4)
+    expect(html.match(/class="lab-card__icon"/g)?.length).toBe(4)
     expect(html.match(/rel="noopener external"/g)?.length).toBe(4)
+
+    // Kind headings match each link's kind in order: demo, repo, demo, repo
+    expect(html).toContain('Demo')
+    expect(html).toContain('Repository')
+
+    // Labels come through as the visible link text
+    expect(html).toContain('>Forms Platform<')
+    expect(html).toContain('>flexion/forms<')
+    expect(html).toContain('>Forms Lab (experiment)<')
+    expect(html).toContain('>flexion/forms-lab<')
   })
 
-  test('groups links under a sub-project heading when group is set', async () => {
-    const html = await renderToHtml(<LabCard lab={multiProject} />)
-    expect(html).toContain('Forms Platform')
-    expect(html).toContain('Forms Lab (experiment)')
-    // Two group headings are present in the markup
-    expect(html.match(/class="lab-card__group-name"/g)?.length).toBe(2)
-  })
-
-  test('omits the group heading when links have no group', async () => {
+  test('a single-link lab renders a single column', async () => {
     const html = await renderToHtml(<LabCard lab={singleLink} />)
-    expect(html).not.toContain('lab-card__group-name')
+    expect(html.match(/class="lab-card__column"/g)?.length).toBe(1)
+    expect(html).toContain('Repository')
     expect(html).toContain('href="https://github.com/flexion/flexion-notify"')
   })
 
-  test('emits one icon per link, marked aria-hidden', async () => {
-    const html = await renderToHtml(<LabCard lab={multiProject} />)
-    expect(html.match(/class="lab-card__icon"/g)?.length).toBe(4)
-    expect(html.match(/aria-hidden="true"/g)?.length ?? 0).toBeGreaterThanOrEqual(4)
+  test('case-study kind renders its own heading', async () => {
+    const html = await renderToHtml(<LabCard lab={caseStudy} />)
+    expect(html).toContain('Case study')
+    expect(html).toContain('href="https://flexion.us/case-study/"')
   })
 })

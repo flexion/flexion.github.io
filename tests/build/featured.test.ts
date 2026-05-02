@@ -13,7 +13,7 @@ describe('loadFeatured', () => {
     ])
   })
 
-  test('Forms Lab carries sub-project groups and typed links', async () => {
+  test('Forms Lab has four typed links in document order', async () => {
     const labs = await loadFeatured(ROOT)
     const forms = labs.find((l) => l.title === 'Forms Lab')!
     expect(forms.tagline).toBe(
@@ -21,23 +21,20 @@ describe('loadFeatured', () => {
     )
     expect(forms.order).toBe(1)
     expect(forms.links).toHaveLength(4)
+    expect(forms.links.map((l) => l.kind)).toEqual(['demo', 'repo', 'demo', 'repo'])
     expect(forms.links[0]).toEqual({
-      label: 'Live demo',
+      label: 'Forms Platform',
       url: 'https://pp4cc7kwbf.us-east-1.awsapprunner.com/',
       kind: 'demo',
-      group: 'Forms Platform',
     })
-    // All four links belong to one of two groups
-    const groups = new Set(forms.links.map((l) => l.group))
-    expect(groups).toEqual(new Set(['Forms Platform', 'Forms Lab (experiment)']))
   })
 
-  test('Messaging Lab has a single typed link, no group', async () => {
+  test('Messaging Lab has a single repo link', async () => {
     const labs = await loadFeatured(ROOT)
     const messaging = labs.find((l) => l.title === 'Messaging Lab')!
     expect(messaging.links).toEqual([
       {
-        label: 'Repository',
+        label: 'flexion/flexion-notify',
         url: 'https://github.com/flexion/flexion-notify',
         kind: 'repo',
       },

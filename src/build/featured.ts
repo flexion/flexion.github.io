@@ -8,7 +8,6 @@ export type FeaturedLink = {
   label: string
   url: string
   kind: FeaturedLinkKind
-  group?: string
 }
 
 const LINK_KINDS: ReadonlySet<FeaturedLinkKind> = new Set([
@@ -71,15 +70,11 @@ function parseLinks(file: string, value: unknown): FeaturedLink[] {
         `content/featured/${file}: links[${i}].kind must be one of ${[...LINK_KINDS].join(', ')}`,
       )
     }
-    const link: FeaturedLink = {
+    return {
       label: requireString(file, `links[${i}].label`, o.label),
       url: requireString(file, `links[${i}].url`, o.url),
       kind: kindRaw as FeaturedLinkKind,
     }
-    if (typeof o.group === 'string' && o.group.length > 0) {
-      link.group = o.group
-    }
-    return link
   })
 }
 
