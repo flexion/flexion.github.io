@@ -58,8 +58,8 @@
     padding: 0;
     margin: 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3) var(--space-4);
+    flex-direction: column;
+    gap: var(--space-2);
   }
 
   .lab-card__link-anchor {
@@ -96,6 +96,13 @@
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
       gap: var(--space-6);
       align-items: start;
+    }
+    .lab-card__group {
+      align-items: flex-end;
+      text-align: end;
+    }
+    .lab-card__link-list {
+      align-items: flex-end;
     }
   }
 }
