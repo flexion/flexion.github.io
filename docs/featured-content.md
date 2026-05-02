@@ -12,10 +12,14 @@ title: Forms Lab
 tagline: Digitize forms to create modern, accessible experiences for public outreach.
 order: 1
 links:
-  - label: Demo (Forms Platform)
+  - label: Live demo
     url: https://pp4cc7kwbf.us-east-1.awsapprunner.com/
-  - label: GitHub repository — Forms Platform
+    kind: demo
+    group: Forms Platform
+  - label: Repository
     url: https://github.com/flexion/forms
+    kind: repo
+    group: Forms Platform
 ---
 ```
 
@@ -24,7 +28,11 @@ links:
 - `title` — card heading (string, required)
 - `tagline` — one-sentence summary (string, required)
 - `order` — display order ascending (integer, required)
-- `links` — list of `{ label, url }` pairs rendered as external links (array, required)
+- `links` — list of link objects (array, required). Each link has:
+  - `label` — visible link text (string, required)
+  - `url` — destination URL (string, required)
+  - `kind` — one of `demo`, `repo`, or `case-study` (required). Drives the icon shown before the label.
+  - `group` — optional sub-project name (string). When multiple links share a `group`, they render together under a small heading; ungrouped links render without one. Use this for a lab that contains more than one distinct project (e.g., a production and an experiment variant).
 
 ## Loader
 
@@ -32,7 +40,7 @@ links:
 
 ## Rendering
 
-The home page renders one `<LabCard />` per lab. The card shows the title (not linked), the tagline, and a vertical list of external links. Cards stack on narrow viewports and flow into a grid on wider viewports via the existing `.home-featured__list` composition.
+The home page renders one `<LabCard />` per lab. Each card is a horizontal band — title and tagline on the left, grouped link list on the right — that collapses to a stacked layout on narrow viewports via a `@container (min-width: 40rem)` rule. Links are prefixed with an icon (globe for `demo`, GitHub mark for `repo`, document for `case-study`) and grouped under a small heading when a `group` is set. The home page's featured list is constrained to `72rem` to keep the bands at a readable width on wide displays.
 
 ## Adding a featured lab
 

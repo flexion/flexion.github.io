@@ -85,11 +85,13 @@
     flex-direction: column;
     gap: var(--space-5);
     margin-block-start: var(--space-4);
+    max-inline-size: 72rem;
   }
   .home-learn-more__grid {
     display: grid;
     gap: var(--space-5);
     margin-block-start: var(--space-4);
+    max-inline-size: 72rem;
   }
   .home-learn-more__item {
     padding: var(--space-5);
