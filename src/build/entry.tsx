@@ -11,7 +11,6 @@ import { WorkIndex } from '../pages/work/index'
 import { WorkDetail } from '../pages/work/detail'
 import { Health } from '../pages/work/health'
 import { Commitment } from '../pages/commitment'
-import { About } from '../pages/about'
 import { DesignSystem } from '../pages/design-system'
 import { SHOW_PER_REPO_FAILURES } from '../catalog/repo-checks'
 
@@ -41,7 +40,6 @@ export async function buildSite(options: BuildOptions): Promise<void> {
   const commitmentBody = await loadContentBody(
     join(rootDir, 'content', 'commitment.md'),
   )
-  const aboutBody = await loadContentBody(join(rootDir, 'content', 'about.md'))
 
   const routes = allRoutes(catalog)
 
@@ -52,7 +50,6 @@ export async function buildSite(options: BuildOptions): Promise<void> {
       hero,
       featured,
       commitmentBody,
-      aboutBody,
       config,
       now,
     )
@@ -87,7 +84,6 @@ async function render(
   hero: Awaited<ReturnType<typeof loadHero>>,
   featured: Awaited<ReturnType<typeof loadFeatured>>,
   commitmentBody: string,
-  aboutBody: string,
   config: { basePath: string; buildTime: string },
   now: Date,
 ): Promise<string> {
@@ -107,8 +103,6 @@ async function render(
       )
     case 'commitment':
       return renderToHtml(<Commitment body={commitmentBody} config={config} />)
-    case 'about':
-      return renderToHtml(<About body={aboutBody} config={config} />)
     case 'design-system':
       return renderToHtml(<DesignSystem config={config} />)
     case 'work-detail': {

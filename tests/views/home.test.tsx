@@ -82,7 +82,7 @@ describe('Home', () => {
     expect(html).toContain('Our open source commitment')
     expect(html).toContain('About Flexion')
     expect(html).toContain('href="/commitment/"')
-    expect(html).toContain('href="/about/"')
+    expect(html).toContain('href="https://flexion.us/"')
   })
 
   test('does not render the stats strip', async () => {

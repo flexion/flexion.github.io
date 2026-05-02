@@ -2,7 +2,7 @@ import type { Catalog } from '../catalog/types'
 
 export type Route = {
   path: string // always starts with "/" and ends with "/"
-  view: 'home' | 'work-index' | 'work-detail' | 'health' | 'commitment' | 'about' | 'design-system'
+  view: 'home' | 'work-index' | 'work-detail' | 'health' | 'commitment' | 'design-system'
   slug?: string
 }
 
@@ -16,7 +16,6 @@ export function allRoutes(catalog: Catalog): Route[] {
     // { path: '/work/', view: 'work-index' },
     // { path: '/work/health/', view: 'health' },
     { path: '/commitment/', view: 'commitment' },
-    { path: '/about/', view: 'about' },
     { path: '/design-system/', view: 'design-system' },
   ]
   // for (const entry of catalog) {

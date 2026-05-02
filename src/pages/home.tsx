@@ -61,7 +61,7 @@ export function Home({
             <h3>About Flexion</h3>
             <p>{hero.learnMore.about}</p>
             <p>
-              <a href={url('/about/', config.basePath)}>Learn about Flexion &rarr;</a>
+              <a href="https://flexion.us/" rel="noopener external">Learn about Flexion &rarr;</a>
             </p>
           </article>
         </div>

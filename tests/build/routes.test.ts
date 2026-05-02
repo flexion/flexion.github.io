@@ -7,8 +7,8 @@ describe('allRoutes', () => {
     const paths = allRoutes(fixtureCatalog).map((r) => r.path)
     expect(paths).toContain('/')
     expect(paths).toContain('/commitment/')
-    expect(paths).toContain('/about/')
     expect(paths).toContain('/design-system/')
+    expect(paths).not.toContain('/about/')
   })
 
   test('does not produce any /work/ routes', () => {

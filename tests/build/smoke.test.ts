@@ -20,7 +20,6 @@ describe('build smoke', () => {
   const expectedPaths = [
     'index.html',
     'commitment/index.html',
-    'about/index.html',
   ]
 
   for (const path of expectedPaths) {

@@ -35,9 +35,6 @@ export function Header({ config }: { config: SiteConfig }) {
             <a href={url('/commitment/', config.basePath)}>Commitment</a>
           </li>
           <li>
-            <a href={url('/about/', config.basePath)}>About</a>
-          </li>
-          <li>
             <Link href="https://github.com/flexion" external>
               GitHub
             </Link>
