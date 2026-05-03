@@ -29,13 +29,10 @@ export function Header({ config }: { config: SiteConfig }) {
       <nav aria-label="Primary" id="primary-nav" popover="auto">
         <ul>
           <li>
-            <a href={url('/work/', config.basePath)}>Work</a>
+            <a href={url('/', config.basePath)}>Home</a>
           </li>
           <li>
             <a href={url('/commitment/', config.basePath)}>Commitment</a>
-          </li>
-          <li>
-            <a href={url('/about/', config.basePath)}>About</a>
           </li>
           <li>
             <Link href="https://github.com/flexion" external>

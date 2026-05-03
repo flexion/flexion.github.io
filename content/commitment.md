@@ -2,51 +2,25 @@
 title: Open source commitment
 ---
 
-# Flexion Labs open source commitment
+# Flexion's open source commitment
 
-*Status: Working draft. Pending delivery leadership and ownership group review.*
+Flexion has always worked differently. How we work is what distinguishes us. Our commitment to open source is part of how we create value. Open source enables long-term resilience, and the Flexion approach to development prioritizes resilience. We know that our customers may need to pivot at any moment, and we want them to be able to adapt to changing conditions.
 
-## Why we value openness
+Our competitive advantage comes from delivery expertise and proven capabilities, not from hiding code. We compete by being better at building, deploying, and supporting solutions, not by locking them down.
 
-Open source solves practical problems. For the government agencies we serve, it eliminates vendor lock-in, reduces sustainability risk, and lowers total cost of ownership. For Flexion, it creates options — the freedom to build on proven foundations, to redirect resources from infrastructure to the problems that matter, and to demonstrate technical capability in ways closed projects never can.
+## We're open by default
 
-Transparency improves quality. When code is open, more eyes find more bugs. Agencies and oversight bodies can audit how public systems work. The discipline of building in the open — knowing anyone can read the code — raises the bar for the work itself.
+Flexion's code, architecture, and interfaces are open unless there's a reason they can't be, such as security concerns or client requirements. Once we release something as open source, it remains available under that license.
 
-Openness compounds value across jurisdictions. Investment in one agency's solution becomes infrastructure that others can adopt. This commons-building isn't overhead — it's how we create defensible competitive advantage while empowering agencies to control their technology. Open source attracts talent who value transparency and civic impact, and contributors can become hires.
+Flexion is committed to open source because open source:
 
-Openness also makes sense for the public. Publicly funded work should create reusable public infrastructure. Citizens benefit from transparency into the systems that serve them. And when agencies embrace open source, the result is higher public satisfaction with government technology. We don't ask anyone to take our word for it — the code is there to inspect, use, and build on.
+- Eliminates vendor lock-in, reduces sustainability risk, and lowers total cost of ownership for our customers.
+- Creates options, with the freedom to build on proven foundations.
+- Allows us to redirect resources from infrastructure to the problems that matter.
+- Improves quality by letting more eyes find more bugs.
+- Compounds value, by allowing investment in one solution to become infrastructure that others can adopt.
+- Attracts talent who value transparency and civic impact.
 
-## What we commit to
+Openness also makes sense for the public. Publicly funded work should create reusable public infrastructure. Citizens benefit from transparency into the systems that serve them. And when agencies embrace open source, the result is higher public satisfaction with government technology.
 
-We are open by default. Code, architecture, and interfaces are open unless there's a specific reason otherwise — security concerns, client requirements, or competitive considerations. We will never take an open source project to a closed model. Once we release something as open source, it remains available under that license.
-
-We use licensing appropriate to each project's context. Government-funded work uses public domain (CC0) to maximize reuse and avoid contractual friction. Commercial client work follows client preferences, typically proposing public domain. For projects where Flexion makes significant independent investment and maintains long-term stewardship, we use permissive open source licenses (Apache 2.0) with contributor agreements that preserve flexibility for the project's future. Small enhancements to existing open source projects follow those projects' conventions.
-
-We commit to clear, professional repository standards: proper documentation, contributor guidance, legal terms, and getting-started materials. Code alone isn't enough — a project that's hard to understand or adopt isn't truly open.
-
-Our competitive advantage comes from delivery expertise and proven capabilities, not from hiding code. We compete by being better at building, deploying, and supporting solutions — not by locking them down.
-
-## How we operate
-
-We develop in the open for projects intended to be open source. Public by default means the work is visible from the start, not just after delivery. We are mindful of security considerations and maintain clear vulnerability disclosure processes.
-
-We govern our projects incrementally, starting with Flexion authority and evolving toward broader community governance as projects mature and attract use. For client work, the governance model depends on context — for traditional client engagements, operational decisions belong to the empowered client; for Flexion Solutions, Flexion governs directly.
-
-Contribution processes are documented and all work is done through pull requests. We welcome contributions with clear guidance. We build our stewardship practices by dogfooding them on internal projects first, so we learn what works before applying it externally.
-
-We recognize that governance stagnation — projects going dormant because no one takes ownership — is a primary risk of open source. We address this through honest communication about support levels, explicit project tiers, and a commitment to never let projects silently decay. If a project is no longer actively maintained, we say so clearly.
-
-## What we steward
-
-We recognize that resources are finite and not all projects warrant the same level of investment. We support a tiered approach to stewardship, with honest communication about what we will and won't provide for each project.
-
-For actively maintained projects, we commit to security patch management and defined response commitments. For projects available as-is, we say so clearly. We don't over-promise maintenance. Abandoned repositories damage credibility and create a security risk — if we can't maintain something, we explicitly archive it rather than letting it decay silently.
-
-Open source work is funded primarily through consulting engagements with clients who value openness. We also make strategic investments in projects where the business case warrants it — where open source creates market opportunities, builds community, or strengthens civic infrastructure. Different projects use different funding models: traditional hourly billing, retainers, maintenance within team structures, grants, and partnerships.
-
-## Maintenance tiers
-
-- **Active** — Flexion commits to security patch management and defined response commitments. Bug reports are triaged. Pull requests are reviewed on a predictable cadence.
-- **As-is** — Available without active maintenance. The code works (or worked at one point); future updates are not promised.
-- **Archived** — No longer maintained. The GitHub archive flag is set. The repo is read-only. Listed for transparency.
-- **Unreviewed** — A human has not yet classified this repo. Defaults to this state; visible on the site so gaps are honest.
+We don't ask anyone to take our word for it. The code is there to inspect, use, and build on.

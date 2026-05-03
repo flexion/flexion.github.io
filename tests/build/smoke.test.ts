@@ -19,10 +19,7 @@ beforeAll(async () => {
 describe('build smoke', () => {
   const expectedPaths = [
     'index.html',
-    'work/index.html',
-    'work/health/index.html',
     'commitment/index.html',
-    'about/index.html',
   ]
 
   for (const path of expectedPaths) {
@@ -35,8 +32,8 @@ describe('build smoke', () => {
     })
   }
 
-  test('produces a work directory', () => {
+  test('does not produce a work directory', () => {
     const workDir = join(outDir, 'work')
-    expect(existsSync(workDir)).toBe(true)
+    expect(existsSync(workDir)).toBe(false)
   })
 })

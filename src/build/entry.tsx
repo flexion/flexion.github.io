@@ -4,13 +4,13 @@ import { renderToHtml } from './render'
 import { createConfig, getBasePath } from './config'
 import { loadCatalog } from '../catalog/load'
 import { loadHero } from './hero'
+import { loadFeatured } from './featured'
 import { allRoutes } from './routes'
 import { Home } from '../pages/home'
 import { WorkIndex } from '../pages/work/index'
 import { WorkDetail } from '../pages/work/detail'
 import { Health } from '../pages/work/health'
 import { Commitment } from '../pages/commitment'
-import { About } from '../pages/about'
 import { DesignSystem } from '../pages/design-system'
 import { SHOW_PER_REPO_FAILURES } from '../catalog/repo-checks'
 
@@ -32,14 +32,14 @@ export async function buildSite(options: BuildOptions): Promise<void> {
     buildTime: now.toISOString(),
   }
 
-  const [catalog, hero] = await Promise.all([
+  const [catalog, hero, featured] = await Promise.all([
     loadCatalog(rootDir),
     loadHero(rootDir),
+    loadFeatured(rootDir),
   ])
   const commitmentBody = await loadContentBody(
     join(rootDir, 'content', 'commitment.md'),
   )
-  const aboutBody = await loadContentBody(join(rootDir, 'content', 'about.md'))
 
   const routes = allRoutes(catalog)
 
@@ -48,8 +48,8 @@ export async function buildSite(options: BuildOptions): Promise<void> {
       route,
       catalog,
       hero,
+      featured,
       commitmentBody,
-      aboutBody,
       config,
       now,
     )
@@ -82,14 +82,14 @@ async function render(
   route: ReturnType<typeof allRoutes>[number],
   catalog: Awaited<ReturnType<typeof loadCatalog>>,
   hero: Awaited<ReturnType<typeof loadHero>>,
+  featured: Awaited<ReturnType<typeof loadFeatured>>,
   commitmentBody: string,
-  aboutBody: string,
   config: { basePath: string; buildTime: string },
   now: Date,
 ): Promise<string> {
   switch (route.view) {
     case 'home':
-      return renderToHtml(<Home catalog={catalog} hero={hero} config={config} />)
+      return renderToHtml(<Home hero={hero} featured={featured} config={config} />)
     case 'work-index':
       return renderToHtml(<WorkIndex catalog={catalog} config={config} />)
     case 'health':
@@ -103,8 +103,6 @@ async function render(
       )
     case 'commitment':
       return renderToHtml(<Commitment body={commitmentBody} config={config} />)
-    case 'about':
-      return renderToHtml(<About body={aboutBody} config={config} />)
     case 'design-system':
       return renderToHtml(<DesignSystem config={config} />)
     case 'work-detail': {

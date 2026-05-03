@@ -6,9 +6,8 @@ export function Footer({ config }: { config: SiteConfig }) {
     <footer class="site-footer">
       <nav aria-label="Footer">
         <ul>
-          <li><a href={url('/work/', config.basePath)}>Work</a></li>
+          <li><a href={url('/', config.basePath)}>Home</a></li>
           <li><a href={url('/commitment/', config.basePath)}>Commitment</a></li>
-          <li><a href={url('/about/', config.basePath)}>About</a></li>
           <li><a href={url('/design-system/', config.basePath)}>Design system</a></li>
         </ul>
       </nav>

@@ -1,60 +1,70 @@
+import { raw } from 'hono/html'
 import { Layout } from '../design/common/layout'
-import { FeaturedCard } from '../design/components/featured-card'
-import type { Catalog } from '../catalog/types'
+import { LabCard } from '../design/components/lab-card'
+import { url } from '../build/config'
+import type { FeaturedLab } from '../build/featured'
 import type { SiteConfig } from '../build/config'
 
-export type HeroContent = { hero: string; intro: string }
+export type HeroContent = {
+  title: string
+  subtitle: string
+  intro: string // pre-rendered HTML
+  learnMore: {
+    commitment: string
+    about: string
+  }
+}
 
 export function Home({
-  catalog,
   hero,
+  featured,
   config,
 }: {
-  catalog: Catalog
   hero: HeroContent
+  featured: FeaturedLab[]
   config: SiteConfig
 }) {
-  const featuredOrder = ['forms', 'forms-lab', 'document-extractor', 'flexion-notify']
-  const featured = catalog
-    .filter((e) => e.featured && !e.hidden)
-    .sort((a, b) => {
-      const ai = featuredOrder.indexOf(a.name)
-      const bi = featuredOrder.indexOf(b.name)
-      return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi)
-    })
-  const visible = catalog.filter((e) => !e.hidden)
-  const active = visible.filter((e) => e.tier === 'active').length
-  const languages = new Set(
-    visible.map((e) => e.language).filter((l): l is string => Boolean(l)),
-  ).size
-
   return (
     <Layout title={null} config={config}>
       <section class="home-hero">
-        <h1>{hero.hero}</h1>
-        <p class="home-hero__intro">{hero.intro}</p>
+        <h1>{hero.title}</h1>
+        {hero.subtitle ? (
+          <p class="home-hero__subtitle">{hero.subtitle}</p>
+        ) : null}
+        {hero.intro ? (
+          <div class="home-intro">{raw(hero.intro)}</div>
+        ) : null}
       </section>
 
       <section class="home-featured" aria-labelledby="featured-heading">
         <div class="home-featured__header">
-          <h2 id="featured-heading">Featured</h2>
-          <p class="home-featured__intro">
-            Products and tools we actively steward — built for government, shared with everyone.
-          </p>
+          <h2 id="featured-heading">Featured labs</h2>
         </div>
         <div class="home-featured__list">
-          {featured.map((entry) => (
-            <FeaturedCard entry={entry} basePath={config.basePath} />
+          {featured.map((lab) => (
+            <LabCard lab={lab} />
           ))}
         </div>
       </section>
 
-      <section class="home-stats">
-        <ul class="home-stats__grid">
-          <li><strong>{visible.length}</strong> public projects</li>
-          <li><strong>{active}</strong> actively maintained</li>
-          <li><strong>{languages}</strong> languages</li>
-        </ul>
+      <section class="home-learn-more" aria-labelledby="learn-more-heading">
+        <h2 id="learn-more-heading">Learn more</h2>
+        <div class="home-learn-more__grid">
+          <article class="home-learn-more__item">
+            <h3>Our open source commitment</h3>
+            <p>{hero.learnMore.commitment}</p>
+            <p>
+              <a href={url('/commitment/', config.basePath)}>Read our commitment &rarr;</a>
+            </p>
+          </article>
+          <article class="home-learn-more__item">
+            <h3>About Flexion</h3>
+            <p>{hero.learnMore.about}</p>
+            <p>
+              <a href="https://flexion.us/" rel="noopener external">Learn about Flexion &rarr;</a>
+            </p>
+          </article>
+        </div>
       </section>
     </Layout>
   )
