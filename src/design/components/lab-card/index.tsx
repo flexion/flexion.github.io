@@ -26,30 +26,30 @@ function groupByKind(links: readonly FeaturedLink[]): Column[] {
 
 export function LabCard({ lab }: { lab: FeaturedLab }) {
   const columns = groupByKind(lab.links)
+  const maxLinks = columns.reduce((n, c) => Math.max(n, c.links.length), 0)
+  // Expose the grid size so subgrid rows can align across columns.
+  const style = `--lab-card-rows: ${maxLinks};`
+
   return (
     <article class="lab-card">
       <div class="lab-card__intro">
         <h3 class="lab-card__title">{lab.title}</h3>
         <p class="lab-card__tagline">{lab.tagline}</p>
       </div>
-      <ul class="lab-card__columns">
+      <ul class="lab-card__columns" style={style}>
         {columns.map((column) => (
           <li class="lab-card__column">
             <p class="lab-card__column-heading">{KIND_HEADING[column.kind]}</p>
-            <ul class="lab-card__column-links">
-              {column.links.map((link) => (
-                <li>
-                  <a
-                    class="lab-card__column-link"
-                    href={link.url}
-                    rel="noopener external"
-                  >
-                    <LinkIcon kind={column.kind} />
-                    <span>{link.label}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+            {column.links.map((link) => (
+              <a
+                class="lab-card__column-link"
+                href={link.url}
+                rel="noopener external"
+              >
+                <LinkIcon kind={column.kind} />
+                <span>{link.label}</span>
+              </a>
+            ))}
           </li>
         ))}
       </ul>

@@ -112,6 +112,12 @@ describe('LabCard', () => {
     expect(html.match(/rel="noopener external"/g)?.length).toBe(4)
   })
 
+  test('exposes --lab-card-rows to size subgrid rows across columns', async () => {
+    const html = await renderToHtml(<LabCard lab={multiProject} />)
+    // Two links per column → 2 rows of links
+    expect(html).toContain('--lab-card-rows: 2')
+  })
+
   test('column order is Demo, Repository, Case study (only kinds present)', async () => {
     const html = await renderToHtml(<LabCard lab={multiProject} />)
     const demoIdx = html.indexOf('>Demo<')
