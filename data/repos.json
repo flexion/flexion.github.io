@@ -543,7 +543,7 @@
     "name": "forms-lab",
     "description": "Experiments in delivering friendly government forms.",
     "url": "https://github.com/flexion/forms-lab",
-    "homepage": "https://ec2-34-197-222-16.compute-1.amazonaws.com",
+    "homepage": "https://forms.labs.flexion.us",
     "language": "TypeScript",
     "license": "Apache-2.0",
     "pushedAt": "2026-04-21T14:34:26Z",

@@ -24,7 +24,7 @@ describe('loadFeatured', () => {
     expect(forms.links.map((l) => l.kind)).toEqual(['demo', 'repo', 'demo', 'repo'])
     expect(forms.links[0]).toEqual({
       label: 'Forms Platform',
-      url: 'https://pp4cc7kwbf.us-east-1.awsapprunner.com/',
+      url: 'https://10x-forms.labs.flexion.us/',
       kind: 'demo',
     })
   })
