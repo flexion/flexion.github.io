@@ -21,7 +21,7 @@ const featured: FeaturedLab[] = [
     tagline: 'Digitize forms to create modern, accessible experiences for public outreach.',
     order: 1,
     links: [
-      { label: 'Forms Platform', url: 'https://pp4cc7kwbf.us-east-1.awsapprunner.com/', kind: 'demo' },
+      { label: 'Forms Platform', url: 'https://10x-forms.labs.flexion.us/', kind: 'demo' },
       { label: 'flexion/forms', url: 'https://github.com/flexion/forms', kind: 'repo' },
     ],
   },
