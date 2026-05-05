@@ -1,0 +1,16 @@
+.repo-card {
+  padding: var(--space-5);
+  border: 1px solid var(--color-surface-alt);
+  border-block-start: 3px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.repo-card__name { font-size: var(--step-1); }
+.repo-card__name a { text-decoration: none; }
+.repo-card__name a:hover { text-decoration: underline; }
+.repo-card__summary { color: var(--color-ink-subtle); }
+.repo-card__meta { display: flex; gap: var(--space-2); flex-wrap: wrap; }
