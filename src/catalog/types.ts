@@ -18,7 +18,6 @@ export type GithubSnapshotEntry = {
   pushedAt: string // ISO 8601
   archived: boolean
   fork: boolean
-  stars: number
   hasReadme: boolean
   hasLicense: boolean
   hasContributing: boolean

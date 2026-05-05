@@ -48,7 +48,6 @@ export async function buildSnapshot(
       pushedAt: repo.pushed_at,
       archived: repo.archived,
       fork: repo.fork,
-      stars: repo.stargazers_count,
       hasReadme,
       hasLicense: Boolean(repo.license?.spdx_id) || hasLicenseFile,
       hasContributing,

@@ -36,7 +36,7 @@ jobs:
             exit 0
           fi
           DATE="$(date -u +%F)"
-          BRANCH="catalog/refresh-$DATE"
+          BRANCH="catalog/refresh"
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           # Ensure remote-tracking ref exists so --force-with-lease works on retries.
@@ -47,7 +47,7 @@ jobs:
           git push --force-with-lease origin "$BRANCH"
           if ! gh pr view "$BRANCH" >/dev/null 2>&1; then
             gh pr create --base main --head "$BRANCH" \
-              --title "Refresh catalog snapshot — $DATE" \
+              --title "Refresh catalog snapshot" \
               --body "Automated snapshot refresh from the GitHub API."
           fi
           gh pr merge "$BRANCH" --auto --squash
