@@ -11,7 +11,6 @@ const example: CatalogEntry = {
   pushedAt: '2026-04-20T00:00:00Z',
   archived: false,
   fork: false,
-  stars: 12,
   hasReadme: true,
   hasLicense: true,
   hasContributing: true,

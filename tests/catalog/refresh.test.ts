@@ -11,7 +11,6 @@ const apiRepo = (overrides: Record<string, unknown>) => ({
   pushed_at: '2026-01-01T00:00:00Z',
   archived: false,
   fork: false,
-  stargazers_count: 0,
   private: false,
   ...overrides,
 })
@@ -34,7 +33,6 @@ describe('buildSnapshot', () => {
         homepage: 'https://messaging.example/',
         language: 'TypeScript',
         license: { spdx_id: 'Apache-2.0' },
-        stargazers_count: 3,
         pushed_at: '2026-04-20T00:00:00Z',
       }),
     ]), {
@@ -46,7 +44,7 @@ describe('buildSnapshot', () => {
     const snapshot = await buildSnapshot({ org: 'flexion', fetch: fetchImpl, fileCheck })
     expect(snapshot[0].name).toBe('messaging')
     expect(snapshot[0].license).toBe('Apache-2.0')
-    expect(snapshot[0].stars).toBe(3)
+    expect('stars' in snapshot[0]).toBe(false)
     expect(snapshot[0].hasReadme).toBe(true)
     expect(snapshot[0].hasContributing).toBe(false)
   })
