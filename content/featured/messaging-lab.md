@@ -1,6 +1,6 @@
 ---
 title: Messaging Lab
-tagline: Text messaging services to deliver critical updates to the people you serve.
+tagline: Text messaging services to deliver critical updates to the people you serve. An easy-to-use, web-based service, Messaging allows personalized text messaging, including messaging in more than 30 languages, with limited data retention. The Messaging Lab emerged from work done for GSA’s Public Benefits Studio.
 order: 2
 links:
   - label: Flexion Messaging
