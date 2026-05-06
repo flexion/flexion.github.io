@@ -38,7 +38,7 @@ export function Home({
 
       <section class="home-featured" aria-labelledby="featured-heading">
         <div class="home-featured__header">
-          <h2 id="featured-heading">Featured labs</h2>
+          <h2 id="featured-heading">Featured work</h2>
         </div>
         <div class="home-featured__list">
           {featured.map((lab) => (
