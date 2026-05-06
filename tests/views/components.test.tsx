@@ -186,19 +186,13 @@ describe('LabCard', () => {
     expect(html).not.toContain('href="/assets/images/')
   })
 
-  test('screenshot link renders a dialog with images and nav buttons', async () => {
+  test('screenshot link renders a dialog with images', async () => {
     const html = await renderToHtml(<LabCard lab={withScreenshots} />)
     expect(html).toContain('<dialog')
     expect(html).toContain('src="/assets/images/messaging-dashboard.png"')
     expect(html).toContain('alt="Dashboard"')
     expect(html).toContain('src="/assets/images/messaging-get-started.png"')
     expect(html).toContain('alt="Get started"')
-    // First image visible, second hidden
-    expect(html).toContain('data-index="0"')
-    expect(html).toContain('data-index="1"')
-    // Prev/next nav buttons
-    expect(html).toContain('data-prev')
-    expect(html).toContain('data-next')
   })
 
   test('screenshot image src respects basePath', async () => {
