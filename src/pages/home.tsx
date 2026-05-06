@@ -29,7 +29,7 @@ export function Home({
       <section class="home-hero">
         <h1>{hero.title}</h1>
         {hero.subtitle ? (
-          <p class="home-hero__subtitle">{hero.subtitle}</p>
+          <h2 class="home-hero__subtitle">{hero.subtitle}</h2>
         ) : null}
         {hero.intro ? (
           <div class="home-intro">{raw(hero.intro)}</div>
