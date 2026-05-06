@@ -88,6 +88,27 @@ describe('LabCard', () => {
     ],
   }
 
+  const withScreenshots: FeaturedLab = {
+    title: 'Messaging Lab',
+    tagline: 'Text messaging services.',
+    order: 2,
+    links: [
+      {
+        label: 'Flexion Messaging',
+        kind: 'screenshot',
+        images: [
+          { src: '/assets/images/messaging-dashboard.png', alt: 'Dashboard' },
+          { src: '/assets/images/messaging-get-started.png', alt: 'Get started' },
+        ],
+      },
+      {
+        label: 'flexion/flexion-notify',
+        url: 'https://github.com/flexion/flexion-notify',
+        kind: 'repo',
+      },
+    ],
+  }
+
   test('renders the title as an h3 with no link', async () => {
     const html = await renderToHtml(<LabCard lab={multiProject} />)
     expect(html).toMatch(/<h3[^>]*class="lab-card__title"[^>]*>Forms Lab<\/h3>/)
@@ -155,5 +176,31 @@ describe('LabCard', () => {
     expect(html).toContain('>Case study<')
     expect(html.indexOf('>Repository<')).toBeLessThan(html.indexOf('>Case study<'))
     expect(html).toContain('href="https://flexion.us/case-study/"')
+  })
+
+  test('screenshot link renders a button instead of an anchor', async () => {
+    const html = await renderToHtml(<LabCard lab={withScreenshots} />)
+    expect(html).toContain('<button')
+    expect(html).toContain('Flexion Messaging')
+    // Should NOT have an <a> for the screenshot link
+    expect(html).not.toContain('href="/assets/images/')
+  })
+
+  test('screenshot link renders a dialog with images', async () => {
+    const html = await renderToHtml(<LabCard lab={withScreenshots} />)
+    expect(html).toContain('<dialog')
+    expect(html).toContain('src="/assets/images/messaging-dashboard.png"')
+    expect(html).toContain('alt="Dashboard"')
+    expect(html).toContain('src="/assets/images/messaging-get-started.png"')
+    expect(html).toContain('alt="Get started"')
+  })
+
+  test('column order includes Screenshots between Demo and Repository', async () => {
+    const html = await renderToHtml(<LabCard lab={withScreenshots} />)
+    const screenshotIdx = html.indexOf('>Screenshots<')
+    const repoIdx = html.indexOf('>Repository<')
+    expect(screenshotIdx).toBeGreaterThan(-1)
+    expect(repoIdx).toBeGreaterThan(-1)
+    expect(screenshotIdx).toBeLessThan(repoIdx)
   })
 })
