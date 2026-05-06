@@ -18,7 +18,7 @@ const hero = {
 const featured: FeaturedLab[] = [
   {
     title: 'Forms Lab',
-    tagline: 'Digitize forms to create modern, accessible experiences for public outreach.',
+    tagline: 'Digitize forms to create modern, accessible experiences for public outreach. Simple, accessible, and conformant, with powerful automation and integration options.',
     order: 1,
     links: [
       { label: 'Forms Platform', url: 'https://10x-forms.labs.flexion.us/', kind: 'demo' },
