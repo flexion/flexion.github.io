@@ -4,7 +4,7 @@ title: Open source commitment
 
 # Flexion's open source commitment
 
-Flexion has always worked differently. How we work is what distinguishes us. Our commitment to open source is part of how we create value. Open source enables long-term resilience, and the Flexion approach to development prioritizes resilience. We know that our customers may need to pivot at any moment, and we want them to be able to adapt to changing conditions.
+Flexion has always worked differently. How we work is what distinguishes us. Our commitment to open source is part of how we create value. Open source enables long-term resilience, and the Flexion approach to development prioritizes resilience. We know that our customers may need to pivot at any time, and we want them to be able to adapt to changing conditions.
 
 Our competitive advantage comes from delivery expertise and proven capabilities, not from hiding code. We compete by being better at building, deploying, and supporting solutions, not by locking them down.
 
