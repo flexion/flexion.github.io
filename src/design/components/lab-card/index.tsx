@@ -4,6 +4,7 @@ import type {
   FeaturedLinkKind,
   FeaturedScreenshotLink,
 } from '../../../build/featured'
+import { url } from '../../../build/config'
 
 const KIND_HEADING: Record<FeaturedLinkKind, string> = {
   demo: 'Demo',
@@ -35,7 +36,7 @@ function dialogId(labTitle: string, linkIndex: number): string {
   return `screenshots-${slug}-${linkIndex}`
 }
 
-export function LabCard({ lab }: { lab: FeaturedLab }) {
+export function LabCard({ lab, basePath = '/' }: { lab: FeaturedLab; basePath?: string }) {
   const columns = groupByKind(lab.links)
   const maxLinks = columns.reduce((n, c) => Math.max(n, c.links.length), 0)
   // Expose the grid size so subgrid rows can align across columns.
@@ -96,7 +97,7 @@ export function LabCard({ lab }: { lab: FeaturedLab }) {
               {link.images.map((img) => (
                 <img
                   class="screenshot-dialog__img"
-                  src={img.src}
+                  src={url(img.src, basePath)}
                   alt={img.alt}
                   loading="lazy"
                 />

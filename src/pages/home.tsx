@@ -42,7 +42,7 @@ export function Home({
         </div>
         <div class="home-featured__list">
           {featured.map((lab) => (
-            <LabCard lab={lab} />
+            <LabCard lab={lab} basePath={config.basePath} />
           ))}
         </div>
       </section>

@@ -195,6 +195,12 @@ describe('LabCard', () => {
     expect(html).toContain('alt="Get started"')
   })
 
+  test('screenshot image src respects basePath', async () => {
+    const html = await renderToHtml(<LabCard lab={withScreenshots} basePath="/preview/branch/" />)
+    expect(html).toContain('src="/preview/branch/assets/images/messaging-dashboard.png"')
+    expect(html).toContain('src="/preview/branch/assets/images/messaging-get-started.png"')
+  })
+
   test('column order includes Screenshots between Demo and Repository', async () => {
     const html = await renderToHtml(<LabCard lab={withScreenshots} />)
     const screenshotIdx = html.indexOf('>Screenshots<')
