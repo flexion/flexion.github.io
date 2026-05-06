@@ -102,8 +102,8 @@ describe('LabCard', () => {
         ],
       },
       {
-        label: 'flexion/flexion-notify',
-        url: 'https://github.com/flexion/flexion-notify',
+        label: 'flexion/flexion-messaging',
+        url: 'https://github.com/flexion/flexion-messaging',
         kind: 'repo',
       },
     ],
