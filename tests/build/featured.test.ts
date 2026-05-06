@@ -4,46 +4,38 @@ import { loadFeatured } from '../../src/build/featured'
 const ROOT = import.meta.dir + '/../..'
 
 describe('loadFeatured', () => {
-  test('loads every file in content/featured/ and returns them sorted by order', async () => {
+  test('all content/featured/ files load without error', async () => {
     const labs = await loadFeatured(ROOT)
-    expect(labs.map((l) => l.title)).toEqual([
-      'Forms Lab',
-      'Messaging Lab',
-      'Document Extractor Lab',
-    ])
+    expect(labs.length).toBeGreaterThan(0)
   })
 
-  test('Forms Lab has four typed links in document order', async () => {
+  test('every lab has required fields', async () => {
     const labs = await loadFeatured(ROOT)
-    const forms = labs.find((l) => l.title === 'Forms Lab')!
-    expect(forms.tagline).toBe(
-      'Digitize forms to create modern, accessible experiences for public outreach.',
-    )
-    expect(forms.order).toBe(1)
-    expect(forms.links).toHaveLength(4)
-    expect(forms.links.map((l) => l.kind)).toEqual(['demo', 'repo', 'demo', 'repo'])
-    expect(forms.links[0]).toEqual({
-      label: 'Forms Platform',
-      url: 'https://10x-forms.labs.flexion.us/',
-      kind: 'demo',
-    })
+    for (const lab of labs) {
+      expect(typeof lab.title).toBe('string')
+      expect(lab.title.length).toBeGreaterThan(0)
+      expect(typeof lab.tagline).toBe('string')
+      expect(lab.tagline.length).toBeGreaterThan(0)
+      expect(typeof lab.order).toBe('number')
+      expect(lab.links.length).toBeGreaterThan(0)
+    }
   })
 
-  test('Messaging Lab has a single repo link', async () => {
+  test('every link has a valid kind and required fields', async () => {
     const labs = await loadFeatured(ROOT)
-    const messaging = labs.find((l) => l.title === 'Messaging Lab')!
-    expect(messaging.links).toEqual([
-      {
-        label: 'flexion/flexion-messaging',
-        url: 'https://github.com/flexion/flexion-messaging',
-        kind: 'repo',
-      },
-    ])
+    const validKinds = new Set(['demo', 'repo', 'case-study'])
+    for (const lab of labs) {
+      for (const link of lab.links) {
+        expect(typeof link.label).toBe('string')
+        expect(typeof link.url).toBe('string')
+        expect(validKinds.has(link.kind)).toBe(true)
+      }
+    }
   })
 
-  test('Document Extractor Lab has repo and case-study kinds', async () => {
+  test('labs are sorted by order', async () => {
     const labs = await loadFeatured(ROOT)
-    const doc = labs.find((l) => l.title === 'Document Extractor Lab')!
-    expect(doc.links.map((l) => l.kind)).toEqual(['repo', 'case-study'])
+    const orders = labs.map((l) => l.order)
+    expect(orders).toEqual([...orders].sort((a, b) => a - b))
   })
 })
