@@ -126,7 +126,6 @@
     border-radius: var(--radius-sm);
     padding: var(--space-6);
     overflow-y: auto;
-    position: relative;
   }
 
   .screenshot-dialog::backdrop {
