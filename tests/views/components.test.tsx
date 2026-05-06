@@ -74,7 +74,7 @@ describe('LabCard', () => {
     tagline: 'Text messaging services.',
     order: 2,
     links: [
-      { label: 'flexion/flexion-notify', url: 'https://github.com/flexion/flexion-notify', kind: 'repo' },
+      { label: 'flexion/flexion-messaging', url: 'https://github.com/flexion/flexion-messaging', kind: 'repo' },
     ],
   }
 
@@ -145,7 +145,7 @@ describe('LabCard', () => {
     const html = await renderToHtml(<LabCard lab={singleLink} />)
     expect(html.match(/class="lab-card__column"/g)?.length).toBe(1)
     expect(html).toContain('>Repository<')
-    expect(html).toContain('href="https://github.com/flexion/flexion-notify"')
+    expect(html).toContain('href="https://github.com/flexion/flexion-messaging"')
   })
 
   test('case-study kind renders its own column and heading', async () => {

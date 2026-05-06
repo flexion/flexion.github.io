@@ -34,8 +34,8 @@ describe('loadFeatured', () => {
     const messaging = labs.find((l) => l.title === 'Messaging Lab')!
     expect(messaging.links).toEqual([
       {
-        label: 'flexion/flexion-notify',
-        url: 'https://github.com/flexion/flexion-notify',
+        label: 'flexion/flexion-messaging',
+        url: 'https://github.com/flexion/flexion-messaging',
         kind: 'repo',
       },
     ])
