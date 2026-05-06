@@ -1,6 +1,6 @@
 ---
 title: Document Extractor Lab
-tagline: Accurately extract data from PDFs and images for faster application processing.
+tagline: Accurately extract data from PDFs and images for faster application processing. Document Extractor recognizes and maps key data fields, turning them into data that can be integrated into existing systems. The Document Extractor Lab emerged from work done for GSA's Public Benefits Studio.
 order: 3
 links:
   - label: flexion/document-extractor

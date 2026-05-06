@@ -12,7 +12,7 @@ First impression for every visitor. Introduces Flexion Labs with a hero, showcas
 
 ## Behavior
 
-- **When the page loads, then** the hero renders the `title` as `<h1>`, the `subtitle` as a tagline paragraph, and the rendered `intro` HTML as the intro block.
+- **When the page loads, then** the hero renders the `title` as `<h1>`, the `subtitle` as a `<h2>`, and the rendered `intro` HTML as the intro block.
 - **When there are featured labs, then** one `LabCard` is rendered per lab in `order` ascending.
 - **When the page loads, then** a "Learn more" section renders two side-by-side teasers — one linking to `/commitment/`, one linking to `https://flexion.us/`. The grid collapses to a single column below 48rem.
 - **The stats strip is not rendered.** The catalog directory is disabled in this pass.

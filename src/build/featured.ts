@@ -2,18 +2,32 @@ import { parse as parseYaml } from 'yaml'
 import { readdir } from 'node:fs/promises'
 import { join } from 'node:path'
 
-export type FeaturedLinkKind = 'demo' | 'repo' | 'case-study'
+export type FeaturedLinkKind = 'demo' | 'repo' | 'case-study' | 'screenshot'
 
-export type FeaturedLink = {
+export type ScreenshotImage = {
+  src: string
+  alt: string
+}
+
+export type FeaturedUrlLink = {
   label: string
   url: string
-  kind: FeaturedLinkKind
+  kind: 'demo' | 'repo' | 'case-study'
 }
+
+export type FeaturedScreenshotLink = {
+  label: string
+  kind: 'screenshot'
+  images: ScreenshotImage[]
+}
+
+export type FeaturedLink = FeaturedUrlLink | FeaturedScreenshotLink
 
 const LINK_KINDS: ReadonlySet<FeaturedLinkKind> = new Set([
   'demo',
   'repo',
   'case-study',
+  'screenshot',
 ])
 
 export type FeaturedLab = {
@@ -70,10 +84,37 @@ function parseLinks(file: string, value: unknown): FeaturedLink[] {
         `content/featured/${file}: links[${i}].kind must be one of ${[...LINK_KINDS].join(', ')}`,
       )
     }
+    if (kindRaw === 'screenshot') {
+      return {
+        label: requireString(file, `links[${i}].label`, o.label),
+        kind: 'screenshot' as const,
+        images: parseImages(file, i, o.images),
+      }
+    }
     return {
       label: requireString(file, `links[${i}].label`, o.label),
       url: requireString(file, `links[${i}].url`, o.url),
-      kind: kindRaw as FeaturedLinkKind,
+      kind: kindRaw as FeaturedUrlLink['kind'],
+    }
+  })
+}
+
+function parseImages(file: string, linkIndex: number, value: unknown): ScreenshotImage[] {
+  if (!Array.isArray(value) || value.length === 0) {
+    throw new Error(
+      `content/featured/${file}: links[${linkIndex}].images must be a non-empty array`,
+    )
+  }
+  return value.map((item, j) => {
+    if (!item || typeof item !== 'object') {
+      throw new Error(
+        `content/featured/${file}: links[${linkIndex}].images[${j}] must be an object`,
+      )
+    }
+    const o = item as Record<string, unknown>
+    return {
+      src: requireString(file, `links[${linkIndex}].images[${j}].src`, o.src),
+      alt: requireString(file, `links[${linkIndex}].images[${j}].alt`, o.alt),
     }
   })
 }

@@ -29,7 +29,7 @@ export function Home({
       <section class="home-hero">
         <h1>{hero.title}</h1>
         {hero.subtitle ? (
-          <p class="home-hero__subtitle">{hero.subtitle}</p>
+          <h2>{hero.subtitle}</h2>
         ) : null}
         {hero.intro ? (
           <div class="home-intro">{raw(hero.intro)}</div>
@@ -38,11 +38,11 @@ export function Home({
 
       <section class="home-featured" aria-labelledby="featured-heading">
         <div class="home-featured__header">
-          <h2 id="featured-heading">Featured labs</h2>
+          <h2 id="featured-heading">Featured work</h2>
         </div>
         <div class="home-featured__list">
           {featured.map((lab) => (
-            <LabCard lab={lab} />
+            <LabCard lab={lab} basePath={config.basePath} />
           ))}
         </div>
       </section>

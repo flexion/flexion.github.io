@@ -1,6 +1,6 @@
 ---
-title: Solutions for the public, in the open
-subtitle:
+title: Flexion Labs
+subtitle: Solutions for the public, built in the open
 intro: |
   Flexion is committed to excellence in civic technology. We are also
   committed to transparency. As part of that commitment, Flexion Labs

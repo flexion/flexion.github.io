@@ -55,12 +55,6 @@
     font-size: var(--step-4);
     max-inline-size: 22ch;
   }
-  .home-hero__subtitle {
-    font-size: var(--step-1);
-    color: var(--color-ink-subtle);
-    font-weight: 500;
-    max-inline-size: var(--measure-prose);
-  }
   .home-intro {
     font-size: var(--step-0);
     color: var(--color-ink);

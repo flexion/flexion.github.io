@@ -1,13 +1,20 @@
-import type { FeaturedLab, FeaturedLink, FeaturedLinkKind } from '../../../build/featured'
+import type {
+  FeaturedLab,
+  FeaturedLink,
+  FeaturedLinkKind,
+  FeaturedScreenshotLink,
+} from '../../../build/featured'
+import { url } from '../../../build/config'
 
 const KIND_HEADING: Record<FeaturedLinkKind, string> = {
   demo: 'Demo',
+  screenshot: 'Screenshots',
   repo: 'Repository',
   'case-study': 'Case study',
 }
 
 // Column order whenever these kinds are present.
-const KIND_ORDER: readonly FeaturedLinkKind[] = ['demo', 'repo', 'case-study']
+const KIND_ORDER: readonly FeaturedLinkKind[] = ['demo', 'screenshot', 'repo', 'case-study']
 
 type Column = { kind: FeaturedLinkKind; links: FeaturedLink[] }
 
@@ -24,11 +31,23 @@ function groupByKind(links: readonly FeaturedLink[]): Column[] {
   }))
 }
 
-export function LabCard({ lab }: { lab: FeaturedLab }) {
+function dialogId(labTitle: string, linkIndex: number): string {
+  const slug = labTitle.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+  return `screenshots-${slug}-${linkIndex}`
+}
+
+export function LabCard({ lab, basePath = '/' }: { lab: FeaturedLab; basePath?: string }) {
   const columns = groupByKind(lab.links)
   const maxLinks = columns.reduce((n, c) => Math.max(n, c.links.length), 0)
   // Expose the grid size so subgrid rows can align across columns.
   const style = `--lab-card-rows: ${maxLinks};`
+
+  const screenshotLinks: { link: FeaturedScreenshotLink; id: string }[] = []
+  lab.links.forEach((link, i) => {
+    if (link.kind === 'screenshot') {
+      screenshotLinks.push({ link, id: dialogId(lab.title, i) })
+    }
+  })
 
   return (
     <article class="lab-card">
@@ -40,19 +59,53 @@ export function LabCard({ lab }: { lab: FeaturedLab }) {
         {columns.map((column) => (
           <li class="lab-card__column">
             <p class="lab-card__column-heading">{KIND_HEADING[column.kind]}</p>
-            {column.links.map((link) => (
-              <a
-                class="lab-card__column-link"
-                href={link.url}
-                rel="noopener external"
-              >
-                <LinkIcon kind={column.kind} />
-                <span>{link.label}</span>
-              </a>
-            ))}
+            {column.links.map((link) => {
+              if (link.kind === 'screenshot') {
+                const id = dialogId(lab.title, lab.links.indexOf(link))
+                return (
+                  <button
+                    class="lab-card__column-link lab-card__column-link--button"
+                    data-open-dialog={id}
+                    type="button"
+                  >
+                    <LinkIcon kind="screenshot" />
+                    <span>{link.label}</span>
+                  </button>
+                )
+              }
+              return (
+                <a
+                  class="lab-card__column-link"
+                  href={link.url}
+                  rel="noopener external"
+                >
+                  <LinkIcon kind={column.kind} />
+                  <span>{link.label}</span>
+                </a>
+              )
+            })}
           </li>
         ))}
       </ul>
+      {screenshotLinks.map(({ link, id }) => (
+        <screenshot-dialog>
+          <dialog id={id} class="screenshot-dialog">
+            <button class="screenshot-dialog__close" data-close-dialog aria-label="Close" type="button">
+              &times;
+            </button>
+            <div class="screenshot-dialog__images">
+              {link.images.map((img) => (
+                <img
+                  class="screenshot-dialog__img"
+                  src={url(img.src, basePath)}
+                  alt={img.alt}
+                  loading="lazy"
+                />
+              ))}
+            </div>
+          </dialog>
+        </screenshot-dialog>
+      ))}
     </article>
   )
 }
@@ -61,6 +114,8 @@ function LinkIcon({ kind }: { kind: FeaturedLinkKind }) {
   switch (kind) {
     case 'demo':
       return <DemoIcon />
+    case 'screenshot':
+      return <ScreenshotIcon />
     case 'repo':
       return <RepoIcon />
     case 'case-study':
@@ -87,6 +142,27 @@ function DemoIcon() {
       <path d="M3 12h18" />
       <path d="M12 3a14 14 0 0 1 0 18" />
       <path d="M12 3a14 14 0 0 0 0 18" />
+    </svg>
+  )
+}
+
+function ScreenshotIcon() {
+  return (
+    <svg
+      class="lab-card__icon"
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+      <circle cx="8.5" cy="8.5" r="1.5" />
+      <path d="m21 15-5-5L5 21" />
     </svg>
   )
 }

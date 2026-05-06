@@ -7,13 +7,12 @@ export function Header({ config }: { config: SiteConfig }) {
     <header class="site-header">
       <a href={url('/', config.basePath)} class="site-brand">
         <img
-          src={url('/assets/flexion_tornado.svg', config.basePath)}
-          alt=""
+          src={url('/assets/flexion_logo.svg', config.basePath)}
+          alt="Flexion"
           class="site-brand__logo"
-          width="38"
-          height="38"
+          width="162"
+          height="35"
         />
-        <span>Flexion Labs</span>
       </a>
       <button
         class="mobile-nav-toggle"
