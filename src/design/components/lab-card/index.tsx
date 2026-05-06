@@ -90,19 +90,34 @@ export function LabCard({ lab, basePath = '/' }: { lab: FeaturedLab; basePath?: 
       {screenshotLinks.map(({ link, id }) => (
         <screenshot-dialog>
           <dialog id={id} class="screenshot-dialog">
-            <button class="screenshot-dialog__close" data-close-dialog aria-label="Close" type="button">
-              &times;
-            </button>
+            <div class="screenshot-dialog__header">
+              <span class="screenshot-dialog__counter" aria-live="polite"></span>
+              <button class="screenshot-dialog__close" data-close-dialog aria-label="Close" type="button">
+                &times;
+              </button>
+            </div>
             <div class="screenshot-dialog__images">
-              {link.images.map((img) => (
+              {link.images.map((img, i) => (
                 <img
                   class="screenshot-dialog__img"
                   src={url(img.src, basePath)}
                   alt={img.alt}
                   loading="lazy"
+                  data-index={i}
+                  hidden={i > 0}
                 />
               ))}
             </div>
+            {link.images.length > 1 ? (
+              <div class="screenshot-dialog__nav">
+                <button class="screenshot-dialog__nav-btn" data-prev type="button" aria-label="Previous screenshot">
+                  &larr; Prev
+                </button>
+                <button class="screenshot-dialog__nav-btn" data-next type="button" aria-label="Next screenshot">
+                  Next &rarr;
+                </button>
+              </div>
+            ) : null}
           </dialog>
         </screenshot-dialog>
       ))}
