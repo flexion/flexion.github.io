@@ -30,7 +30,7 @@ const featured: FeaturedLab[] = [
     tagline: 'Text messaging services to deliver critical updates to the people you serve.',
     order: 2,
     links: [
-      { label: 'flexion/flexion-notify', url: 'https://github.com/flexion/flexion-notify', kind: 'repo' },
+      { label: 'flexion/flexion-messaging', url: 'https://github.com/flexion/flexion-messaging', kind: 'repo' },
     ],
   },
   {
@@ -72,7 +72,7 @@ describe('Home', () => {
   test('renders each labs links inside its card', async () => {
     const html = await renderToHtml(<Home hero={hero} featured={featured} config={config} />)
     expect(html).toContain('href="https://github.com/flexion/forms"')
-    expect(html).toContain('href="https://github.com/flexion/flexion-notify"')
+    expect(html).toContain('href="https://github.com/flexion/flexion-messaging"')
     expect(html).toContain('href="https://github.com/flexion/document-extractor"')
   })
 
