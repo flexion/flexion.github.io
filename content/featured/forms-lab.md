@@ -1,8 +1,6 @@
 ---
 title: Forms Lab
-tagline: Digitize forms to create modern, accessible experiences for public outreach. Simple, accessible, and conformant, with powerful automation and integration options.
-
-Forms Lab emerged from work done for the General Services Administration’s (GSA) 10x program.
+tagline: Digitize forms to create modern, accessible experiences for public outreach. Simple, accessible, and conformant, with powerful automation and integration options. The Forms Lab emerged from work done for the General Services Administration’s (GSA) 10x program.
 
 order: 1
 links:
