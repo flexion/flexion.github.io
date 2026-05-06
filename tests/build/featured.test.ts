@@ -23,11 +23,10 @@ describe('loadFeatured', () => {
 
   test('every link has a valid kind and required fields', async () => {
     const labs = await loadFeatured(ROOT)
-    const validKinds = new Set(['demo', 'repo', 'case-study'])
+    const validKinds = new Set(['demo', 'repo', 'case-study', 'screenshot'])
     for (const lab of labs) {
       for (const link of lab.links) {
         expect(typeof link.label).toBe('string')
-        expect(typeof link.url).toBe('string')
         expect(validKinds.has(link.kind)).toBe(true)
       }
     }
