@@ -3,6 +3,7 @@ name: Build, test, and deploy
 on:
   push:
     branches: ['**']
+  pull_request:
   delete:
   workflow_dispatch:
 
@@ -35,7 +36,7 @@ jobs:
       - name: Determine deploy metadata
         id: meta
         run: |
-          BRANCH="${GITHUB_REF_NAME}"
+          BRANCH="${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}"
           SANITIZED="$(echo "$BRANCH" | tr '/' '-' | tr -cd 'a-zA-Z0-9._-')"
           if [ "$BRANCH" = "main" ]; then
             echo "base_path=/" >> "$GITHUB_OUTPUT"
