@@ -107,4 +107,61 @@
       gap: 0;
     }
   }
+
+  /* Screenshot button — match anchor styling */
+  .lab-card__column-link--button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  /* Screenshot dialog */
+  .screenshot-dialog {
+    max-inline-size: min(900px, 90vw);
+    max-block-size: 90vh;
+    margin: auto;  /* restore centering lost by global * { margin: 0 } reset */
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: var(--space-6);
+    overflow-y: auto;
+  }
+
+  .screenshot-dialog::backdrop {
+    background: rgb(0 0 0 / 0.6);
+  }
+
+  .screenshot-dialog__close {
+    position: absolute;
+    inset-block-start: var(--space-3);
+    inset-inline-end: var(--space-3);
+    background: none;
+    border: none;
+    font-size: var(--step-3);
+    line-height: 1;
+    cursor: pointer;
+    color: var(--color-ink-subtle);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+  }
+
+  .screenshot-dialog__close:hover,
+  .screenshot-dialog__close:focus-visible {
+    color: var(--color-ink);
+    background: var(--color-surface-alt);
+  }
+
+  .screenshot-dialog__images {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .screenshot-dialog__img {
+    max-inline-size: 100%;
+    block-size: auto;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-card);
+  }
 }
