@@ -121,29 +121,22 @@
   .screenshot-dialog {
     max-inline-size: min(900px, 90vw);
     max-block-size: 90vh;
+    margin: auto;  /* restore centering lost by global * { margin: 0 } reset */
     border: none;
     border-radius: var(--radius-sm);
     padding: var(--space-6);
     overflow-y: auto;
+    position: relative;
   }
 
   .screenshot-dialog::backdrop {
     background: rgb(0 0 0 / 0.6);
   }
 
-  .screenshot-dialog__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-block-end: var(--space-4);
-  }
-
-  .screenshot-dialog__counter {
-    font-size: var(--step--1);
-    color: var(--color-ink-subtle);
-  }
-
   .screenshot-dialog__close {
+    position: absolute;
+    inset-block-start: var(--space-3);
+    inset-inline-end: var(--space-3);
     background: none;
     border: none;
     font-size: var(--step-3);
@@ -152,7 +145,6 @@
     color: var(--color-ink-subtle);
     padding: var(--space-1) var(--space-2);
     border-radius: var(--radius-sm);
-    margin-inline-start: auto;
   }
 
   .screenshot-dialog__close:hover,
@@ -163,7 +155,8 @@
 
   .screenshot-dialog__images {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: var(--space-4);
   }
 
   .screenshot-dialog__img {
@@ -171,33 +164,5 @@
     block-size: auto;
     border-radius: var(--radius-sm);
     box-shadow: var(--shadow-card);
-  }
-
-  .screenshot-dialog__nav {
-    display: flex;
-    justify-content: space-between;
-    margin-block-start: var(--space-4);
-  }
-
-  .screenshot-dialog__nav-btn {
-    background: none;
-    border: 1px solid var(--color-surface-alt);
-    border-radius: var(--radius-sm);
-    padding: var(--space-2) var(--space-4);
-    cursor: pointer;
-    font: inherit;
-    font-size: var(--step--1);
-    color: var(--color-link);
-  }
-
-  .screenshot-dialog__nav-btn:hover,
-  .screenshot-dialog__nav-btn:focus-visible {
-    background: var(--color-surface-alt);
-    color: var(--color-link-hover);
-  }
-
-  .screenshot-dialog__nav-btn:disabled {
-    opacity: 0.4;
-    cursor: default;
   }
 }
